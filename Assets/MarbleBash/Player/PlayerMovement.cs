@@ -30,7 +30,7 @@ public class PlayerMovement : MonoBehaviour
     {   
         Vector3 movementInput = _moveAction.ReadValue<Vector2>();
 
-        Vector3 forceThisFrame = _playerLook.yaw * movementInput.y;
+        Vector3 forceThisFrame = _playerLook.yaw * movementInput.y + _playerLook.yawRight * movementInput.x;
 
         _rb.AddForce(_speed * Time.deltaTime * forceThisFrame);
     }
