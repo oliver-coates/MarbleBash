@@ -163,7 +163,7 @@ GameObject:
   m_Component:
   - component: {fileID: 100137633}
   - component: {fileID: 100137634}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Player Look Direction (Yaw)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -385,7 +385,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 164478802}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Direction (Pitch)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -421,7 +421,7 @@ GameObject:
   - component: {fileID: 209866585}
   - component: {fileID: 209866590}
   - component: {fileID: 209866589}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Player Marble
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -534,8 +534,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerMovement
   _playerLook: {fileID: 100137634}
-  _speed: 250
   _inputActions: {fileID: -944628639613478452, guid: 052faaac586de48259a63d0c4782560b, type: 3}
+  _speed: 250
+  _jumpForce: 5
+  _groundedLayerMask:
+    serializedVersion: 2
+    m_Bits: 55
+  _isGrounded: 0
 --- !u!54 &209866590
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -1485,7 +1490,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1146106107}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: --- Player
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1744,7 +1749,7 @@ MeshCollider:
   serializedVersion: 5
   m_Convex: 0
   m_CookingOptions: 30
-  m_Mesh: {fileID: 1689687134}
+  m_Mesh: {fileID: 942343888}
 --- !u!33 &1314315523
 MeshFilter:
   m_ObjectHideFlags: 10
