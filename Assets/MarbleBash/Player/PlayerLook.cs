@@ -10,6 +10,8 @@ public class PlayerLook : MonoBehaviour
     [SerializeField] private Transform _yawDirection;
     [SerializeField] private CinemachineCamera _camera;
 
+    private float _pitchDegrees;
+
     public Vector3 yaw
     {
         get
@@ -36,8 +38,6 @@ public class PlayerLook : MonoBehaviour
     }
     
 
-
-
     #region Input
     [Header("Input:")]
     [SerializeField] private InputActionAsset _inputActions;
@@ -50,14 +50,19 @@ public class PlayerLook : MonoBehaviour
     }
     #endregion
 
-    [Header("Settings:")]
+    [Header("Settings / Sensitivity:")]
     [SerializeField] private float _lookSensitivity;
 
+    [Header("Settings / Field of View:")]
     [SerializeField] private float _minFov;
     [SerializeField] private float _maxFov;
     [SerializeField] private float _maxVelocityFovDistortion;
     private float _currentFov;
     [Range(0,1), SerializeField] private float _fovChangeRate;
+
+    [Header("Settings / Pitch:")]
+    [SerializeField] private float _minimumPitch = -5f;
+    [SerializeField] private float _maxmimumPitch = 70f;
 
     private void Start()
     {
@@ -76,16 +81,25 @@ public class PlayerLook : MonoBehaviour
     {
         // Follow player
         transform.position = _playerTransform.transform.position;
+        
+        RotateAroundPlayerByInput();
 
-        // Apply rotations
+        RecaclulateCameraFov(_playerRB.linearVelocity.magnitude);
+    }
+
+    private void RotateAroundPlayerByInput()
+    {
         Vector2 lookInput = _lookAction.ReadValue<Vector2>();
-
         lookInput *= _lookSensitivity * Time.deltaTime;
 
+        // Yaw is simple:
         _yawDirection.Rotate(0, lookInput.x, 0);
-        _pitchDirection.Rotate(-lookInput.y, 0, 0);
-    
-        RecaclulateCameraFov(_playerRB.linearVelocity.magnitude);
+        
+        // Pitch requiires clamping:
+        _pitchDegrees += -lookInput.y;
+        _pitchDegrees = Mathf.Clamp(_pitchDegrees, _minimumPitch, _maxmimumPitch);
+        _pitchDirection.localRotation = Quaternion.Euler(_pitchDegrees, 0f, 0f);
+
     }
 
     private void RecaclulateCameraFov(float currentVelocity)
