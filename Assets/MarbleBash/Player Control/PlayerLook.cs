@@ -8,11 +8,12 @@ public class PlayerLook : MonoBehaviour
     [SerializeField] private Transform _playerTransform;
     [SerializeField] private Rigidbody _playerRB;
     [SerializeField] private Transform _yawDirection;
+    [SerializeField] private Transform _pitchDirection;
+
     [SerializeField] private CinemachineCamera _camera;
 
-    private float _pitchDegrees;
 
-    public Vector3 yaw
+    public Vector3 yawForward
     {
         get
         {
@@ -27,16 +28,22 @@ public class PlayerLook : MonoBehaviour
         }
     }
     
-
-    [SerializeField] private Transform _pitchDirection;
-    public Vector3 pitch
+    private float _pitchDegrees;
+    public Vector3 pitchForward
     {
         get
         {
             return _pitchDirection.forward;
         }
     }
-    
+    public Vector3 pitchRight
+    {
+        get
+        {
+            return _pitchDirection.right;
+        }
+    }
+
 
     #region Input
     [Header("Input:")]
