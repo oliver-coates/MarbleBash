@@ -86,7 +86,10 @@ namespace MarbleBash.Enemy
                 requester.agent.SetPath(path);
                 Debug.Log($"[TIME: {Time.time:0.00}] Calculated path for requester : {requester.id}");
             }
-            Debug.LogWarning($"[TIME: {Time.time:0.00}] Could not calculate path for requester : {requester.id}");
+            else
+            {
+                Debug.LogWarning($"[TIME: {Time.time:0.00}] Could not calculate path for requester : {requester.id}");            
+            }
 
         }
 
