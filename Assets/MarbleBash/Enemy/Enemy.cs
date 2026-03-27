@@ -5,24 +5,41 @@ namespace MarbleBash.Enemy
 {
 
     
-    public class Enemy : MonoBehaviour
+    public class Enemy : MonoBehaviour, IDistributedPathingAgent
     {
-        private NavMeshPath newPath;
+        private NavMeshPath _path;
 
-        private void SetNewPath(NavMeshPath newPath)
+        public Vector3 GetCurrentPosition()
         {
-            
+            return transform.position;
+        }
+
+        public Vector3 GetPathingTargetPosition()
+        {
+            return Player.rigidbody.transform.position;
+        }
+
+        public void SetPath(NavMeshPath path)
+        {
+            _path = path;
         }
 
         private void Start()
         {
-            PathingLoadDistributor.SubscribeTo(SetNewPath);
+            PathingLoadDistributor.SubscribeTo(this);
         }
 
         private void Update()
         {
-            
+            Vector3 prev = transform.position;
+            foreach (Vector3 point in _path.corners)
+            {
+                Debug.DrawLine(prev, point, Color.blue);
+                prev = point;
+            }
         }
+
+
     }
 
 

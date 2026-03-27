@@ -31,13 +31,13 @@ namespace MarbleBash.Enemy
         }
 
 
-        public static void SubscribeTo(Action<NavMeshPath> loadRequester)
+        public static void SubscribeTo(IDistributedPathingAgent pathingAgent)
         {
-            _this._SubscribeTo(loadRequester);            
+            _this._SubscribeTo(pathingAgent);            
         }
-        private void _SubscribeTo(Action<NavMeshPath> loadRequester)
+        private void _SubscribeTo(IDistributedPathingAgent pathingAgent)
         {
-            PathingRequester newRequester = new PathingRequester(_numRequesters, loadRequester);
+            PathingRequester newRequester = new PathingRequester(_numRequesters, pathingAgent);
             _requesters.AddLast(new LinkedListNode<PathingRequester>(newRequester));
             _numRequesters++;
 
@@ -79,23 +79,39 @@ namespace MarbleBash.Enemy
 
         private void CalculatePathFor(PathingRequester requester)
         {
-            requester.callback.Invoke(new NavMeshPath());
-            Debug.Log($"[TIME: {Time.time:0.00}] Calculated path for requester : {requester.id}");
-        }
+            Vector3 targetPosition = requester.agent.GetPathingTargetPosition();
+            NavMeshPath path = new NavMeshPath();
+            if (NavMesh.CalculatePath(requester.agent.GetCurrentPosition(), targetPosition, NavMesh.AllAreas, path))
+            {
+                requester.agent.SetPath(path);
+                Debug.Log($"[TIME: {Time.time:0.00}] Calculated path for requester : {requester.id}");
+            }
+            Debug.LogWarning($"[TIME: {Time.time:0.00}] Could not calculate path for requester : {requester.id}");
 
+        }
 
         private class PathingRequester
         {
             public int id;
-            public Action<NavMeshPath> callback;
+            public IDistributedPathingAgent agent;
 
-            public PathingRequester(int id, Action<NavMeshPath> callback)
+
+            public PathingRequester(int id, IDistributedPathingAgent agent)
             {
+                this.agent = agent;
                 this.id = id;
-                this.callback = callback;
             }
         }
+
     }
 
+
+    public interface IDistributedPathingAgent
+    {
+        public void SetPath(NavMeshPath path);
+
+        public Vector3 GetPathingTargetPosition();
+        public Vector3 GetCurrentPosition();
+    }
 
 }
