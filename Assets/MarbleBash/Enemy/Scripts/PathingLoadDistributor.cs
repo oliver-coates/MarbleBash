@@ -19,10 +19,10 @@ namespace MarbleBash.Enemy
 
         [Header("Settings:")]
         [SerializeField] private int _maxRequestsAllowedPerFrame;
-        private int _numRequestsAllowedPerFrame;
 
-        [Header("Status:")]
-        [SerializeField] private int _numRequesters;
+        [Header("Status (READ ONLY):")]
+        [SerializeField, ReadOnly] private int _numRequesters;
+        [SerializeField,ReadOnly] private int _numRequestsAllowedPerFrame;
 
         private void Awake()
         {
@@ -84,11 +84,11 @@ namespace MarbleBash.Enemy
             if (NavMesh.CalculatePath(requester.agent.GetCurrentPosition(), targetPosition, NavMesh.AllAreas, path))
             {
                 requester.agent.SetPath(path);
-                Debug.Log($"[TIME: {Time.time:0.00}] Calculated path for requester : {requester.id}");
+                // Debug.Log($"[TIME: {Time.time:0.00}] Calculated path for requester : {requester.id}");
             }
             else
             {
-                Debug.LogWarning($"[TIME: {Time.time:0.00}] Could not calculate path for requester : {requester.id}");            
+                Debug.LogWarning($"[Pathing Load Distributor] Could not calculate path for requester : {requester.id}, TIME: {Time.time:0.00}");            
             }
 
         }
