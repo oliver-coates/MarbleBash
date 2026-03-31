@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class AbilityJumpstart : MonoBehaviour
 {
-    public AbilityManager manager;
+    public Abilities manager;
     public void Start()
     {
         manager.EquipAbility(new Dash(), 0);

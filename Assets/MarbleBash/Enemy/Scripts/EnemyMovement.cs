@@ -1,4 +1,4 @@
-// #define DEBUG_DRAW_PATH
+#define DEBUG_DRAW_PATH
 
 using System;
 using System.Linq;

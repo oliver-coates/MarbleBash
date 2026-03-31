@@ -5,32 +5,18 @@ using UnityEngine.InputSystem;
 namespace MarbleBash.Abilities
 {
     
-    public class AbilityManager : MonoBehaviour
+    public class Abilities : MonoBehaviour
     {
         [Header("Equipped Abilities:")]
         [SerializeField] private Ability[] _abilities;
 
-        [Header("Input:")]
-        public InputActionAsset inputActions;
-
-        private void SetupInput()
-        {
-            InputActionMap map = inputActions.FindActionMap("Player");
-
-            map.FindAction("Ability 1").performed += (InputAction.CallbackContext c) => { AttemptActivateAbility(0); };
-            map.FindAction("Ability 2").performed += (InputAction.CallbackContext c) => { AttemptActivateAbility(1); };
-            map.FindAction("Ability 3").performed += (InputAction.CallbackContext c) => { AttemptActivateAbility(2); };
-            map.FindAction("Ability 4").performed += (InputAction.CallbackContext c) => { AttemptActivateAbility(3); };
-        }
 
         private void Awake()
         {
             _abilities = new Ability[4];
-
-            SetupInput();
         }
 
-        private void AttemptActivateAbility(int index)
+        internal void AttemptActivateAbility(int index)
         {
             Ability ability = _abilities[index];
 
