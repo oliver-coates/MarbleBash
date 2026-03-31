@@ -8,7 +8,7 @@ namespace MarbleBash.Abilities
     {
 
         [Header("Decorator:")]
-        [SerializeField] internal string _name;
+        [SerializeField] protected string _name;
         public string name
         {
             get

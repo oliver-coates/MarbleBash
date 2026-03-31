@@ -1317,8 +1317,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 93927411790b4274a81f2f6c587b8bee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemiesBenchmark
-  _spawnRadius: 2
-  _numEnemies: 300
+  _spawnRadius: 2.5
+  _numEnemies: 10
   _prefab: {fileID: 2296398700786242156, guid: fb6f00d5452a63a4da6ad7f9a0edd762, type: 3}
   _rotator: {fileID: 533295324}
   _spawnPos: {fileID: 1081064042}
@@ -1736,7 +1736,7 @@ MeshCollider:
   serializedVersion: 5
   m_Convex: 0
   m_CookingOptions: 30
-  m_Mesh: {fileID: 904012530}
+  m_Mesh: {fileID: 301488006}
 --- !u!33 &807687919
 MeshFilter:
   m_ObjectHideFlags: 10
@@ -3620,9 +3620,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MarbleBash.Player
   _rigidbody: {fileID: 209866590}
-  _abilities: {fileID: 0}
+  _abilities: {fileID: 209866591}
   _look: {fileID: 100137634}
   _movement: {fileID: 209866589}
+  _transform: {fileID: 209866588}
 --- !u!114 &1146106109
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3681,7 +3682,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1a589f6924390c44d921cdf955d30b57, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MarbleBash.Enemy.PathingLoadDistributor
-  _maxRequestsAllowedPerFrame: 1
+  _maxRequestsAllowedPerFrame: 4
   _numRequesters: 0
   _numRequestsAllowedPerFrame: 0
 --- !u!1 &1396202098
@@ -4275,7 +4276,7 @@ MeshCollider:
   serializedVersion: 5
   m_Convex: 0
   m_CookingOptions: 30
-  m_Mesh: {fileID: 1443522859}
+  m_Mesh: {fileID: 865269141}
 --- !u!33 &1469581546
 MeshFilter:
   m_ObjectHideFlags: 10

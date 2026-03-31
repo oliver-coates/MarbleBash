@@ -2,10 +2,10 @@ using UnityEngine;
 
 namespace MarbleBash.Abilities
 {
-
-    public class Dash : Ability
+    [System.Serializable]
+    public class PlayerDash : Ability
     {
-        public Dash() : base()
+        public PlayerDash() : base()
         {
             _name = "Dash";
         }

@@ -50,7 +50,14 @@ namespace MarbleBash
             }
         }
         
-        
+        [SerializeField] private Transform _transform;
+        public static new Transform transform
+        {
+            get
+            {
+                return _this._transform;
+            }
+        }
     }
 
 }
