@@ -7,8 +7,6 @@ using UnityEngine.AI;
 namespace MarbleBash.Enemy
 {
     
-
-    
     public class PathingLoadDistributor : MonoBehaviour
     {
 
@@ -16,6 +14,7 @@ namespace MarbleBash.Enemy
 
         private LinkedList<PathingRequester> _requesters;
         LinkedListNode<PathingRequester> _currentRequesterNode;
+        private Dictionary<IDistributedPathingAgent, PathingRequester> _agentToRequesterDict;
 
         [Header("Settings:")]
         [SerializeField] private int _maxRequestsAllowedPerFrame;
@@ -26,6 +25,7 @@ namespace MarbleBash.Enemy
 
         private void Awake()
         {
+            _agentToRequesterDict = new Dictionary<IDistributedPathingAgent, PathingRequester>();
             _requesters = new LinkedList<PathingRequester>();
             _this = this;
         }
@@ -38,6 +38,7 @@ namespace MarbleBash.Enemy
         private void _SubscribeTo(IDistributedPathingAgent pathingAgent)
         {
             PathingRequester newRequester = new PathingRequester(_numRequesters, pathingAgent);
+            _agentToRequesterDict.Add(pathingAgent, newRequester);
             _requesters.AddLast(new LinkedListNode<PathingRequester>(newRequester));
             _numRequesters++;
 
@@ -46,6 +47,26 @@ namespace MarbleBash.Enemy
                 _currentRequesterNode = _requesters.Last;
             }
 
+            UpdateNumRequestsAllowedPerFrame();
+        }
+
+        public static void UnsubscribeFrom(IDistributedPathingAgent pathingAgent)
+        {
+            _this._UnsubscribeFrom(pathingAgent);
+        }
+        private void _UnsubscribeFrom(IDistributedPathingAgent pathingAgent)
+        {
+            PathingRequester toRemove = _agentToRequesterDict[pathingAgent];
+            _numRequesters--;
+
+            _requesters.Remove(toRemove);
+            _agentToRequesterDict.Remove(pathingAgent);
+
+            UpdateNumRequestsAllowedPerFrame();
+        }
+
+        private void UpdateNumRequestsAllowedPerFrame()
+        {
             if (_numRequesters > _maxRequestsAllowedPerFrame)
             {
                 _numRequestsAllowedPerFrame = _maxRequestsAllowedPerFrame;
@@ -105,14 +126,12 @@ namespace MarbleBash.Enemy
                 this.id = id;
             }
         }
-
     }
 
 
     public interface IDistributedPathingAgent
     {
         public void SetPath(NavMeshPath path);
-
         public Vector3 GetPathingTargetPosition();
         public Vector3 GetCurrentPosition();
     }

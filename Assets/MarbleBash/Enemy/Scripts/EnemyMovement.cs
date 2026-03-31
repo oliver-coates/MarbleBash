@@ -1,20 +1,17 @@
-// #define DEBUG_DRAW_PATH
+#define DEBUG_DRAW_PATH
 
 using UnityEngine;
 using UnityEngine.AI;
 
 namespace MarbleBash.Enemy
 {
-    
-
-
     public class EnemyMovement : MonoBehaviour, IDistributedPathingAgent
     {
         private NavMeshPath _path;
         private Rigidbody _rb;
         private EnemyInstance _enemy;
 
-        private readonly Color[] debugColours = {Color.red, Color.blue, Color.green, Color.yellow, Color.pink, Color.brown, Color.turquoise, Color.purple};
+        
 
         private void Start()
         {
@@ -22,6 +19,11 @@ namespace MarbleBash.Enemy
             _enemy = this.GetComponentSafe<EnemyInstance>();
 
             PathingLoadDistributor.SubscribeTo(this);
+        }
+
+        private void OnDestroy()
+        {
+            PathingLoadDistributor.UnsubscribeFrom(this);
         }
 
         private void Update()
@@ -58,6 +60,7 @@ namespace MarbleBash.Enemy
             Debug.DrawLine(transform.position, transform.position + direction * 2, Color.hotPink);
         }
 
+
         #region Public Methods
         public Vector3 GetCurrentPosition()
         {
@@ -75,7 +78,13 @@ namespace MarbleBash.Enemy
         }
         #endregion
 
+
         #region Debug Methods
+
+        #if DEBUG_DRAW_PATH
+        private readonly Color[] debugColours = {Color.red, Color.blue, Color.green, Color.yellow, Color.pink, Color.brown, Color.turquoise, Color.purple};
+        #endif
+        
         private void DebugDrawPath()
         {
             #if DEBUG_DRAW_PATH
@@ -86,7 +95,7 @@ namespace MarbleBash.Enemy
                 Debug.DrawLine(prev, point, debugColours[i]);
                 prev = point;
                 i++;
-                if (i > debugColours.Length)
+                if (i >= debugColours.Length)
                 {
                     i = 0;
                 }
