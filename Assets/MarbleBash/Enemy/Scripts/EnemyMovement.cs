@@ -1,19 +1,20 @@
-#define DEBUG_DRAW_PATH
+// #define DEBUG_DRAW_PATH
 
-using System;
-using System.Linq;
-using MarbleBash.Enemy;
 using UnityEngine;
 using UnityEngine.AI;
 
 namespace MarbleBash.Enemy
 {
     
+
+
     public class EnemyMovement : MonoBehaviour, IDistributedPathingAgent
     {
         private NavMeshPath _path;
         private Rigidbody _rb;
         private EnemyInstance _enemy;
+
+        private readonly Color[] debugColours = {Color.red, Color.blue, Color.green, Color.yellow, Color.pink, Color.brown, Color.turquoise, Color.purple};
 
         private void Start()
         {
@@ -37,7 +38,15 @@ namespace MarbleBash.Enemy
 
         private void ChasePlayer()
         {
-            Vector3 targetPositon = _path.corners[1].ShearTo2D();
+            Vector3 targetPositon;
+            if (_path.corners.Length == 1)
+            {
+                targetPositon = _path.corners[0].ShearTo2D(); 
+            }
+            else
+            {
+                targetPositon = _path.corners[1].ShearTo2D(); 
+            }
             Vector3 myPosition = transform.position.ShearTo2D();
 
             Vector3 direction = (targetPositon - myPosition).normalized;
@@ -57,7 +66,7 @@ namespace MarbleBash.Enemy
 
         public Vector3 GetPathingTargetPosition()
         {
-            return Player.rigidbody.transform.position;
+            return Player.movement.groundedPosition;
         }
 
         public void SetPath(NavMeshPath path)
@@ -71,10 +80,16 @@ namespace MarbleBash.Enemy
         {
             #if DEBUG_DRAW_PATH
             Vector3 prev = transform.position;
+            int i = 0;
             foreach (Vector3 point in _path.corners)
             {
-                Debug.DrawLine(prev, point, Color.blue);
+                Debug.DrawLine(prev, point, debugColours[i]);
                 prev = point;
+                i++;
+                if (i > debugColours.Length)
+                {
+                    i = 0;
+                }
             }  
             #endif
         }

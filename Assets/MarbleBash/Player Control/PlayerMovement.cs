@@ -38,6 +38,18 @@ public class PlayerMovement : MonoBehaviour
             return _isGrounded;
         }
     }
+    /// <summary>
+    /// The position on the surface directly below the player. 
+    /// </summary>
+    private Vector3 _groundedPosition;
+    public Vector3 groundedPosition
+    {
+        get
+        {
+            return _groundedPosition;
+        }
+    }
+
 
 
     private void Start()
@@ -48,18 +60,26 @@ public class PlayerMovement : MonoBehaviour
 
     private void Update()
     {
-        _isGrounded = CheckIsGrounded();
+        UpdateGroundedState();
 
         MoveHorizontally();
     }
 
-    private bool CheckIsGrounded()
+    private void UpdateGroundedState()
     {
+        // Check to see if we are grounded:
         float halfScale = transform.localScale.x / 2f;
         Vector3 groundBoxPosition = transform.position + (Vector3.down * halfScale);
         Vector3 goundBoxSize = new Vector3(halfScale * 0.85f, 0.05f, halfScale * 0.85f);
 
-        return Physics.CheckBox(groundBoxPosition, goundBoxSize, Quaternion.identity, _groundedLayerMask);
+        _isGrounded =  Physics.CheckBox(groundBoxPosition, goundBoxSize, Quaternion.identity, _groundedLayerMask);
+    
+        // Update our grounded position:
+        Ray downRay = new Ray(transform.position, Vector3.down);
+        if (Physics.Raycast(downRay, out RaycastHit hit, 100f, _groundedLayerMask))
+        {
+            _groundedPosition = hit.point;
+        }
     }
 
     private void MoveHorizontally()
@@ -70,7 +90,6 @@ public class PlayerMovement : MonoBehaviour
 
         _rb.AddForce(_speed * Time.deltaTime * forceThisFrame);
     }
-
 
     private void AttemptJump(InputAction.CallbackContext context)
     {
