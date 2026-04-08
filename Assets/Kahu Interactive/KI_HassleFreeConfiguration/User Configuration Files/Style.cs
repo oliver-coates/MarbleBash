@@ -7,6 +7,8 @@ namespace MarbleBash
     [CreateAssetMenu(fileName = "Style Config", menuName = "Configuration/Style")]
     public class StyleConfig : ConfigBase
     {
+        [Header("Colours:")]
+
         [SerializeField] private Color _massColour;
         public Color massColour
         {
