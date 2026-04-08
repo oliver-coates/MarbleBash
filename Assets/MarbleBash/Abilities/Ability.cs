@@ -25,6 +25,9 @@ namespace MarbleBash.Abilities
         [SerializeField] private bool _hasCooldown;
         [SerializeField] private float _cooldownTimer;
 
+        [Header("Enemy AI use requriements:")]
+        [SerializeField] private EnemyAbilityUseRequirement[] _useRequirements;
+
         public Ability(Marble subject)
         {
             _subject = subject;
@@ -79,6 +82,34 @@ namespace MarbleBash.Abilities
         /// <returns> True if able to activate.</returns>
         protected abstract bool IsAbleToActivate();
 
+
+        public void SetupEnemyUseRequirements()
+        {
+            _useRequirements = GetEnemyUseRequirements();
+        }
+
+        /// <summary>
+        /// Gets a list of Ability Use Requirements which dictate whether an enemy AI should use this ability or not.
+        /// For example: The fireball ability requires a line of sight to the player.
+        /// </summary>
+        protected abstract EnemyAbilityUseRequirement[] GetEnemyUseRequirements();
+
+        /// <summary>
+        /// Loops through all Enemy Ability Use Requirements and ensures they are all true.
+        /// Returns true if all use requirements are met.
+        /// </summary>
+        public bool EvaluateEnemyUseRequirements()
+        {
+            foreach (EnemyAbilityUseRequirement requirement in _useRequirements)
+            {
+                if (requirement.Evaluate() == false)
+                {
+                    return false;
+                }
+            }
+
+            return true;
+        }
 
         internal void Tick()
         {

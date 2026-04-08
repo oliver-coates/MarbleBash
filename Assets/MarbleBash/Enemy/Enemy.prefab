@@ -181,6 +181,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 055d237ca043a92418dddd4e03746235, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MarbleBash.Abilities.Abilities
+  _isEnemy: 1
 --- !u!114 &5118750658469363972
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -193,7 +194,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f6b25908e01e9804a806c251afdc69a6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MarbleBash.Abilities.EnemyAbilitiesInput
-  _timeToActivate: 2
+  _timeToActivate: 1
   _timer: 0
 --- !u!114 &910302221631095127
 MonoBehaviour:
@@ -207,4 +208,3 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ab2dc93cb22d2824c9459e98ebc6ab82, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::AbilityJumpstart
-  manager: {fileID: 0}

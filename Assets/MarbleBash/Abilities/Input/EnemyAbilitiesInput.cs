@@ -22,7 +22,10 @@ namespace MarbleBash.Abilities
             if (_timer < 0)
             {
                 _timer = _timeToActivate;
-                _abilities.AttemptActivateAbility(Random.Range(0, 4));
+
+                int abilityRandomIndex = Random.Range(0, 4);
+
+                _abilities.AttemptActivateAbility(abilityRandomIndex);
             }
         }
     }

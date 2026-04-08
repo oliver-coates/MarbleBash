@@ -27,7 +27,7 @@ namespace MarbleBash
             }
         }
     
-        private void Awake()
+        private void Start()
         {
             Setup();
 

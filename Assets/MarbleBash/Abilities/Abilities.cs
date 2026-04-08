@@ -1,14 +1,17 @@
 using System.Collections.Generic;
+using Unity.Mathematics;
 using UnityEngine;
-using UnityEngine.InputSystem;
 
 namespace MarbleBash.Abilities
 {
-    
     public class Abilities : MonoBehaviour
     {
+        [Header("Config:")]
+        [Tooltip("Tick this to enable enemy AI activating abilities"), SerializeField] private bool _isEnemy;
+
         [Header("Equipped Abilities:")]
         [SerializeField] private Ability[] _abilities;
+        
 
 
         private void Awake()
@@ -26,6 +29,15 @@ namespace MarbleBash.Abilities
                 return;
             }
 
+            // Enemies need to check their use reqirements before attempting an activation 
+            if (_isEnemy)
+            {
+                if (ability.EvaluateEnemyUseRequirements() == false)
+                {
+                    return;
+                }
+            }
+
             // Attempt activation
             ability.AttemptActivate();
         }
@@ -36,6 +48,11 @@ namespace MarbleBash.Abilities
             {
                 Debug.LogError($"Ability slots are in the range 0-3, not the given: {slot}");
                 return;
+            }
+
+            if (_isEnemy)
+            {
+                ability.SetupEnemyUseRequirements();
             }
 
             _abilities[slot] = ability;

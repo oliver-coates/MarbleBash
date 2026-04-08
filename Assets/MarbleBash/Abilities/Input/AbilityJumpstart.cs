@@ -8,8 +8,8 @@ public class AbilityJumpstart : MonoBehaviour
     public void Start()
     {
         Marble subject = this.GetComponentSafe<Marble>();
+        Abilities abilities = this.GetComponentSafe<Abilities>();
 
-        MarbleBash.Player.abilities.EquipAbility(new Dash(subject), 0);
-        Debug.Log($"Debug: Dash Equipped in slot 0");
+        abilities.EquipAbility(new Dash(subject), 0);
     }
 }
