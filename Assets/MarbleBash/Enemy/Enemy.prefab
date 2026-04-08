@@ -16,8 +16,8 @@ GameObject:
   - component: {fileID: 2412970716671330613}
   - component: {fileID: 5163346413169798622}
   - component: {fileID: 4555060791517180805}
-  - component: {fileID: 1865582605325327724}
   - component: {fileID: 5118750658469363972}
+  - component: {fileID: 910302221631095127}
   m_Layer: 0
   m_Name: Enemy
   m_TagString: Untagged
@@ -181,18 +181,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 055d237ca043a92418dddd4e03746235, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MarbleBash.Abilities.Abilities
---- !u!114 &1865582605325327724
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2296398700786242156}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4f6a293d235d5eb49a3936340bec4f6c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::MarbleBash.Abilities.EnemyAbilityJumpstart
 --- !u!114 &5118750658469363972
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -207,3 +195,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::MarbleBash.Abilities.EnemyAbilitiesInput
   _timeToActivate: 2
   _timer: 0
+--- !u!114 &910302221631095127
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2296398700786242156}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ab2dc93cb22d2824c9459e98ebc6ab82, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::AbilityJumpstart
+  manager: {fileID: 0}

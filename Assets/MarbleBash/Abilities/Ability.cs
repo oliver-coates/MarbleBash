@@ -6,6 +6,10 @@ namespace MarbleBash.Abilities
     [System.Serializable]
     public abstract class Ability
     {
+        /// <summary>
+        /// The 'Subject' who has/is casting this ability.
+        /// </summary>
+        protected Marble _subject;
 
         [Header("Decorator:")]
         [SerializeField] protected string _name;
@@ -21,8 +25,9 @@ namespace MarbleBash.Abilities
         [SerializeField] private bool _hasCooldown;
         [SerializeField] private float _cooldownTimer;
 
-        public Ability()
+        public Ability(Marble subject)
         {
+            _subject = subject;
             // Default values, repalce with some kind of constructor parameter:
             _hasCooldown = true;
             _cooldownTimer = 2f;

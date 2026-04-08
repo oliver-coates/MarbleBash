@@ -2,20 +2,19 @@ using UnityEngine;
 
 namespace MarbleBash.Abilities
 {
-    [System.Serializable]
-    public class PlayerDash : Ability
+
+    public class Dash : Ability
     {
-        public PlayerDash() : base()
+        public Dash(Marble subject) : base(subject)
         {
             _name = "Dash";
         }
 
-
         protected override void Activate()
         {
-            Vector3 force = Player.look.pitchForward * 10f;
+            Vector3 force = _subject.lookDirection * 10f;
 
-            Player.rigidbody.AddForce(force, ForceMode.VelocityChange);
+            MarbleBash.Player.rigidbody.AddForce(force, ForceMode.VelocityChange);
         }
 
         protected override bool IsAbleToActivate()
@@ -23,5 +22,10 @@ namespace MarbleBash.Abilities
             // Dash is always able to activate.
             return true;
         }
+
+
     }
+
+
 }
+

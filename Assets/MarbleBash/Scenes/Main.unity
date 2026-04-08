@@ -460,6 +460,7 @@ GameObject:
   - component: {fileID: 209866590}
   - component: {fileID: 209866589}
   - component: {fileID: 209866591}
+  - component: {fileID: 209866592}
   m_Layer: 6
   m_Name: Player Marble
   m_TagString: Player
@@ -619,6 +620,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 055d237ca043a92418dddd4e03746235, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MarbleBash.Abilities.AbilityManager
+--- !u!114 &209866592
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 209866584}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ab2dc93cb22d2824c9459e98ebc6ab82, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::AbilityJumpstart
+  manager: {fileID: 209866591}
 --- !u!43 &301488006
 Mesh:
   m_ObjectHideFlags: 0
