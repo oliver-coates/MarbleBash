@@ -8,6 +8,9 @@ namespace MarbleBash
         protected override void Setup()
         {
             _rb = GetComponent<Rigidbody>();
+
+            // In future, enemies should be setup with a method:
+            _stats = new MarbleStats();
         }
 
         protected override Vector3 GetLookDirection()

@@ -2,6 +2,7 @@ using UnityEngine;
 
 namespace MarbleBash
 {
+    [System.Serializable]
     public class PlayerInstance : Marble
     {
         /// <summary>
@@ -10,6 +11,7 @@ namespace MarbleBash
         protected override void Setup()
         {
             _rb = Player.rigidbody;
+            _stats = new MarbleStats();
         }
 
         protected override Vector3 GetLookDirection()

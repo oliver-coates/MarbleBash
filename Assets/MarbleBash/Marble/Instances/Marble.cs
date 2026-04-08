@@ -8,6 +8,7 @@ namespace MarbleBash
     /// defined in this class. (Example: the dash ability pushes the rigidbody in
     /// the direction of _lookDirection)
     /// </summary>
+    [System.Serializable]
     public abstract class Marble : MonoBehaviour
     {
         public Vector3 lookDirection
@@ -26,7 +27,17 @@ namespace MarbleBash
                 return _rb;
             }
         }
-    
+
+        [SerializeField] protected MarbleStats _stats;
+        public MarbleStats stats
+        {
+            get
+            {
+                return _stats;
+            }
+        }
+
+
         private void Start()
         {
             Setup();
@@ -34,9 +45,7 @@ namespace MarbleBash
             Debug.Assert(_rb != null);
         }
 
-        /// <summary>
-        /// Fill out the class fields in this method.
-        /// </summary>
+
         protected abstract void Setup();
 
         protected abstract Vector3 GetLookDirection();
