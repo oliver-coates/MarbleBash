@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 538e90e950eded241ae89cf58baf1651, type: 3}
+  m_Name: Style Config
+  m_EditorClassIdentifier: Assembly-CSharp::MarbleBash.StyleConfig
+  _massColour: {r: 1, g: 0.85882354, b: 0.34509805, a: 1}
+  _agilityColour: {r: 0.62352943, g: 0.16862746, b: 0.40784314, a: 1}
+  _rechargeColour: {r: 0.5686275, g: 0.21960784, b: 0.19215687, a: 1}
+  _blockColour: {r: 0.4509804, g: 0.5764706, b: 0.7019608, a: 1}
+  _luckColour: {r: 0.9137255, g: 0.8627451, b: 0.7882353, a: 1}
+  _energyColour: {r: 0.20784314, g: 0.22352941, b: 0.20784314, a: 1}
