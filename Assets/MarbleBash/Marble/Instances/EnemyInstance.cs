@@ -7,7 +7,7 @@ namespace MarbleBash
     {
         protected override void Setup()
         {
-            _rb = GetComponent<Rigidbody>();
+            _rigidbody = GetComponent<Rigidbody>();
 
             // In future, enemies should be setup with a method:
             _stats = new MarbleStats();

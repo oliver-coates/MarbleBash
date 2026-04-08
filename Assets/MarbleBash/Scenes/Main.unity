@@ -461,7 +461,9 @@ GameObject:
   - component: {fileID: 209866589}
   - component: {fileID: 209866591}
   - component: {fileID: 209866592}
+  - component: {fileID: 209866594}
   - component: {fileID: 209866593}
+  - component: {fileID: 209866595}
   m_Layer: 6
   m_Name: Player Marble
   m_TagString: Player
@@ -646,6 +648,46 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d0735726b8f4a374f9754f3f3fd156ac, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MarbleBash.PlayerInstance
+  _stats:
+    _health: 0
+    _maxHealth: 0
+    mass:
+      _value: 1
+    agility:
+      _value: 1
+    recharge:
+      _value: 1
+    block:
+      _value: 1
+    luck:
+      _value: 1
+    energy:
+      _value: 1
+--- !u!114 &209866594
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 209866584}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e02ab0161ec1db44f9dfd8793369f71e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MarbleBash.PlayerDamageManager
+--- !u!114 &209866595
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 209866584}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8a5e6b8556275c449afd37664f0adeca, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::VelocityDebugger
+  rb: {fileID: 209866590}
 --- !u!43 &301488006
 Mesh:
   m_ObjectHideFlags: 0
@@ -2817,7 +2859,7 @@ Transform:
   m_GameObject: {fileID: 926227300}
   serializedVersion: 2
   m_LocalRotation: {x: 0.00000043213367, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 9.7091465, y: 0.75, z: 0.98753524}
+  m_LocalPosition: {x: 15.34, y: 0.75, z: 0.87}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 1
   m_Children: []
@@ -3651,6 +3693,7 @@ MonoBehaviour:
   _look: {fileID: 100137634}
   _movement: {fileID: 209866589}
   _transform: {fileID: 209866588}
+  _instance: {fileID: 209866593}
 --- !u!114 &1146106109
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4676,13 +4719,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1985459247}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.00000043213367, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 4.57, y: 0.75, z: 9.37}
+  m_LocalRotation: {x: 0.0000004060822, y: -0.3419603, z: -0.0000001477726, w: 0.9397144}
+  m_LocalPosition: {x: -9.548771, y: 0.74999726, z: 18.790258}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 52023892}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: -39.993, z: 0}
 --- !u!64 &1985459249
 MeshCollider:
   m_ObjectHideFlags: 0

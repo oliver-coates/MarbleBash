@@ -23,7 +23,7 @@ namespace MarbleBash.Abilities
         {
             Vector3 force = _subject.lookDirection * 10f;
 
-            _subject.rb.AddForce(force, ForceMode.VelocityChange);
+            _subject.rigidbody.AddForce(force, ForceMode.VelocityChange);
         }
 
         protected override bool IsAbleToActivate()

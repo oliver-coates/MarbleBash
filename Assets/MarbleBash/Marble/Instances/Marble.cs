@@ -11,22 +11,6 @@ namespace MarbleBash
     [System.Serializable]
     public abstract class Marble : MonoBehaviour
     {
-        public Vector3 lookDirection
-        {
-            get
-            {
-                return GetLookDirection();
-            }
-        }
-
-        protected Rigidbody _rb;
-        public Rigidbody rb
-        {
-            get
-            {
-                return _rb;
-            }
-        }
 
         [SerializeField] protected MarbleStats _stats;
         public MarbleStats stats
@@ -37,14 +21,44 @@ namespace MarbleBash
             }
         }
 
+        private Vector3 _cachedVelocity;
+        public Vector3 cachedVelocity
+        {
+            get
+            {
+                return _cachedVelocity;
+            }
+        }
+
+        public Vector3 lookDirection
+        {
+            get
+            {
+                return GetLookDirection();
+            }
+        }
+
+        protected Rigidbody _rigidbody;
+        public new Rigidbody rigidbody
+        {
+            get
+            {
+                return _rigidbody;
+            }
+        }
+
 
         private void Start()
         {
             Setup();
 
-            Debug.Assert(_rb != null);
+            Debug.Assert(_rigidbody != null);
         }
 
+        private void FixedUpdate()
+        {
+            _cachedVelocity = _rigidbody.linearVelocity;
+        }
 
         protected abstract void Setup();
 

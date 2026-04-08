@@ -58,6 +58,15 @@ namespace MarbleBash
                 return _this._transform;
             }
         }
+
+        [SerializeField] private Marble _instance;
+        public static Marble instance
+        {
+            get
+            {
+                return _this._instance;
+            }
+        }
     }
 
 }

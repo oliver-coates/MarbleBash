@@ -57,7 +57,7 @@ namespace MarbleBash.Enemy
             Vector3 force = direction * speed * Time.deltaTime;
 
             _rb.AddForce(force);
-            Debug.DrawLine(transform.position, transform.position + direction * 2, Color.hotPink);
+            // Debug.DrawLine(transform.position, transform.position + direction * 2, Color.hotPink);
         }
 
 

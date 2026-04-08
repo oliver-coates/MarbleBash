@@ -18,9 +18,10 @@ GameObject:
   - component: {fileID: 4555060791517180805}
   - component: {fileID: 5118750658469363972}
   - component: {fileID: 910302221631095127}
+  - component: {fileID: 230013426109112366}
   m_Layer: 0
   m_Name: Enemy
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -157,6 +158,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4127173ed166aa342af1364fcacb82d2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Enemy
+  _stats:
+    _health: 0
+    _maxHealth: 0
+    mass:
+      _value: 1
+    agility:
+      _value: 1
+    recharge:
+      _value: 1
+    block:
+      _value: 1
+    luck:
+      _value: 1
+    energy:
+      _value: 1
 --- !u!114 &5163346413169798622
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -189,7 +205,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2296398700786242156}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f6b25908e01e9804a806c251afdc69a6, type: 3}
   m_Name: 
@@ -203,8 +219,21 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2296398700786242156}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ab2dc93cb22d2824c9459e98ebc6ab82, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::AbilityJumpstart
+--- !u!114 &230013426109112366
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2296398700786242156}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8a5e6b8556275c449afd37664f0adeca, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::VelocityDebugger
+  rb: {fileID: 3233556855980811747}
