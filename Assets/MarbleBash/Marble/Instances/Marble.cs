@@ -64,5 +64,13 @@ namespace MarbleBash
 
         protected abstract Vector3 GetLookDirection();
 
+        public void TakeDamage(DamageEvent damageEvent)
+        {
+            // Debug.Log($"({name}) Ouich: {damageEvent.amount}");
+
+            // Debug.DrawLine(transform.position, transform.position + damageEvent.normal * 2f, Color.yellow, 5f);
+            // Debug.Break();
+        }
+
     }
 }

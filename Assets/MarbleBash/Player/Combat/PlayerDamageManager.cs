@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 namespace MarbleBash
@@ -5,6 +6,8 @@ namespace MarbleBash
 
     public class PlayerDamageManager : MonoBehaviour
     {
+        private const float DAMAGE_IGNORE_MINIMUM_THRESHOLD = 1f;
+
         public void OnCollisionEnter(Collision collision)
         {
             if (collision.collider.CompareTag("Enemy"))
@@ -19,20 +22,21 @@ namespace MarbleBash
         /// Calculated and applies damage to each entity based on their speed, direction & mass.
         /// 
         /// ### HOW DAMAGE IS CALCUALTED: ###
-        /// 
+        ///
         /// 'Aligned Velocity' is the magnitude of a marble's velocity, scaled by how much their velocity is pointing towards their target.
         /// - For instance, a slight glancing blow does much less damage than a direct hit.
         /// 
         /// 'Raw Damage' is simply mass * aligned velocity.
         ///  - The size and the speed of your marble affect the damage dealt,
         ///  - And maximum damage is dealt when your velocity in pointing directly at the hit marble
-        /// 
+        ///
+        /// Damage Rampup: 
         /// The damage of the two marbles are then compared, if one marble's raw damage is greater than double the other marble, it 
         /// deals 100% damage while the other marble's damage is ignored.
         /// 
+        /// Finally, buffs and multipliers are applied ontop of these final values.
+        /// The final damage values are then dealt to the respective marbles.
         /// </summary>
-        /// <param name="collision"></param>
-        /// <param name="enemy"></param>
         private void HandleCollisionWithEnemy(Collision collision, EnemyInstance enemy)
         {
             // Find the aliged velocity between the player and enemy:
@@ -47,10 +51,11 @@ namespace MarbleBash
             // A value of 1 means the player deals 100% damage and the enemy 0 
             // A value of 0 means both marbles deal 50% damage each 
             // A value of -1 means the enemy marble deals 100% and the player 0
-            float damageScaling = FindDamageRampup(rawPlayerDamage, rawEnemyDamage);
+            ApplyDamageRampup(rawPlayerDamage, rawEnemyDamage, out float playerDamage, out float enemyDamage);
 
-            Debug.Log($"Player: {rawPlayerDamage}, Enemy: {rawEnemyDamage}, Damage scaling: {damageScaling}");
-
+            // Final damage calculations, applying any additional damage multipliers from scaling and from perks
+            ApplyDamage(Player.instance, enemy, playerDamage);
+            ApplyDamage(enemy, Player.instance, enemyDamage);
         }
 
         private float FindAlignedVelocity(Marble primaryBody, Marble hitBody)
@@ -69,8 +74,6 @@ namespace MarbleBash
             return alignedVelocity;
         }
 
-
-
         private float FindRawDamageForCollision(Marble marble, float mass, float alignedVelocity)
         {
             // Base damage is simply mass * velocity
@@ -83,27 +86,38 @@ namespace MarbleBash
             
             return baseDamage;
         }
-    
-
-        private static float FindDamageRampup(float playerVelocity, float enemyVelocity)
+            
+        private void ApplyDamageRampup(float rawPlayerDamage, float rawEnemyDamage, out float playerDamage, out float enemyDamage)
         {
             float damageRampup;
-            
-            if (playerVelocity > enemyVelocity)
+            float multiplier;
+
+            if (rawPlayerDamage > rawEnemyDamage)
             {
-                damageRampup = Mathf.Clamp(playerVelocity / enemyVelocity, 0, 2f);
-                damageRampup = damageRampup / 2f;
+                damageRampup = Mathf.Clamp(rawPlayerDamage / rawEnemyDamage, 0, 2f) / 2f;
+
+                multiplier = Mathf.Lerp(0.5f, 1f, Mathf.Abs(damageRampup));
+                
+                playerDamage = rawPlayerDamage * multiplier;
+                enemyDamage = rawEnemyDamage * (1f - multiplier);
             }
             else
             {
-                damageRampup = Mathf.Clamp(enemyVelocity / playerVelocity, 0f, 2f);
-                damageRampup = damageRampup / 2f;
-                damageRampup = -damageRampup;
-            }
+                damageRampup = Mathf.Clamp(rawEnemyDamage / rawPlayerDamage, 0f, 2f) / 2f;
 
-            return damageRampup;
+                multiplier = Mathf.Lerp(0.5f, 1f, Mathf.Abs(damageRampup));
+                
+                enemyDamage = rawEnemyDamage * multiplier;
+                playerDamage = rawPlayerDamage * (1f - multiplier);
+            }
         }
 
+        private void ApplyDamage(Marble from, Marble to, float damage)
+        {
+            DamageEvent damageEvent = new DamageEvent(from, to, damage);
+
+            to.TakeDamage(damageEvent);
+        }        
     }
 
 
