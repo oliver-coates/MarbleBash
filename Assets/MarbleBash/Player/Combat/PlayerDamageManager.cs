@@ -1,4 +1,5 @@
 using System;
+using KahuInteractive.HassleFreeConfig;
 using UnityEngine;
 
 namespace MarbleBash
@@ -6,7 +7,12 @@ namespace MarbleBash
 
     public class PlayerDamageManager : MonoBehaviour
     {
-        private const float DAMAGE_IGNORE_MINIMUM_THRESHOLD = 1f;
+        private CombatConfig _config;
+
+        private void Start()
+        {
+            _config = Configuration.Get<CombatConfig>();
+        }
 
         public void OnCollisionEnter(Collision collision)
         {
@@ -21,7 +27,7 @@ namespace MarbleBash
         /// Handles a collision between the player and an enemy.
         /// Calculated and applies damage to each entity based on their speed, direction & mass.
         /// 
-        /// ### HOW DAMAGE IS CALCUALTED: ###
+        /// ### HOW DAMAGE IS CALCULATED: ###
         ///
         /// 'Aligned Velocity' is the magnitude of a marble's velocity, scaled by how much their velocity is pointing towards their target.
         /// - For instance, a slight glancing blow does much less damage than a direct hit.
@@ -44,8 +50,8 @@ namespace MarbleBash
             float alignedVelocityEnemy = FindAlignedVelocity(enemy, Player.instance);
 
             // Find the raw damage from this collision 
-            float rawPlayerDamage = FindRawDamageForCollision(Player.instance, Player.rigidbody.mass, alignedVelocityPlayer);
-            float rawEnemyDamage = FindRawDamageForCollision(enemy, enemy.rigidbody.mass, alignedVelocityEnemy);
+            float rawPlayerDamage = FindRawDamageForCollision(Player.instance, alignedVelocityPlayer);
+            float rawEnemyDamage = FindRawDamageForCollision(enemy, alignedVelocityEnemy);
 
             // Find damage scaling value:
             // A value of 1 means the player deals 100% damage and the enemy 0 
@@ -54,8 +60,8 @@ namespace MarbleBash
             ApplyDamageRampup(rawPlayerDamage, rawEnemyDamage, out float playerDamage, out float enemyDamage);
 
             // Final damage calculations, applying any additional damage multipliers from scaling and from perks
-            ApplyDamage(Player.instance, enemy, playerDamage);
-            ApplyDamage(enemy, Player.instance, enemyDamage);
+            ApplyDamage(Player.instance, enemy, playerDamage, collision);
+            ApplyDamage(enemy, Player.instance, enemyDamage, collision);
         }
 
         private float FindAlignedVelocity(Marble primaryBody, Marble hitBody)
@@ -74,10 +80,10 @@ namespace MarbleBash
             return alignedVelocity;
         }
 
-        private float FindRawDamageForCollision(Marble marble, float mass, float alignedVelocity)
+        private float FindRawDamageForCollision(Marble marble, float alignedVelocity)
         {
             // Base damage is simply mass * velocity
-            float baseDamage = alignedVelocity * mass;
+            float baseDamage = alignedVelocity * marble.rigidbody.mass;;
             
             // Vector3 position = marble.transform.position;
             // Vector3 velocity = marble.cachedVelocity;
@@ -112,11 +118,22 @@ namespace MarbleBash
             }
         }
 
-        private void ApplyDamage(Marble from, Marble to, float damage)
+        private void ApplyDamage(Marble from, Marble to, float amount, Collision collision)
         {
-            DamageEvent damageEvent = new DamageEvent(from, to, damage);
+            // Ignore if less than the minimum damage threshold.
+            if (amount < _config.minimumDamageThreshold)
+            {
+                return;
+            }
 
-            to.TakeDamage(damageEvent);
+            // Damage events hold all information regarding the damage being dealt:
+            DamageEvent damage = new DamageEvent(from, to)
+            {
+                amount = amount * _config.damageMultiplier,
+                knockbackAmount = amount * _config.knockbackMultiplier
+            };
+
+            to.TakeDamage(damage);
         }        
     }
 

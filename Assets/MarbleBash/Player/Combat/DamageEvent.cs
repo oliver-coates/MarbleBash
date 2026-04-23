@@ -5,40 +5,82 @@ namespace MarbleBash
 
     public class DamageEvent
     {
-        // Currently assuming all damage is from marbles, this will need to be changed in future
-        [SerializeField] private Marble _damageSource;
-        public Marble damageSource
+        
+        [SerializeField] private Marble _source;
+        /// <summary>
+        /// The marble that caused the damage.
+        /// Currently assuming all damage is from marbles, this will need to be changed in future
+        /// </summary>
+        public Marble source
         {
             get
             {
-                return _damageSource;
+                return _source;
             }	
         }
     
-        [SerializeField] private float _amount;
-        public float amount
+        
+        [SerializeField] private Marble _target;
+        /// <summary>
+        /// The marble that recieved the damage.
+        /// </summary>
+        public Marble target
         {
             get
             {
-                return _amount;
-            }	
-        }
-    
-        [SerializeField] private Vector3 _normal;
-        public Vector3 normal
-        {
-            get
-            {
-                return _normal;
+                return _target;
             }	
         }
 
-        public DamageEvent(Marble source, Marble target, float damageAmount)
+        
+        [SerializeField] private Vector3 _direction;
+        /// <summary>
+        /// The direction of the damage, from the center of the damaging marble towards the damaged marble.
+        /// Calculated automatically in the constructor
+        /// </summary>
+        public Vector3 direction
         {
-            _normal = (source.transform.position - target.transform.position).normalized;
-            _amount = damageAmount;
-            _damageSource = source; 
+            get
+            {
+                return _direction;
+            }	
         }
+
+        
+        [SerializeField] private Vector3 _location;
+        /// <summary>
+        /// The position of the damaged marble in world space.
+        /// Calculated automatically in the constructor.
+        /// </summary>
+        public Vector3 location
+        {
+            get
+            {
+                return _location;
+            }	
+        }
+
+
+        /// <summary>
+        /// Amount of damage.
+        /// </summary>
+        public float amount;
+
+        /// <summary>
+        /// The amount of knockback.
+        /// </summary>
+        public float knockbackAmount;
+
+        public DamageEvent(Marble source, Marble target)
+        {
+            _source = source; 
+            _target = target;
+
+            _location = target.transform.position;
+            _direction = (source.transform.position - target.transform.position).normalized;
+        }
+    
+
     }
 
 

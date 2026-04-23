@@ -68,8 +68,13 @@ namespace MarbleBash
         {
             // Debug.Log($"({name}) Ouich: {damageEvent.amount}");
 
-            // Debug.DrawLine(transform.position, transform.position + damageEvent.normal * 2f, Color.yellow, 5f);
+            Debug.DrawLine(transform.position, transform.position + damageEvent.direction * 2f, Color.yellow, 5f);
             // Debug.Break();
+
+            
+            Vector3 knockbackForce = damageEvent.knockbackAmount * (-damageEvent.direction + (Vector3.up * 0.33f));
+
+            _rigidbody.AddForce(knockbackForce, ForceMode.Impulse);
         }
 
     }
