@@ -133,7 +133,7 @@ namespace MarbleBash
                 knockbackAmount = amount * _config.knockbackMultiplier
             };
 
-            to.TakeDamage(damage);
+            to.health.TakeDamage(damage);
         }        
     }
 

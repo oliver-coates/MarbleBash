@@ -11,7 +11,7 @@ namespace MarbleBash
     [System.Serializable]
     public abstract class Marble : MonoBehaviour
     {
-
+        [Header("Stats:")]
         [SerializeField] protected MarbleStats _stats;
         public MarbleStats stats
         {
@@ -20,6 +20,17 @@ namespace MarbleBash
                 return _stats;
             }
         }
+
+        [Header("Health:")]
+        [SerializeField] protected MarbleHealth _health;
+        public MarbleHealth health
+        {
+            get
+            {
+                return _health;
+            }
+        }
+
 
         private Vector3 _cachedVelocity;
         public Vector3 cachedVelocity
@@ -50,9 +61,16 @@ namespace MarbleBash
 
         private void Start()
         {
+            _health = new MarbleHealth(this);
             Setup();
 
             Debug.Assert(_rigidbody != null);
+
+            // Setup subcomponents:
+            foreach (MarbleSubComponent subcomponent in transform.GetComponentsInChildren<MarbleSubComponent>())
+            {
+                subcomponent.Initialise(this);
+            }
         }
 
         private void FixedUpdate()
@@ -64,18 +82,7 @@ namespace MarbleBash
 
         protected abstract Vector3 GetLookDirection();
 
-        public void TakeDamage(DamageEvent damageEvent)
-        {
-            // Debug.Log($"({name}) Ouich: {damageEvent.amount}");
-
-            Debug.DrawLine(transform.position, transform.position + damageEvent.direction * 2f, Color.yellow, 5f);
-            // Debug.Break();
-
-            
-            Vector3 knockbackForce = damageEvent.knockbackAmount * (-damageEvent.direction + (Vector3.up * 0.33f));
-
-            _rigidbody.AddForce(knockbackForce, ForceMode.Impulse);
-        }
+        
 
     }
 }
