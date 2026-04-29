@@ -21,6 +21,7 @@ namespace MarbleBash
         /// HealthChangedEvent contains all the information regarding the change in health.
         /// </summary>
         public event Action<HealthChangedEvent> OnDamageTaken;
+        public static event Action<HealthChangedEvent> OnDamageTakenGlobal; 
 
         [Header("Lives:")]
         [SerializeField] private int _lives;
@@ -86,7 +87,8 @@ namespace MarbleBash
 
         public void TakeDamage(DamageEvent damageEvent)
         {
-            HealthChangedEvent newEvent = new ();
+            HealthChangedEvent newEvent = new (damageEvent.target);
+            newEvent.totalHealthChange = -damageEvent.amount;
 
             // Apply shield:
             if (_shield >= 0)
@@ -118,6 +120,7 @@ namespace MarbleBash
         
             // Finish by firing event
             OnDamageTaken?.Invoke(newEvent);
+            OnDamageTakenGlobal?.Invoke(newEvent);
         }
 
         private void LoseLife()
@@ -131,7 +134,13 @@ namespace MarbleBash
 
         public class HealthChangedEvent
         {
+            public HealthChangedEvent(Marble marble)
+            {
+                this.marble = marble;
+            }
+
             public Marble marble;
+            public float totalHealthChange;
             public float healthChange;
             public float shieldChange;
             public bool shieldBroken;
