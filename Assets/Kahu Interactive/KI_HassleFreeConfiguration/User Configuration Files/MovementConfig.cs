@@ -74,27 +74,6 @@ namespace MarbleBash
                 return _trailIntensityChangeTightness;
             }	
         }
-
-
-        [SerializeField] private AnimationCurve _trailWidthCurve;
-        public AnimationCurve trailWidthCurve
-        {
-            get
-            {
-                return _trailWidthCurve;
-            }	
-        }
-
-        [SerializeField] private AnimationCurve _trailTimeCurve;
-        public AnimationCurve trailTimeCurve
-        {
-            get
-            {
-                return _trailTimeCurve;
-            }	
-        }
-
-
     }
 
 }
