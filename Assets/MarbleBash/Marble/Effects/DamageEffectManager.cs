@@ -16,6 +16,8 @@ namespace MarbleBash
         [SerializeField] private MeshRenderer _baseRenderer;
         private Material _baseMaterial;
 
+        [SerializeField] private MeshRenderer _outlineRenderer;
+        private Material _outlineMaterial;
 
         private float _damageFlashIntensity;
 
@@ -33,6 +35,9 @@ namespace MarbleBash
         
             _baseMaterial = new Material(_baseRenderer.material);
             _baseRenderer.material = _baseMaterial;
+
+            _outlineMaterial = new Material(_outlineRenderer.material);
+            _outlineRenderer.material = _outlineMaterial;
 
             _config = Configuration.Get<HealthConfig>();
         }
@@ -76,14 +81,19 @@ namespace MarbleBash
             float intensity = _config.damageFlashIntensityCurve.Evaluate(_damageFlashIntensity);
 
             _damageFlashMaterial.SetFloat("_Intensity", intensity);
+            _outlineMaterial.SetFloat("_DamageIntensity", intensity);
+
             _damageFlashIntensity = Mathf.MoveTowards(_damageFlashIntensity, 0, Time.deltaTime * _config.damageFlashIntensityFalloff);      
-        
+
             if (_isDead)
             {
                 _deathTimer += Time.deltaTime;
                 
                 _baseMaterial.SetFloat("_Desaturation", Mathf.Clamp(_deathTimer, 0, 1f));
-                _baseMaterial.SetFloat("_Transparency", _config.deadMarbleFadeOutCurve.Evaluate(Mathf.Clamp(_deathTimer / _config.deadMarbleFadeOutTime, 0, 1f)));
+                
+                float trans = _config.deadMarbleFadeOutCurve.Evaluate(Mathf.Clamp(_deathTimer / _config.deadMarbleFadeOutTime, 0, 1f));
+                _outlineMaterial.SetFloat("_Transparency", trans);
+                _baseMaterial.SetFloat("_Transparency", trans);
             }
         }
     }
