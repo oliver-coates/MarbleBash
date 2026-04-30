@@ -1257,11 +1257,13 @@ MonoBehaviour:
   _playerLook: {fileID: 100137634}
   _inputActions: {fileID: -944628639613478452, guid: 052faaac586de48259a63d0c4782560b, type: 3}
   _speed: 350
-  _jumpForce: 5
+  _jumpForce: 6.5
   _groundedLayerMask:
     serializedVersion: 2
     m_Bits: 55
   _isGrounded: 0
+  _isAgainstWall: 0
+  _wallNormal: {x: 0, y: 0, z: 0}
 --- !u!54 &209866590
 Rigidbody:
   m_ObjectHideFlags: 0
