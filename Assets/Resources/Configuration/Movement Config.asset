@@ -16,7 +16,7 @@ MonoBehaviour:
   _wallJumpForceMultiplier: 8
   _collisionCameraShakeForceMultiplier: 0.2
   _minimumCollisionForceRequiredForCameraShake: 8
-  _minimumVelocityForTrail: 14
+  _minimumVelocityForTrail: 13
   _maxVelocityForTrail: 30
   _trailIntensityChangeTightness: 2
   _trailWidthCurve:

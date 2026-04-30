@@ -5,17 +5,19 @@ using UnityEngine;
 namespace MarbleBash
 {
 
-    public class TrailRendererManager : MonoBehaviour
+    public class SpeedEffectManager : MonoBehaviour
     {
         private MovementConfig _c;
-        private TrailRenderer _renderer;
+        private ParticleSystem _particles;
         [SerializeField] private float _targetIntensity;
         [SerializeField] private float _emissionIntensity;
+
+        private float _emissionTimer;
 
         private void Start()
         {
             _c = Configuration.Get<MovementConfig>();
-            _renderer = this.GetComponentSafe<TrailRenderer>();
+            _particles = this.GetComponentSafe<ParticleSystem>();
         }
 
 
@@ -28,8 +30,16 @@ namespace MarbleBash
             _emissionIntensity = Mathf.Lerp(_emissionIntensity, _targetIntensity, Time.deltaTime * _c.trailIntensityChangeTightness);
 
             // Set renderer:
-            _renderer.time = _c.trailTimeCurve.Evaluate(_emissionIntensity);
-            _renderer.startWidth = _c.trailWidthCurve.Evaluate(_emissionIntensity);
+            // _particles.time = _c.trailTimeCurve.Evaluate(_emissionIntensity);
+            // _particles.startWidth = _c.trailWidthCurve.Evaluate(_emissionIntensity);
+            // _particles.SetParticles()
+
+            _emissionTimer += _emissionIntensity;
+            if (_emissionTimer > 1.0f)
+            {
+                _emissionTimer -= 1.0f;
+                _particles.Emit(1);
+            }
 
         }
     }
