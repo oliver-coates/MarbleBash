@@ -38,7 +38,7 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  _deadMarbleFadeOutTime: 5
+  _deadMarbleFadeOutTime: 3
   _deadMarbleFadeOutCurve:
     serializedVersion: 2
     m_Curve:
@@ -52,7 +52,7 @@ MonoBehaviour:
       inWeight: 0
       outWeight: 0.33333334
     - serializedVersion: 3
-      time: 0.8
+      time: 0.7
       value: 1
       inSlope: 0
       outSlope: 0
@@ -63,8 +63,8 @@ MonoBehaviour:
     - serializedVersion: 3
       time: 1
       value: 0
-      inSlope: -5.0000005
-      outSlope: -5.0000005
+      inSlope: -3.3333333
+      outSlope: -3.3333333
       tangentMode: 34
       weightedMode: 0
       inWeight: 0.33333334

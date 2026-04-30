@@ -1,9 +1,13 @@
 using System;
+using KahuInteractive.HassleFreeConfig;
+using MarbleBash;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
 public class PlayerMovement : MonoBehaviour
 {
+    private MovementConfig _config;
+
     [Header("References:")]
     [SerializeField] private PlayerLook _playerLook;
     private Rigidbody _rb;
@@ -24,7 +28,6 @@ public class PlayerMovement : MonoBehaviour
 
     [Header("Settings:")]
     [SerializeField] private float _speed;
-    [SerializeField] private float _jumpForce;
     [SerializeField] private LayerMask _groundedLayerMask;
 
     [Header("State:")]
@@ -68,10 +71,11 @@ public class PlayerMovement : MonoBehaviour
     }
 
 
-
     private void Start()
     {
+        _config = Configuration.Get<MovementConfig>();
         _rb = GetComponent<Rigidbody>();
+
         SetupInput();
     }
 
@@ -89,7 +93,7 @@ public class PlayerMovement : MonoBehaviour
         Vector3 groundBoxPosition = transform.position + (Vector3.down * halfScale);
         Vector3 goundBoxSize = new Vector3(halfScale * 0.5f, 0.05f, halfScale * 0.5f);
 
-        _isGrounded =  Physics.CheckBox(groundBoxPosition, goundBoxSize, Quaternion.identity, _groundedLayerMask);
+        _isGrounded = Physics.CheckBox(groundBoxPosition, goundBoxSize, Quaternion.identity, _groundedLayerMask);
         
         // Update our grounded position:
         Ray downRay = new Ray(transform.position, Vector3.down);
@@ -124,15 +128,22 @@ public class PlayerMovement : MonoBehaviour
 
     private void Jump()
     {
-        _rb.AddForce(Vector3.up * _jumpForce, ForceMode.VelocityChange);
+        _rb.AddForce(Vector3.up  * _config.jumpForceMultiplier, ForceMode.VelocityChange);
     }
 
     private void WallJump()
     {
         Vector3 direction = (_wallNormal + Vector3.up).normalized;
-        // Debug.DrawRay(transform.position, direction, Color.hotPink, 5f);
 
-        _rb.AddForce(direction * _jumpForce, ForceMode.VelocityChange);
+        Vector3 velocity = _rb.linearVelocity;
+        if (velocity.y < 0)
+        {
+            velocity.y = velocity.y / 2f;
+            _rb.linearVelocity = velocity;
+        } 
+        _rb.AddForce(direction  * _config.wallJumpForceMultiplier, ForceMode.VelocityChange);
+
+        _isAgainstWall = false;
     }
 
     private void OnCollisionEnter(Collision collision)

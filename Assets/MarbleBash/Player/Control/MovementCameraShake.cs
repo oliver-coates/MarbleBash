@@ -18,7 +18,8 @@ namespace MarbleBash
 
         private void OnCollisionEnter(Collision collision)
         {
-            float collisionForce = collision.relativeVelocity.magnitude;            
+            float collisionForce = collision.impulse.magnitude;            
+            // float collisionForce = collision.relativeVelocity.magnitude;            
 
             if (collisionForce > _config.minimumCollisionForceRequiredForCameraShake)
             {

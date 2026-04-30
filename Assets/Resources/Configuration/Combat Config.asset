@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: Combat Config
   m_EditorClassIdentifier: Assembly-CSharp::MarbleBash.CombatConfig
   _damageMultiplier: 1
-  _knockbackMultiplier: 2
+  _knockbackMultiplier: 1.5
   _minimumDamageThreshold: 1
