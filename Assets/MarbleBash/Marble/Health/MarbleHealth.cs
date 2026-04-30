@@ -87,6 +87,11 @@ namespace MarbleBash
 
         public void TakeDamage(DamageEvent damageEvent)
         {
+            if (_marble == Player.instance)
+            {
+                return;
+            }
+            
             HealthChangedEvent newEvent = new (damageEvent.target);
             newEvent.totalHealthChange = -damageEvent.amount;
 

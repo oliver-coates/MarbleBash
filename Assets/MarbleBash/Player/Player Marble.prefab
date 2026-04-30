@@ -5196,6 +5196,7 @@ GameObject:
   - component: {fileID: 3828636568881872556}
   - component: {fileID: 9199519569152521705}
   - component: {fileID: 3635826411682522983}
+  - component: {fileID: 592690296531654841}
   - component: {fileID: 21806275588996396}
   m_Layer: 6
   m_Name: Player Marble
@@ -5429,6 +5430,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MarbleBash.MovementCameraShake
   _source: {fileID: 21806275588996396}
+--- !u!114 &592690296531654841
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8260454692025462916}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bff85b3a886b4614aad9b74fa1e85653, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Saviour
 --- !u!114 &21806275588996396
 MonoBehaviour:
   m_ObjectHideFlags: 0

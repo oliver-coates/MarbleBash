@@ -4,6 +4,7 @@ public class EnemiesBenchmark : MonoBehaviour
 {
     [SerializeField, Min(0)] private float _spawnRadius = 5f;
     
+    [SerializeField] private float _timeToSpawnEnemy = 0.025f;
     [SerializeField] private int _numEnemies;
     [SerializeField] private GameObject _prefab;
     [SerializeField] private Transform _rotator;
@@ -22,7 +23,7 @@ public class EnemiesBenchmark : MonoBehaviour
             Vector3 spawnPos = _spawnPos.position + (Random.insideUnitSphere * _spawnRadius);
             _numEnemiesSpawned++;
             Instantiate(_prefab, spawnPos, Quaternion.identity, _enemyHolder);
-            _spawnTimer = 0.025f;
+            _spawnTimer = _timeToSpawnEnemy;
         }
     }
 
