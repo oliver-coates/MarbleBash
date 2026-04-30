@@ -1,4 +1,5 @@
 using System;
+using System.Threading;
 using KahuInteractive.HassleFreeConfig;
 using UnityEngine;
 
@@ -12,10 +13,14 @@ namespace MarbleBash
         [Header("References:")]
         [SerializeField] private MeshRenderer _damageFlashRenderer;
         private Material _damageFlashMaterial;
+        [SerializeField] private MeshRenderer _baseRenderer;
+        private Material _baseMaterial;
 
 
         private float _damageFlashIntensity;
 
+        private bool _isDead;
+        private float _deathTimer;
 
 
         protected override void Initialise()
@@ -26,18 +31,40 @@ namespace MarbleBash
             _damageFlashMaterial = new Material(_damageFlashRenderer.material);
             _damageFlashRenderer.material = _damageFlashMaterial;
         
+            _baseMaterial = new Material(_baseRenderer.material);
+            _baseRenderer.material = _baseMaterial;
+
             _config = Configuration.Get<HealthConfig>();
         }
 
-        private void LivesChanged(int livesChanged)
+        private void LivesChanged(int livesRemaining)
         {
-            Debug.Log($"Lives have changed! {livesChanged}");
+            // Debug.Log($"Lives have changed! {livesChanged}");
+            if (livesRemaining == 0)
+            {
+                ApplyDeathEffect();
+            }
         }
 
         private void DamageTaken(MarbleHealth.HealthChangedEvent @event)
         {
+            ApplyDamageTakenEffect(@event.healthChange);
+        }
+
+
+        private void ApplyDeathEffect()
+        {
+            _isDead = true;
+            
+            // Stop casting shadows
+            _baseRenderer.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.Off;
+        }
+
+
+        private void ApplyDamageTakenEffect(float damage)
+        {
             // Calculate incoming damage as percentage of health:
-            float damagePercentage = @event.healthChange / _marble.health.maxHealth;
+            float damagePercentage = damage / _marble.health.maxHealth;
 
             float newIntensity = damagePercentage * (1/_config.damagePercentageForFullFlashIntensity);
 
@@ -50,6 +77,14 @@ namespace MarbleBash
 
             _damageFlashMaterial.SetFloat("_Intensity", intensity);
             _damageFlashIntensity = Mathf.MoveTowards(_damageFlashIntensity, 0, Time.deltaTime * _config.damageFlashIntensityFalloff);      
+        
+            if (_isDead)
+            {
+                _deathTimer += Time.deltaTime;
+                
+                _baseMaterial.SetFloat("_Desaturation", Mathf.Clamp(_deathTimer, 0, 1f));
+                _baseMaterial.SetFloat("_Transparency", _config.deadMarbleFadeOutCurve.Evaluate(Mathf.Clamp(_deathTimer / _config.deadMarbleFadeOutTime, 0, 1f)));
+            }
         }
     }
 }

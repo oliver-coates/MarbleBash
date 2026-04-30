@@ -7,7 +7,6 @@ namespace MarbleBash
     {
         protected override void Setup()
         {
-            _rigidbody = Player.rigidbody;
             _stats = new MarbleStats();
         }
 

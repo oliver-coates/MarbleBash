@@ -35,6 +35,24 @@ namespace MarbleBash
                 return _damageFlashIntensityCurve;
             }	
         }
+
+        [Header("Death Effects:")]
+        [SerializeField] private float _deadMarbleFadeOutTime;
+        public float deadMarbleFadeOutTime
+        {
+            get
+            {
+                return _deadMarbleFadeOutTime;
+            }	
+        }
+        [SerializeField] private AnimationCurve _deadMarbleFadeOutCurve;
+        public AnimationCurve deadMarbleFadeOutCurve
+        {
+            get
+            {
+                return _deadMarbleFadeOutCurve;
+            }	
+        }
     }
 
 }

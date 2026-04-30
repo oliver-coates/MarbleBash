@@ -58,19 +58,29 @@ namespace MarbleBash
             }
         }
 
+        protected Abilities.Abilities _abilities;
+        public Abilities.Abilities abilities
+        {
+            get
+            {
+                return _abilities;
+            }
+        }
 
         private void Start()
         {
             _health = new MarbleHealth(this);
-            Setup();
-
-            Debug.Assert(_rigidbody != null);
+            
+            _rigidbody = this.GetComponentSafe<Rigidbody>();
+            _abilities = this.GetComponentSafe<Abilities.Abilities>();
 
             // Setup subcomponents:
             foreach (MarbleSubComponent subcomponent in transform.GetComponentsInChildren<MarbleSubComponent>())
             {
                 subcomponent.Initialise(this);
             }
+
+            Setup();
         }
 
         private void FixedUpdate()

@@ -12,7 +12,7 @@ namespace MarbleBash
 
         /// <summary>
         /// Called when number of lives has changed,
-        /// int - The change in number of lives
+        /// int - The num of lives remaining
         /// </summary>
         public event Action<int> OnLivesChanged;
 
@@ -34,12 +34,12 @@ namespace MarbleBash
         }    
     
         [Header("Health:")]
-        [SerializeField] private float _health;
+        [SerializeField] private float _hp;
         public float health
         {
             get
             {
-                return _health;
+                return _hp;
             }	
         }
     
@@ -76,10 +76,10 @@ namespace MarbleBash
         {
             _marble = marble;
 
-            _lives = 3;
+            _lives = 1;
 
-            _maxHealth = 100f;
-            _health = 100f;
+            _maxHealth = 25f;
+            _hp = 25f;
 
             _maxShield = 0;
             _shield = 0;
@@ -101,14 +101,14 @@ namespace MarbleBash
             if (_shield < 0)
             {
                 float healthChange = Mathf.Abs(_shield);
-                _health -= healthChange;
+                _hp -= healthChange;
                 _shield = 0;
 
                 newEvent.shieldBroken = true;
                 newEvent.healthChange = healthChange;
 
                 // Check to see if our health has fallen below 0
-                if (_health < 0)
+                if (_hp < 0)
                 {
                     LoseLife();
                 }
@@ -126,10 +126,10 @@ namespace MarbleBash
         private void LoseLife()
         {
             _lives -= 1;
-            _health = _maxHealth;
+            _hp = _maxHealth;
             _shield = _maxShield;
 
-            OnLivesChanged?.Invoke(-1);
+            OnLivesChanged?.Invoke(_lives);
         }
 
         public class HealthChangedEvent
