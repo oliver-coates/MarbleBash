@@ -1,3 +1,4 @@
+using KahuInteractive.HassleFreeAudio;
 using KahuInteractive.HassleFreeConfig;
 using Unity.Cinemachine;
 using UnityEngine;
@@ -5,7 +6,7 @@ using UnityEngine;
 namespace MarbleBash
 {
     
-    public class MovementCameraShake : MonoBehaviour
+    public class MovementCollisionEffectManager : MonoBehaviour
     {
         private MovementConfig _config;
 
@@ -27,6 +28,8 @@ namespace MarbleBash
 
                 impulseForce *= _config.collisionCameraShakeForceMultiplier;
                 
+                AudioEngine.PlaySound(_config.impactLowClipSet);
+
                 _source.GenerateImpulse(impulseForce);
             }
         }

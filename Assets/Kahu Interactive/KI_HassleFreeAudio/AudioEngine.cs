@@ -28,13 +28,18 @@ namespace KahuInteractive.HassleFreeAudio
         #region Playing Sound
         public static byte PlaySound(ClipSet clipSet)
         {
+            return PlaySound(clipSet, 1f);
+        }
+
+        public static byte PlaySound(ClipSet clipSet, float volume)
+        {
             if (clipSet == null)
             {
                 Debug.LogError("Recieved null clip set");
                 return 0;
             }
 
-            return PlaySound(new AudioPlayData(clipSet));
+            return PlaySound(new AudioPlayData(clipSet, volume));
         }
 
         public static byte PlaySound(AudioPlayData data)
@@ -67,7 +72,7 @@ namespace KahuInteractive.HassleFreeAudio
     public struct AudioPlayData
     {
         public ClipSet clipSet;
-
+        public float volume;
 
         private Vector3 _worldLocation;
         private bool _hasWorldLocation;
@@ -96,9 +101,10 @@ namespace KahuInteractive.HassleFreeAudio
         public Transform attachedTransform;
 
 
-        public AudioPlayData(ClipSet clipSet)
+        public AudioPlayData(ClipSet clipSet, float volume)
         {
             this.clipSet = clipSet;
+            this.volume = volume;
 
             _hasWorldLocation = false;
             _worldLocation = Vector3.zero;

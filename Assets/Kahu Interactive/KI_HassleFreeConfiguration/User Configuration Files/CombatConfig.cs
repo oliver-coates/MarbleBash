@@ -43,6 +43,16 @@ namespace MarbleBash
                 return _minimumDamageThreshold;
             }	
         }
-    }
 
+            [Header("XP:")]
+        [SerializeField] private GameObject _xpPrefab;
+        public GameObject xpPrefab
+        {
+            get
+            {
+                return _xpPrefab;
+            }	
+        }
+
+    }
 }

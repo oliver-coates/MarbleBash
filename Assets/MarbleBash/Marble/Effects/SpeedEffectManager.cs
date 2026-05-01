@@ -24,7 +24,7 @@ namespace MarbleBash
         private void Update()
         {
             // Find the emission intensity from the player's velocity 
-            _targetIntensity = Mathf.Clamp((Player.rigidbody.linearVelocity.magnitude - _c.minimumVelocityForTrail) / _c.maxVelocityForTrail, 0, 1);
+            _targetIntensity = Mathf.Clamp((Player.instance.cachedVelocity.magnitude - _c.minimumVelocityForTrail) / _c.maxVelocityForTrail, 0, 1);
 
             // Actual intensity smoothly lerps towards it
             _emissionIntensity = Mathf.Lerp(_emissionIntensity, _targetIntensity, Time.deltaTime * _c.trailIntensityChangeTightness);
@@ -34,7 +34,7 @@ namespace MarbleBash
             // _particles.startWidth = _c.trailWidthCurve.Evaluate(_emissionIntensity);
             // _particles.SetParticles()
 
-            _emissionTimer += _emissionIntensity;
+            _emissionTimer += _emissionIntensity * _c.trailIntensityMultiplier;
             if (_emissionTimer > 1.0f)
             {
                 _emissionTimer -= 1.0f;

@@ -1,0 +1,34 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8a36ee82938dd8347aafa1aeb38d3dad, type: 3}
+  m_Name: Impact Low
+  m_EditorClassIdentifier: Assembly-CSharp::KahuInteractive.HassleFreeAudio.ClipSet
+  _clips:
+  - {fileID: 8300000, guid: f15a84bb1f899bb4f8b02afd33296266, type: 3}
+  - {fileID: 8300000, guid: 9deab807ce5dd224aa5cfeac5d54ab80, type: 3}
+  - {fileID: 8300000, guid: a67ec08710a21c94c9e5e907ba9b2a09, type: 3}
+  - {fileID: 8300000, guid: b145e530743259d4999328f055c30328, type: 3}
+  - {fileID: 8300000, guid: fc2de9bbcc90a944d8f91fcd72be3962, type: 3}
+  - {fileID: 8300000, guid: 10b10dc5e4ddd4a4584a0e6fa07b2ea7, type: 3}
+  - {fileID: 8300000, guid: 7376970d4bfdd3145a913a180bd6be5f, type: 3}
+  - {fileID: 8300000, guid: 4acf7621d3f8a2944adb01263b4d7022, type: 3}
+  - {fileID: 8300000, guid: aeeec3fd603de5840a77599ba517116a, type: 3}
+  _mixer: {fileID: -5686910420705490230, guid: 227af2f2877c541449ad6a81671b30f3, type: 2}
+  _pitchVariance: 0.2
+  _volumeVariance: 0
+  maxDistance: 0
+  spatialisationCurve:
+    serializedVersion: 2
+    m_Curve: []
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4

@@ -15,3 +15,4 @@ MonoBehaviour:
   _damageMultiplier: 1
   _knockbackMultiplier: 1.5
   _minimumDamageThreshold: 1
+  _xpPrefab: {fileID: 7846100061068676596, guid: 5b9a4e8c462864749b8e16f60a39d14a, type: 3}

@@ -1,3 +1,4 @@
+using KahuInteractive.HassleFreeAudio;
 using KahuInteractive.HassleFreeConfig;
 using UnityEngine;
 
@@ -65,12 +66,31 @@ namespace MarbleBash
             }	
         }
 
+        [SerializeField] private float _trailIntensityMultiplier = 1;
+        public float trailIntensityMultiplier
+        {
+            get
+            {
+                return _trailIntensityMultiplier;
+            }	
+        }
+
         [SerializeField] private float _trailIntensityChangeTightness = 1;
         public float trailIntensityChangeTightness
         {
             get
             {
                 return _trailIntensityChangeTightness;
+            }	
+        }
+
+        [Header("Audio:")]
+        [SerializeField] private ClipSet _impactLowClipSet;
+        public ClipSet impactLowClipSet
+        {
+            get
+            {
+                return _impactLowClipSet;
             }	
         }
     }

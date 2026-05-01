@@ -8,11 +8,14 @@ namespace MarbleBash
     [RequireComponent(typeof(Rigidbody))]
     public class EnemyInstance : Marble
     {
+        private CombatConfig _combatConfig;
         private EnemyMovement _movement;
 
         protected override void Setup()
         {
             _movement = this.GetComponentSafe<EnemyMovement>();
+
+            _combatConfig = Configuration.Get<CombatConfig>();
 
             // In future, enemies should be setup with a method:
             _stats = new MarbleStats();
@@ -37,7 +40,22 @@ namespace MarbleBash
 
             gameObject.layer = LayerMask.NameToLayer("Debris");
 
+            SpawnXpGlobs(20f);
+
             Destroy(gameObject, Configuration.Get<HealthConfig>().deadMarbleFadeOutTime);
+        }
+
+        private void SpawnXpGlobs(float xpToDrop)
+        {
+            int numToDrop = UnityEngine.Random.Range(48, 50);
+
+            for (int globIndex = 0; globIndex < numToDrop; globIndex++)
+            {
+                xpGlob glob = Instantiate(_combatConfig.xpPrefab).GetComponent<xpGlob>();
+
+                glob.Setup(this, xpToDrop);    
+            }
+            
         }
 
         protected override Vector3 GetLookDirection()

@@ -51,7 +51,7 @@ namespace KahuInteractive.HassleFreeAudio
             AudioClip audioClip = data.clipSet.GetRandomClip(out AudioMixerGroup mixer, out float pitch, out float volume);
 
             _source.dopplerLevel = 0;
-            _source.volume = volume;
+            _source.volume = volume * data.volume;
             _source.pitch = pitch;
 
             // Setup mixer group

@@ -5007,7 +5007,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2001852699742128830}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 1
@@ -5195,8 +5195,8 @@ GameObject:
   - component: {fileID: 4815312233933786222}
   - component: {fileID: 3828636568881872556}
   - component: {fileID: 9199519569152521705}
-  - component: {fileID: 3635826411682522983}
   - component: {fileID: 592690296531654841}
+  - component: {fileID: 6137216703217506774}
   - component: {fileID: 21806275588996396}
   m_Layer: 6
   m_Name: Player Marble
@@ -5417,19 +5417,6 @@ MonoBehaviour:
     _maxHealth: 0
     _shield: 0
     _maxShield: 0
---- !u!114 &3635826411682522983
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8260454692025462916}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2d5ddca5ee037c84e8f75f69637ec55e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::MarbleBash.MovementCameraShake
-  _source: {fileID: 21806275588996396}
 --- !u!114 &592690296531654841
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5442,6 +5429,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bff85b3a886b4614aad9b74fa1e85653, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Saviour
+--- !u!114 &6137216703217506774
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8260454692025462916}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2d5ddca5ee037c84e8f75f69637ec55e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MarbleBash.MovementCameraShake
+  _source: {fileID: 21806275588996396}
 --- !u!114 &21806275588996396
 MonoBehaviour:
   m_ObjectHideFlags: 0
