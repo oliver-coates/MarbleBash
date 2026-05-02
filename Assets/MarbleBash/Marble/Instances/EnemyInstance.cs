@@ -40,14 +40,14 @@ namespace MarbleBash
 
             gameObject.layer = LayerMask.NameToLayer("Debris");
 
-            SpawnXpGlobs(20f);
+            SpawnXpGlobs(_stats.level * 10);
 
             Destroy(gameObject, Configuration.Get<HealthConfig>().deadMarbleFadeOutTime);
         }
 
         private void SpawnXpGlobs(float xpToDrop)
         {
-            int numToDrop = UnityEngine.Random.Range(48, 50);
+            int numToDrop = 10;
 
             for (int globIndex = 0; globIndex < numToDrop; globIndex++)
             {

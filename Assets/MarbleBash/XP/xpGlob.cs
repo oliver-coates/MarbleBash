@@ -5,13 +5,15 @@ namespace MarbleBash
 
     public class xpGlob : MonoBehaviour
     {
-        private Rigidbody _rb;
         private float _timer;
+        private Rigidbody _rb;
+        private TrailRenderer _trailRenderer;
 
         public void Setup(Marble marble, float xp)
-        {
+        {            
             _rb = this.GetComponentSafe<Rigidbody>();
-            
+            _trailRenderer = this.GetComponentSafe<TrailRenderer>();
+
             // Position:
             transform.position = marble.transform.position;
             
@@ -19,13 +21,17 @@ namespace MarbleBash
             
             // Throw
             Vector3 dir = GetThrowDirection();
-            float throwForce = Random.Range(2f, 4f);
+            float throwForce = 10 * Random.Range(0.75f, 1f);
+
             _rb.AddForce(dir * throwForce, ForceMode.VelocityChange);
         }
 
         private void SetupSize(float xp)
         {
-            float size = xp / 25;
+            float size = Mathf.Clamp(xp / 100f, 0.01f, 1) * Random.Range(0.75f, 1.25f);
+
+            _trailRenderer.startWidth = size;
+
             transform.localScale = new Vector3(size, size, size);
         }
 
@@ -41,11 +47,20 @@ namespace MarbleBash
         {
             _timer += Time.deltaTime;
 
-            transform.position = Vector3.MoveTowards(transform.position, Player.transform.position, _timer * Time.deltaTime * 2.5f);
+            // Vector3 directionToPlayer = (Player.transform.position - transform.position).normalized;
+            // _rb.AddForce(speed * directionToPlayer, ForceMode.VelocityChange);
 
-            if (_timer > 1f && Vector3.Distance(transform.position, Player.transform.position) < 0.5f)
+            if (_timer > 0.5f)
             {
-                Destroy(gameObject);
+                float timerAdjuested = _timer - 0.5f;
+                float speed = timerAdjuested * timerAdjuested * Time.deltaTime * 5f;
+
+                _rb.Move(Vector3.MoveTowards(transform.position, Player.transform.position, speed), transform.rotation);
+
+                if (Vector3.Distance(transform.position, Player.transform.position) < 0.5f)
+                {
+                    Destroy(gameObject);
+                }    
             }
         }
     }

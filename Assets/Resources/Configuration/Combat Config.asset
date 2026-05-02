@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 550468b6205b92c44a318728d51e005d, type: 3}
   m_Name: Combat Config
   m_EditorClassIdentifier: Assembly-CSharp::MarbleBash.CombatConfig
-  _damageMultiplier: 1
+  _damageMultiplier: 5
   _knockbackMultiplier: 1.5
   _minimumDamageThreshold: 1
   _xpPrefab: {fileID: 7846100061068676596, guid: 5b9a4e8c462864749b8e16f60a39d14a, type: 3}

@@ -10,6 +10,24 @@ namespace MarbleBash
     [System.Serializable]
     public class MarbleStats
     {
+        [Header("Level:")]
+        [SerializeField] private int _level;
+        public int level
+        {
+            get
+            {
+                return _level;
+            }
+        }
+        [SerializeField] private float _xp;
+        public float xp
+        {
+            get
+            {
+                return _xp;
+            }
+        }
+
         #region Stats:
         [Header("Stats:")]
         public CoreStat mass; // Size, Damage, Health
@@ -20,6 +38,19 @@ namespace MarbleBash
         public CoreStat energy; // Max energy
 
         #endregion
+
+        public MarbleStats()
+        {
+            _level = 1;
+            _xp = 0;
+
+            mass = new CoreStat();
+            agility = new CoreStat();
+            recharge = new CoreStat();
+            block = new CoreStat();
+            luck = new CoreStat();
+            energy = new CoreStat();
+        }
     }
 
 
