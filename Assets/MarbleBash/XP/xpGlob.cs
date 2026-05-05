@@ -9,6 +9,8 @@ namespace MarbleBash
         private Rigidbody _rb;
         private TrailRenderer _trailRenderer;
 
+        private Vector3 _floatZone;
+
         public void Setup(Marble marble, float xp)
         {            
             _rb = this.GetComponentSafe<Rigidbody>();
@@ -22,8 +24,8 @@ namespace MarbleBash
             // Throw
             Vector3 dir = GetThrowDirection();
             float throwForce = 10 * Random.Range(0.75f, 1f);
-
-            _rb.AddForce(dir * throwForce, ForceMode.VelocityChange);
+            _floatZone = transform.position + (dir * throwForce);
+            // _rb.AddForce(dir * throwForce, ForceMode.VelocityChange);
         }
 
         private void SetupSize(float xp)
@@ -50,18 +52,26 @@ namespace MarbleBash
             // Vector3 directionToPlayer = (Player.transform.position - transform.position).normalized;
             // _rb.AddForce(speed * directionToPlayer, ForceMode.VelocityChange);
 
-            if (_timer > 0.5f)
-            {
-                float timerAdjuested = _timer - 0.5f;
-                float speed = timerAdjuested * timerAdjuested * Time.deltaTime * 5f;
+            Vector3 _targetPosition = Vector3.Lerp(_floatZone, Player.transform.position, _timer);
 
-                _rb.Move(Vector3.MoveTowards(transform.position, Player.transform.position, speed), transform.rotation);
+            _rb.MovePosition(Vector3.MoveTowards(transform.position, _targetPosition, 5f * Time.deltaTime * (1f + _timer)));
 
-                if (Vector3.Distance(transform.position, Player.transform.position) < 0.5f)
-                {
-                    Destroy(gameObject);
-                }    
-            }
+            // if (_timer < 0.5f)
+            // {
+            //     _rb.MovePosition(Vector3.MoveTowards(transform.position, _floatZone, Time.deltaTime * 5f));    
+            // }
+            // else
+            // {
+            //     float timerAdjuested = _timer - 0.5f;
+            //     float speed = timerAdjuested * timerAdjuested * Time.deltaTime * 5f;
+
+            //     _rb.MovePosition(Vector3.MoveTowards(transform.position, Player.transform.position, speed));
+
+            //     if (Vector3.Distance(transform.position, Player.transform.position) < 0.5f)
+            //     {
+            //         Destroy(gameObject);
+            //     }    
+            // }
         }
     }
 
