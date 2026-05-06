@@ -21,11 +21,7 @@ namespace MarbleBash
             
             SetupSize(xp);
             
-            // Throw
-            Vector3 dir = GetThrowDirection();
-            float throwForce = 10 * Random.Range(0.75f, 1f);
-            _floatZone = transform.position + (dir * throwForce);
-            // _rb.AddForce(dir * throwForce, ForceMode.VelocityChange);
+            
         }
 
         private void SetupSize(float xp)
@@ -37,13 +33,6 @@ namespace MarbleBash
             transform.localScale = new Vector3(size, size, size);
         }
 
-        private Vector3 GetThrowDirection()
-        {
-            Vector2 randomOnCircle = Random.onUnitCircle * Random.Range(0.75f, 1f);
-            Vector3 direction = new Vector3(randomOnCircle.x, 1, randomOnCircle.y);
-        
-            return direction.normalized;
-        }
     
         private void Update()
         {

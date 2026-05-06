@@ -51,9 +51,9 @@ namespace MarbleBash
 
             for (int globIndex = 0; globIndex < numToDrop; globIndex++)
             {
-                xpGlob glob = Instantiate(_combatConfig.xpPrefab).GetComponent<xpGlob>();
+                xp glob = Instantiate(_combatConfig.xpPrefab).GetComponent<xp>();
 
-                glob.Setup(this, xpToDrop);    
+                glob.Initialise(transform.position);    
             }
             
         }
