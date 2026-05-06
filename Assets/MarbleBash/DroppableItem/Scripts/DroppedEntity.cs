@@ -20,18 +20,12 @@ namespace MarbleBash
           
         
 
-        public void Initialise(Vector3 position, float positionRandomisation)
+        protected void InitialiseInternal()
         {
             // Grab components & Set position:
             _rb = this.GetComponentSafe<Rigidbody>();
             _trail = this.GetComponentSafe<TrailRenderer>();
-            transform.position = position + (UnityEngine.Random.insideUnitSphere * positionRandomisation);
-
-            // Internal setup:
-            Setup();
         }
-
-        protected abstract void Setup();
 
 
         private void HitGround()
@@ -60,6 +54,10 @@ namespace MarbleBash
         {
             Ray ray = new Ray(transform.position, Vector3.down);
             if (Physics.Raycast(ray, _hoverHeight, LayerMask.GetMask("Default")))
+            {
+                HitGround();
+            }
+            else if (transform.position.y < -25f)
             {
                 HitGround();
             }

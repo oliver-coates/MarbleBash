@@ -11,6 +11,7 @@ namespace MarbleBash
         private CombatConfig _combatConfig;
         private EnemyMovement _movement;
 
+
         protected override void Setup()
         {
             _movement = this.GetComponentSafe<EnemyMovement>();
@@ -40,21 +41,38 @@ namespace MarbleBash
 
             gameObject.layer = LayerMask.NameToLayer("Debris");
 
-            SpawnXpGlobs(_stats.level * 10);
+            SpawnXpGlobs(UnityEngine.Random.Range(1, 500f));
 
             Destroy(gameObject, Configuration.Get<HealthConfig>().deadMarbleFadeOutTime);
         }
 
         private void SpawnXpGlobs(float xpToDrop)
         {
-            int numToDrop = 10;
+            int maxNumOrbsToDrop = Mathf.FloorToInt(Mathf.Sqrt(0.1f * xpToDrop)+1);
+            int xpRemaining = Mathf.FloorToInt(xpToDrop);
 
-            for (int globIndex = 0; globIndex < numToDrop; globIndex++)
+            for (int dropIndex = 0; dropIndex < maxNumOrbsToDrop; dropIndex++)
             {
-                XpGlob glob = Instantiate(_combatConfig.xpPrefab).GetComponent<XpGlob>();
+                int xp = Mathf.CeilToInt(xpRemaining * UnityEngine.Random.Range(0.33f, 0.66f));
+                xpRemaining -= xp;
 
-                glob.Initialise(transform.position, transform.localScale.x / 2f);    
-            }            
+                DropXpGlob(xp);
+
+                if (xpRemaining == 0)
+                {
+                    break;
+                }
+            }
+            if (xpRemaining > 0)
+            {
+                DropXpGlob(xpRemaining);
+            }
+        }
+
+        private void DropXpGlob(float xp)
+        {
+            XpGlob glob = Instantiate(_combatConfig.xpPrefab).GetComponent<XpGlob>();
+            glob.Initialise(this, xp);
         }
 
         protected override Vector3 GetLookDirection()

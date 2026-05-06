@@ -91,7 +91,7 @@ public class PlayerMovement : MonoBehaviour
         // Check to see if we are grounded:
         float halfScale = transform.localScale.x / 2f;
         Vector3 groundBoxPosition = transform.position + (Vector3.down * halfScale);
-        Vector3 goundBoxSize = new Vector3(halfScale * 0.5f, 0.05f, halfScale * 0.5f);
+        Vector3 goundBoxSize = new Vector3(halfScale * 0.5f, 0.15f, halfScale * 0.5f);
 
         _isGrounded = Physics.CheckBox(groundBoxPosition, goundBoxSize, Quaternion.identity, _groundedLayerMask);
         
