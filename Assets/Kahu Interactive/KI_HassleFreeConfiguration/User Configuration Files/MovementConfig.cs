@@ -93,6 +93,72 @@ namespace MarbleBash
                 return _impactLowClipSet;
             }	
         }
+    
+        [Header("Impact decals:")]
+        [SerializeField] private GameObject _impactDecalPrefab;
+        public GameObject impactDecalPrefab
+        {
+            get
+            {
+                return _impactDecalPrefab;
+            }	
+        }
+    
+        [SerializeField] private float _minimumVelocityRequiredForImpactDecal = 5;
+        public float minimumVelocityRequiredForImpactDecal
+        {
+            get
+            {
+                return _minimumVelocityRequiredForImpactDecal;
+            }	
+        }
+
+        [SerializeField] private float _maxVelocityForImpactDecal = 40;
+        public float maxVelocityForImpactDecal
+        {
+            get
+            {
+                return _maxVelocityForImpactDecal;
+            }	
+        }
+    
+        [SerializeField] private AnimationCurve _impactStartOpacityCurve;
+        public AnimationCurve impactStartOpacityCurve
+        {
+            get
+            {
+                return _impactStartOpacityCurve;
+            }	
+        }
+
+
+        [SerializeField] private float _impactDecalMinSize;
+        public float impactDecalMinSize
+        {
+            get
+            {
+                return _impactDecalMinSize;
+            }	
+        }
+    
+        [SerializeField] private float _impactDecalMaxSize;
+        public float impactDecalMaxSize
+        {
+            get
+            {
+                return _impactDecalMaxSize;
+            }	
+        }
+
+        [SerializeField] private AnimationCurve _impactDecalSizeCurve;
+        public AnimationCurve impactDecalSizeCurve
+        {
+            get
+            {
+                return _impactDecalSizeCurve;
+            }	
+        }
+   
     }
 
 }

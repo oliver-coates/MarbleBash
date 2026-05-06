@@ -5647,7 +5647,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemiesBenchmark
   _spawnRadius: 2.5
-  _timeToSpawnEnemy: 3
+  _timeToSpawnEnemy: 10
   _numEnemies: 100
   _prefab: {fileID: 2296398700786242156, guid: fb6f00d5452a63a4da6ad7f9a0edd762, type: 3}
   _rotator: {fileID: 533295324}
@@ -21538,10 +21538,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1146106107}
     m_Modifications:
-    - target: {fileID: 819041744776417016, guid: e721e1f7906ca9c41aa06ff36848a372, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 5316720526632171059, guid: e721e1f7906ca9c41aa06ff36848a372, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0

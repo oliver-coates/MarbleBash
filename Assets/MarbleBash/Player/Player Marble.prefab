@@ -5399,6 +5399,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MarbleBash.PlayerInstance
   _stats:
+    _level: 1
+    _xp: 0
     mass:
       _value: 1
     agility:

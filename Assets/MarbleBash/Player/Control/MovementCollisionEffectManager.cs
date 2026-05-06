@@ -9,29 +9,65 @@ namespace MarbleBash
     public class MovementCollisionEffectManager : MonoBehaviour
     {
         private MovementConfig _config;
+        
+        [Header("References:")]
+        [SerializeField] private CinemachineImpulseSource _source;
 
         private void Start()
         {
             _config = Configuration.Get<MovementConfig>();
         }
 
-        [SerializeField] private CinemachineImpulseSource _source;
 
         private void OnCollisionEnter(Collision collision)
         {
-            float collisionForce = collision.impulse.magnitude;            
-            // float collisionForce = collision.relativeVelocity.magnitude;            
+            float collisionForce = collision.impulse.magnitude;
 
-            if (collisionForce > _config.minimumCollisionForceRequiredForCameraShake)
+            string tag = collision.gameObject.tag; 
+            if (tag == "Untagged")
             {
-                float impulseForce = Mathf.Log(collisionForce - _config.minimumCollisionForceRequiredForCameraShake, 2f);
-
-                impulseForce *= _config.collisionCameraShakeForceMultiplier;
-                
-                AudioEngine.PlaySound(_config.impactLowClipSet);
-
-                _source.GenerateImpulse(impulseForce);
+                RegisterImpactGround(collision, collisionForce);            
             }
+            else if (tag == "Enemy")
+            {
+                RegisterImpactEnemy(collision, collisionForce);
+            }
+        }
+
+        private void RegisterImpactGround(Collision c, float magnitude)
+        {
+            if (magnitude > _config.minimumCollisionForceRequiredForCameraShake)
+            {
+                DoCameraShake(magnitude);    
+            }
+
+            if (magnitude > _config.minimumVelocityRequiredForImpactDecal)
+            {
+                CreateImpactDecal(c, magnitude);            
+            }
+
+            AudioEngine.PlaySound(_config.impactLowClipSet, Mathf.Log(magnitude, 2f) * 0.5f);
+            
+        }
+
+        private void RegisterImpactEnemy(Collision c, float magnitude)
+        {
+            AudioEngine.PlaySound(_config.impactLowClipSet, Mathf.Log(magnitude, 2f) * 0.5f);
+        }
+
+        private void DoCameraShake(float force)
+        {
+            float impulseForce = Mathf.Log(force - _config.minimumCollisionForceRequiredForCameraShake, 2f);
+
+            impulseForce *= _config.collisionCameraShakeForceMultiplier;
+            
+            _source.GenerateImpulse(impulseForce);
+        }
+    
+        private void CreateImpactDecal(Collision c, float force)
+        {
+            ImpactDecal decal = Instantiate(_config.impactDecalPrefab).GetComponent<ImpactDecal>();
+            decal.Setup(c, force);   
         }
     }
 }

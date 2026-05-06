@@ -21,3 +21,56 @@ MonoBehaviour:
   _trailIntensityMultiplier: 0.5
   _trailIntensityChangeTightness: 2
   _impactLowClipSet: {fileID: 11400000, guid: 409e401c61332e64097df95f91aeb1f3, type: 2}
+  _impactDecalPrefab: {fileID: 7918670568811036236, guid: 7876614cd10d0fa4ea1b76b8106407fa, type: 3}
+  _minimumVelocityRequiredForImpactDecal: 10
+  _maxVelocityForImpactDecal: 50
+  _impactStartOpacityCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0.5
+      inSlope: 1.409332
+      outSlope: 1.409332
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0.02712988
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  _impactDecalMinSize: 0.35
+  _impactDecalMaxSize: 2.5
+  _impactDecalSizeCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 2
+      outSlope: 2
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
