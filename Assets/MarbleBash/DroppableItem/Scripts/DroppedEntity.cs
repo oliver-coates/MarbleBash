@@ -4,7 +4,7 @@ using UnityEngine;
 namespace MarbleBash
 {
 
-    public abstract class DroppableItem : MonoBehaviour
+    public abstract class DroppedEntity : MonoBehaviour
     {   
         // References:
         private Rigidbody _rb;      
@@ -12,32 +12,26 @@ namespace MarbleBash
 
         // Settings:
         private float _size = 0.1f;
-        protected float _throwForce = 0.5f;
-        protected float _throwForceVariance = 0.25f;
         protected float _hoverHeight = 0.25f;
         
         // State:
-        protected float _timer;
-        private bool _isOnGround;  
+        protected float _timeAlive;
+        protected bool _isOnGround;
+          
         
 
-        public void Initialise(Vector3 position)
+        public void Initialise(Vector3 position, float positionRandomisation)
         {
+            // Grab components & Set position:
             _rb = this.GetComponentSafe<Rigidbody>();
             _trail = this.GetComponentSafe<TrailRenderer>();
+            transform.position = position + (UnityEngine.Random.insideUnitSphere * positionRandomisation);
 
-            transform.position = position;
-
-            // These settings should be set by the subclass:
-            _throwForce = 12f;
-            _throwForceVariance = 0.66f;
-            _hoverHeight = 0.5f;
-
-            Throw();
-
-            // This will eventually be called by the subclass:
-            SetSize(UnityEngine.Random.Range(0.1f, 0.25f));
+            // Internal setup:
+            Setup();
         }
+
+        protected abstract void Setup();
 
 
         private void HitGround()
@@ -48,9 +42,9 @@ namespace MarbleBash
         }
         protected abstract void OnHitGround();
 
-        protected void Update()
+        protected virtual void Update()
         {
-            _timer += Time.deltaTime;
+            _timeAlive += Time.deltaTime;
 
             if (!_isOnGround)
             {
@@ -73,18 +67,25 @@ namespace MarbleBash
 
         private Vector3 GetThrowDirection()
         {
-            Vector2 randomOnCircle = UnityEngine.Random.onUnitCircle * UnityEngine.Random.Range(0.75f, 1f);
-            Vector3 direction = new (randomOnCircle.x, 1.2f, randomOnCircle.y);
+            Vector2 randomOnCircle = UnityEngine.Random.onUnitCircle;
+            Vector3 direction = new (randomOnCircle.x, 0f, randomOnCircle.y);
         
             return direction.normalized;
         }
 
-        private void Throw()
+        /// <summary>
+        /// Throws this item in a random direction.
+        /// </summary>
+        /// <param name="velocity"> How much force the item should be thrown with. </param>
+        /// <param name="forceVerticality"> A value of 0 will throw the item horizontallty, a value of 1 will throw it directly up.</param>
+        protected void Throw(float velocity, float forceVerticality)
         {
-            Vector3 dir = GetThrowDirection();
-            float throwForce = _throwForce * (1 + UnityEngine.Random.Range(-_throwForceVariance, _throwForceVariance));
+            Vector3 horizontalDir = GetThrowDirection();
+            Vector3 upDir = Vector3.up;
+
+            Vector3 throwForce = velocity * Vector3.Lerp(horizontalDir, upDir, forceVerticality);
             
-            _rb.AddForce(dir * throwForce, ForceMode.VelocityChange);
+            _rb.AddForce(throwForce, ForceMode.VelocityChange);
 
         }
 

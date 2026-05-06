@@ -51,11 +51,10 @@ namespace MarbleBash
 
             for (int globIndex = 0; globIndex < numToDrop; globIndex++)
             {
-                xp glob = Instantiate(_combatConfig.xpPrefab).GetComponent<xp>();
+                XpGlob glob = Instantiate(_combatConfig.xpPrefab).GetComponent<XpGlob>();
 
-                glob.Initialise(transform.position);    
-            }
-            
+                glob.Initialise(transform.position, transform.localScale.x / 2f);    
+            }            
         }
 
         protected override Vector3 GetLookDirection()
