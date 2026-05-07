@@ -10,8 +10,10 @@ namespace MarbleBash
     {
         private MovementConfig _config;
         private DecalProjector _projector;
+        [SerializeField] private ParticleSystem _dustParticles;
         private float _strength;
         private float _opacity;
+        private float _size;
 
         public void Setup(Collision c, float force)
         {
@@ -23,12 +25,14 @@ namespace MarbleBash
 
             SetPosition(c);
             SetSize();
+
+            SetupThenPlayParticles();
         }
 
         private void SetSize()
         {
-            float size = Mathf.Lerp(_config.impactDecalMinSize, _config.impactDecalMaxSize, _config.impactDecalSizeCurve.Evaluate(_strength));
-            _projector.size = new Vector3(size, size, size);
+            _size = Mathf.Lerp(_config.impactDecalMinSize, _config.impactDecalMaxSize, _config.impactDecalSizeCurve.Evaluate(_strength));
+            _projector.size = new Vector3(_size, _size, _size);
         }
 
         private float CalculateStrength(float force)
@@ -48,6 +52,24 @@ namespace MarbleBash
             transform.SetPositionAndRotation(pos, rot);
 
             transform.Rotate(0f, 0f, UnityEngine.Random.Range(0, 360f));
+        }
+
+        private void SetupThenPlayParticles()
+        {   
+            // Dust particles:
+            var shape = _dustParticles.shape;
+            shape.radius = _size / 2f;
+
+            var emission = _dustParticles.emission;
+            var burst = emission.GetBurst(0);
+            burst.count = Mathf.Lerp(20, 60, _strength);
+            emission.SetBurst(0, burst);
+
+            // Rocks particles:
+            // ... 
+
+            // Finally play:
+            _dustParticles.Play();
         }
 
         private void Update()
