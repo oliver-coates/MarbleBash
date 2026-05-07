@@ -3,13 +3,16 @@ using UnityEngine;
 
 public class XpGlob : DroppedEntity
 {
-    public void Initialise(Marble marble, float xp)
+    private int _xp;
+
+    public void Initialise(Marble marble, int xp)
     {
         InitialiseInternal();
 
         transform.position = marble.transform.position + (UnityEngine.Random.insideUnitSphere * marble.transform.localScale.x * 0.5f);
         _hoverHeight = 0.5f;
 
+        _xp = xp;
         SetSize(Mathf.Sqrt(xp * 0.001f)+0.05f);
 
         float throwForceVariance = 0.66f;
@@ -35,9 +38,14 @@ public class XpGlob : DroppedEntity
             
             if (Vector3.Distance(transform.position, targetPos) < 0.1f)
             {
-                Destroy(gameObject);
+                ReachedPlayer();
             }
         }
     }
 
+    private void ReachedPlayer()
+    {
+        Player.instance.stats.AddXp(_xp);
+        Destroy(gameObject);
+    }
 }

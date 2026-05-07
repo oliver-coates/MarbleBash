@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 namespace MarbleBash
@@ -10,6 +11,13 @@ namespace MarbleBash
     [System.Serializable]
     public class MarbleStats
     {
+        #region Events:
+
+        public event Action<int> OnXpChanged;
+        public event Action<int> OnLevelUp;
+        #endregion
+
+        #region Level:
         [Header("Level:")]
         [SerializeField] private int _level;
         public int level
@@ -27,6 +35,16 @@ namespace MarbleBash
                 return _xp;
             }
         }
+        
+        [SerializeField] private float _xpNeededForLevelUp;
+        public float xpNeededForLevelUp
+        {
+            get
+            {
+                return _xpNeededForLevelUp;
+            }	
+        }
+        #endregion
 
         #region Stats:
         [Header("Stats:")]
@@ -43,6 +61,7 @@ namespace MarbleBash
         {
             _level = 1;
             _xp = 0;
+            RecalculateXpNeededForLevelUp();
 
             mass = new CoreStat();
             agility = new CoreStat();
@@ -50,6 +69,34 @@ namespace MarbleBash
             block = new CoreStat();
             luck = new CoreStat();
             energy = new CoreStat();
+        }
+
+        private void RecalculateXpNeededForLevelUp()
+        {
+            _xpNeededForLevelUp = _level * 100;
+        }
+    
+        public void AddXp(int amount)
+        {
+            _xp += amount;
+
+            if (_xp > _xpNeededForLevelUp)
+            {
+                _xp -= _xpNeededForLevelUp;
+                LevelUp();
+            }
+            else
+            {
+                OnXpChanged?.Invoke(amount);
+            }
+
+        }
+
+        private void LevelUp()
+        {
+            _level += 1;
+            RecalculateXpNeededForLevelUp();
+            OnLevelUp?.Invoke(_level);
         }
     }
 

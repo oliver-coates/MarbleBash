@@ -41,7 +41,7 @@ namespace MarbleBash
 
             gameObject.layer = LayerMask.NameToLayer("Debris");
 
-            SpawnXpGlobs(UnityEngine.Random.Range(1, 500f));
+            SpawnXpGlobs(UnityEngine.Random.Range(1, 25f));
 
             Destroy(gameObject, Configuration.Get<HealthConfig>().deadMarbleFadeOutTime);
         }
@@ -69,7 +69,7 @@ namespace MarbleBash
             }
         }
 
-        private void DropXpGlob(float xp)
+        private void DropXpGlob(int xp)
         {
             XpGlob glob = Instantiate(_combatConfig.xpPrefab).GetComponent<XpGlob>();
             glob.Initialise(this, xp);
