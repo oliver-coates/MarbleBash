@@ -1,3 +1,4 @@
+using MarbleBash.StatusEffects;
 using UnityEngine;
 
 namespace MarbleBash.Abilities
@@ -17,6 +18,8 @@ namespace MarbleBash.Abilities
             Vector3 force = Vector3.down * 700f;
 
             _subject.rigidbody.AddForce(force);
+
+            _subject.statusEffects.AddEffect<Pounding>();
         }
 
         protected override EnemyAbilityUseRequirement[] GetEnemyUseRequirements()

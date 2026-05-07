@@ -5191,6 +5191,7 @@ GameObject:
   - component: {fileID: 2560847754139406120}
   - component: {fileID: 6865422800289576659}
   - component: {fileID: 6948702813846551566}
+  - component: {fileID: 7359521683227966099}
   - component: {fileID: 6716917274229926903}
   - component: {fileID: 4815312233933786222}
   - component: {fileID: 3828636568881872556}
@@ -5349,6 +5350,18 @@ MonoBehaviour:
   _isGrounded: 0
   _isAgainstWall: 0
   _wallNormal: {x: 0, y: 0, z: 0}
+--- !u!114 &7359521683227966099
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8260454692025462916}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 88acd4188fb0d4e478bbc1fd6ec0046d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MarbleBash.StatusEffects.StatusEffectManager
 --- !u!114 &6716917274229926903
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5401,6 +5414,7 @@ MonoBehaviour:
   _stats:
     _level: 1
     _xp: 0
+    _xpNeededForLevelUp: 100
     mass:
       _value: 1
     agility:

@@ -1,13 +1,21 @@
 using System;
 using UnityEngine;
 
-namespace MarbleBash.Effects
+namespace MarbleBash.StatusEffects
 {
-    public abstract class Effect
+    [System.Serializable]
+    public abstract class StatusEffect
     {
-        protected Marble target;
+        private Marble _subject;
+        public Marble subject
+        {
+            get
+            {
+                return _subject;
+            }
+        }
 
-        [SerializeField] private float _duration;
+        [SerializeField] protected float _duration;
         public float duration
         {
             get
@@ -16,7 +24,7 @@ namespace MarbleBash.Effects
             }	
         }
         
-        [SerializeField] private float _timeElapsed;
+        [SerializeField] protected float _timeElapsed;
         public float timeElapsed
         {
             get
@@ -25,7 +33,7 @@ namespace MarbleBash.Effects
             }	
         }
 
-        [SerializeField] private float _strength;
+        [SerializeField] protected float _strength;
         public float strength
         {
             get
@@ -34,16 +42,18 @@ namespace MarbleBash.Effects
             }	
         }
 
-        public Action<Effect> onEffectFinished;
+        public static Action<StatusEffect> OnEffectFinished;
 
 
-        public Effect(Marble target, float length, float strength)
+        public StatusEffect()
         {
-            this.target = target;
-            _strength = strength;
-            _duration = length; 
             _timeElapsed = 0f;
+        }
 
+        public void Initialise(Marble subject)
+        {
+            _subject = subject;
+            
             Start();
         }
 
@@ -56,8 +66,7 @@ namespace MarbleBash.Effects
 
             if (_timeElapsed >= _duration)
             {
-                Finished();
-                onEffectFinished?.Invoke(this);
+                StopEffect();
             }
 
             Update();
@@ -73,6 +82,17 @@ namespace MarbleBash.Effects
         /// Called every tick that this effect is active.
         /// </summary>
         protected abstract void Update();
+
+        /// <summary>
+        /// Ends the effect. 
+        /// Will be called once duration runs out. Call this to remove the effect early if desired.
+        /// 
+        /// </summary>
+        protected void StopEffect()
+        {
+            Finished();
+            OnEffectFinished?.Invoke(this);
+        }
 
         /// <summary>
         /// Called once this effect finished.

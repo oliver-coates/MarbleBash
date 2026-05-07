@@ -1,3 +1,4 @@
+using MarbleBash.StatusEffects;
 using UnityEngine;
 
 namespace MarbleBash
@@ -66,6 +67,15 @@ namespace MarbleBash
                 return _abilities;
             }
         }
+    
+        protected StatusEffectManager _statusEffects;
+        public StatusEffectManager statusEffects
+        {
+            get
+            {
+                return _statusEffects;
+            }
+        }
 
         internal void Initialise()
         {
@@ -73,7 +83,8 @@ namespace MarbleBash
             
             _rigidbody = this.GetComponentSafe<Rigidbody>();
             _abilities = this.GetComponentSafe<Abilities.Abilities>();
-            
+            _statusEffects = this.GetComponentSafe<StatusEffectManager>();
+
             _cachedVelocity = new Vector3();
 
             // Setup subcomponents:

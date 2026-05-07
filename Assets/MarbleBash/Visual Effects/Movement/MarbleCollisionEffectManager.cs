@@ -1,3 +1,4 @@
+using System;
 using KahuInteractive.HassleFreeAudio;
 using KahuInteractive.HassleFreeConfig;
 using Unity.Cinemachine;
@@ -6,10 +7,12 @@ using UnityEngine;
 namespace MarbleBash
 {
     
-    public class MovementCollisionEffectManager : MarbleSubComponent
+    public class MarbleCollisionEffectManager : MarbleSubComponent
     {
         private MovementConfig _config;
         
+        public event Action<Collision> OnCollisionOccured;
+
         [Header("References:")]
         [SerializeField] private CinemachineImpulseSource _source;
 
@@ -31,6 +34,8 @@ namespace MarbleBash
             {
                 RegisterImpactEnemy(collision, collisionForce);
             }
+
+            OnCollisionOccured?.Invoke(collision);
         }
 
         private void RegisterImpactGround(Collision c, float magnitude)

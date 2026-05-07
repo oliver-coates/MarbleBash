@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 3233556855980811747}
   - component: {fileID: 2412970716671330613}
   - component: {fileID: 5163346413169798622}
+  - component: {fileID: 8815133265322639581}
   - component: {fileID: 4555060791517180805}
   - component: {fileID: 5118750658469363972}
   - component: {fileID: 910302221631095127}
@@ -160,6 +161,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Enemy
   _stats:
+    _level: 1
+    _xp: 0
+    _xpNeededForLevelUp: 100
     mass:
       _value: 1
     agility:
@@ -190,6 +194,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ae26baf5d04d16e4ca90b86d13cc2d2a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MarbleBash.Enemy.EnemyMovement
+--- !u!114 &8815133265322639581
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2296398700786242156}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 88acd4188fb0d4e478bbc1fd6ec0046d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MarbleBash.StatusEffects.StatusEffectManager
 --- !u!114 &4555060791517180805
 MonoBehaviour:
   m_ObjectHideFlags: 0
