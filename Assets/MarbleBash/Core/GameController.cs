@@ -42,6 +42,8 @@ namespace MarbleBash
 
         private static void RunInitialisationOrder()
         {
+            DamageManager.Initialise();
+
             OnInitialiseCore?.Invoke();
 
             OnInitialisePlayer?.Invoke();

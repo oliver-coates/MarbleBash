@@ -52,6 +52,7 @@ namespace MarbleBash.Enemy
             Vector3 myPosition = transform.position.ShearTo2D();
 
             Vector3 direction = (targetPositon - myPosition).normalized;
+
             float speed = 350f;
 
             Vector3 force = direction * speed * Time.deltaTime;

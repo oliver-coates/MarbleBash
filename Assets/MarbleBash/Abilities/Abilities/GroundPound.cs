@@ -6,7 +6,7 @@ namespace MarbleBash.Abilities
     public class GroundPound : Ability
     {
 
-        private const float HEIGHT_ABOVE_GROUND_TO_ACTIVATE = 0;
+        private const float HEIGHT_ABOVE_GROUND_TO_ACTIVATE = 4;
 
         public GroundPound(Marble subject) : base(subject)
         {

@@ -11,6 +11,8 @@ namespace MarbleBash.Abilities
         /// </summary>
         protected Marble _subject;
 
+        
+
         [Header("Decorator:")]
         [SerializeField] protected string _name;
         public string name

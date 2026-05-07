@@ -5,7 +5,7 @@ using UnityEngine;
 namespace MarbleBash
 {
 
-    public class PlayerDamageManager : MonoBehaviour
+    public class PlayerDamageInflictor : MonoBehaviour
     {
         private CombatConfig _config;
 
@@ -72,8 +72,8 @@ namespace MarbleBash
             ApplyDamageRampup(rawPlayerDamage, rawEnemyDamage, out float playerDamage, out float enemyDamage);
 
             // Final damage calculations, applying any additional damage multipliers from scaling and from perks
-            ApplyDamage(Player.instance, enemy, playerDamage, collision);
-            ApplyDamage(enemy, Player.instance, enemyDamage, collision);
+            DamageManager.ApplyDamage(Player.instance, enemy, playerDamage);
+            DamageManager.ApplyDamage(enemy, Player.instance, enemyDamage);
         }
 
         private float FindAlignedVelocity(Marble primaryBody, Marble hitBody)
@@ -130,23 +130,7 @@ namespace MarbleBash
             }
         }
 
-        private void ApplyDamage(Marble from, Marble to, float amount, Collision collision)
-        {
-            // Ignore if less than the minimum damage threshold.
-            if (amount < _config.minimumDamageThreshold)
-            {
-                return;
-            }
-
-            // Damage events hold all information regarding the damage being dealt:
-            DamageEvent damage = new DamageEvent(from, to)
-            {
-                amount = amount * _config.damageMultiplier,
-                knockbackAmount = amount * _config.knockbackMultiplier
-            };
-
-            to.health.TakeDamage(damage);
-        }        
+        
     }
 
 
