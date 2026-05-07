@@ -6,18 +6,17 @@ using UnityEngine;
 namespace MarbleBash
 {
     
-    public class MovementCollisionEffectManager : MonoBehaviour
+    public class MovementCollisionEffectManager : MarbleSubComponent
     {
         private MovementConfig _config;
         
         [Header("References:")]
         [SerializeField] private CinemachineImpulseSource _source;
 
-        private void Start()
+        protected override void Initialise()
         {
             _config = Configuration.Get<MovementConfig>();
         }
-
 
         private void OnCollisionEnter(Collision collision)
         {
@@ -69,5 +68,7 @@ namespace MarbleBash
             ImpactDecal decal = Instantiate(_config.impactDecalPrefab).GetComponent<ImpactDecal>();
             decal.Setup(c, force);   
         }
+
+
     }
 }

@@ -5,7 +5,7 @@ using UnityEngine;
 namespace MarbleBash
 {
 
-    public class SpeedEffectManager : MonoBehaviour
+    public class SpeedEffectManager : MarbleSubComponent
     {
         private MovementConfig _c;
         private ParticleSystem _particles;
@@ -14,12 +14,11 @@ namespace MarbleBash
 
         private float _emissionTimer;
 
-        private void Start()
+        protected override void Initialise()
         {
             _c = Configuration.Get<MovementConfig>();
             _particles = this.GetComponentSafe<ParticleSystem>();
         }
-
 
         private void Update()
         {

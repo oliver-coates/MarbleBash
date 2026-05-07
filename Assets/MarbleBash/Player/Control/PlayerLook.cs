@@ -1,3 +1,4 @@
+using MarbleBash;
 using Unity.Cinemachine;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -71,7 +72,19 @@ public class PlayerLook : MonoBehaviour
     [SerializeField] private float _minimumPitch = -5f;
     [SerializeField] private float _maxmimumPitch = 70f;
 
-    private void Start()
+    #region Initialisation & Destruction
+    void Awake()
+    {
+        GameController.OnInitialisePlayer += Setup;
+    }
+
+    private void OnDestroy()
+    {
+        GameController.OnInitialisePlayer -= Setup;
+    }
+    #endregion
+
+    private void Setup()
     {
         SetupInput();
         LockCursor();

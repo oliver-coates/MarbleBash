@@ -10,7 +10,7 @@ namespace MarbleBash.Abilities
 
         private Abilities _abilities;
 
-        private void Start()
+        private void Awake()
         {
             _abilities = this.GetComponentSafe<Abilities>();
         }

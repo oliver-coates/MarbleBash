@@ -14,7 +14,7 @@ public class FpsBenchmark : MonoBehaviour
     private float _framesRecordingTimer;
     private float _currentFps;
 
-    private void Start()
+    private void Awake()
     {
         _averageFpsList = new List<float>();
     }
@@ -49,7 +49,7 @@ public class FpsBenchmark : MonoBehaviour
 
     public void OnGUI()
     {
-        GUI.Box(new Rect(10, 10, 350, 60),
+        GUI.Box(new Rect(Screen.width/2 - 75, 10, 150, 40),
                 $"FPS: {_currentFps:0.0} across {_fpsRecordingTime}s\n" +
                 $"Average: {_averageFps}");
     }

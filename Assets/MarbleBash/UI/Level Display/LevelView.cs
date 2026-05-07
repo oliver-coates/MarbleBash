@@ -8,6 +8,8 @@ namespace MarbleBash.UI
 
     public class LevelView : MonoBehaviour
     {
+        private bool _initialised;
+
         [Header("References:")]
         [SerializeField] private Image _xpFillRing;
         [SerializeField] private TextMeshProUGUI _levelText;
@@ -15,8 +17,28 @@ namespace MarbleBash.UI
         [Header("State:")]
         [SerializeField] private float _ringFillTarget;
 
-        private void Start()
+        #region Initialisation & Destruction
+        void Awake()
         {
+            GameController.OnInitialiseUI += Setup;
+        }
+
+        private void OnDestroy()
+        {
+            GameController.OnInitialiseUI -= Setup;
+
+            if (_initialised)
+            {
+                Player.instance.stats.OnXpChanged -= PlayerXpChanged;
+                Player.instance.stats.OnLevelUp -= PlayerLevelUp;
+            }
+        }
+        #endregion
+
+        private void Setup()
+        {
+            _initialised = true;
+
             Player.instance.stats.OnXpChanged += PlayerXpChanged;
             Player.instance.stats.OnLevelUp += PlayerLevelUp;
 
@@ -25,16 +47,8 @@ namespace MarbleBash.UI
             RedrawLevelText();
         }
 
-        private void OnDestroy()
-        {
-            Player.instance.stats.OnXpChanged -= PlayerXpChanged;
-            Player.instance.stats.OnLevelUp -= PlayerLevelUp;
-
-        }
-
         private void PlayerXpChanged(int amount)
         {
-            Debug.Log($"XP Changed");
             RecalculateRingFillTarget();
         }
 

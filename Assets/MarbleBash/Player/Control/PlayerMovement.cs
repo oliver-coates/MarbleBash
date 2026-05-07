@@ -4,7 +4,7 @@ using MarbleBash;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class PlayerMovement : MonoBehaviour
+public class PlayerMovement : MarbleSubComponent
 {
     private MovementConfig _config;
 
@@ -70,14 +70,14 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
-
-    private void Start()
+    protected override void Initialise()
     {
         _config = Configuration.Get<MovementConfig>();
         _rb = GetComponent<Rigidbody>();
 
         SetupInput();
     }
+
 
     private void Update()
     {
@@ -179,4 +179,6 @@ public class PlayerMovement : MonoBehaviour
         // We consider against a wall if the difference in y is less than 0.2 units.
         return yDiff < 0.2f; 
     }
+
+
 }

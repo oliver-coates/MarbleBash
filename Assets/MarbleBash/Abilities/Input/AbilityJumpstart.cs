@@ -5,7 +5,21 @@ using UnityEngine;
 
 public class AbilityJumpstart : MonoBehaviour
 {
-    public void Start()
+    #region Initalisation & Destruction
+
+    private void Awake()
+    {
+        GameController.OnInitialisePlayerSecondary += Setup;
+    }
+
+    private void OnDestroy()
+    {
+        GameController.OnInitialisePlayerSecondary -= Setup;
+    }
+
+    #endregion
+
+    public void Setup()
     {
         Marble subject = this.GetComponentSafe<Marble>();
         Abilities abilities = this.GetComponentSafe<Abilities>();

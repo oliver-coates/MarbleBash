@@ -13,7 +13,7 @@ namespace MarbleBash.Enemy
 
         
 
-        private void Start()
+        private void Awake()
         {
             _rb = this.GetComponentSafe<Rigidbody>();
             _enemy = this.GetComponentSafe<EnemyInstance>();

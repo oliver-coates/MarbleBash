@@ -67,12 +67,14 @@ namespace MarbleBash
             }
         }
 
-        private void Start()
+        internal void Initialise()
         {
             _health = new MarbleHealth(this);
             
             _rigidbody = this.GetComponentSafe<Rigidbody>();
             _abilities = this.GetComponentSafe<Abilities.Abilities>();
+            
+            _cachedVelocity = new Vector3();
 
             // Setup subcomponents:
             foreach (MarbleSubComponent subcomponent in transform.GetComponentsInChildren<MarbleSubComponent>())

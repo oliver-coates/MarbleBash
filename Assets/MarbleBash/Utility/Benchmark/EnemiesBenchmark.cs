@@ -1,3 +1,4 @@
+using MarbleBash;
 using UnityEngine;
 
 public class EnemiesBenchmark : MonoBehaviour
@@ -10,6 +11,7 @@ public class EnemiesBenchmark : MonoBehaviour
     [SerializeField] private Transform _rotator;
     [SerializeField] private Transform _spawnPos;
     [SerializeField] private Transform _enemyHolder;
+
     private int _numEnemiesSpawned;
     private float _spawnTimer;
 
@@ -22,7 +24,10 @@ public class EnemiesBenchmark : MonoBehaviour
         {
             Vector3 spawnPos = _spawnPos.position + (Random.insideUnitSphere * _spawnRadius);
             _numEnemiesSpawned++;
-            Instantiate(_prefab, spawnPos, Quaternion.identity, _enemyHolder);
+            
+            Marble spawnedEnemy = Instantiate(_prefab, spawnPos, Quaternion.identity, _enemyHolder).GetComponent<Marble>();
+            spawnedEnemy.Initialise();
+
             _spawnTimer = _timeToSpawnEnemy;
         }
     }

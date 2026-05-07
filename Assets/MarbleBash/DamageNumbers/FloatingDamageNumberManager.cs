@@ -13,7 +13,7 @@ namespace MarbleBash
 
 
         #region Initialisation & Destruction
-        void Start()
+        void Awake()
         {
             MarbleHealth.OnDamageTakenGlobal += OnDamageEvent;
         }

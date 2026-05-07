@@ -9,7 +9,19 @@ namespace MarbleBash
     {
         private CombatConfig _config;
 
-        private void Start()
+        #region Initialisation & Destruction
+        void Awake()
+        {
+            GameController.OnInitialisePlayer += Setup;
+        }
+
+        private void OnDestroy()
+        {
+            GameController.OnInitialisePlayer -= Setup;
+        }
+        #endregion
+
+        private void Setup()
         {
             _config = Configuration.Get<CombatConfig>();
         }
