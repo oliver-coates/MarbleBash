@@ -11,35 +11,28 @@ namespace MarbleBash
     {
         private MovementConfig _config;
         
-        public event Action<Collision> OnCollisionOccured;
-
         [Header("References:")]
         [SerializeField] private CinemachineImpulseSource _source;
 
         protected override void Initialise()
         {
             _config = Configuration.Get<MovementConfig>();
+        
+            PlayerCollisionHandler.OnCollisionGround += RegisterImpactGround;
+            PlayerCollisionHandler.OnCollisionMarble += RegisterImpactEnemy;
+
         }
 
-        private void OnCollisionEnter(Collision collision)
+        private void OnDestroy()
         {
-            float collisionForce = collision.impulse.magnitude;
-
-            string tag = collision.gameObject.tag; 
-            if (tag == "Untagged")
-            {
-                RegisterImpactGround(collision, collisionForce);            
-            }
-            else if (tag == "Enemy")
-            {
-                RegisterImpactEnemy(collision, collisionForce);
-            }
-
-            OnCollisionOccured?.Invoke(collision);
+            PlayerCollisionHandler.OnCollisionGround -= RegisterImpactGround;
+            PlayerCollisionHandler.OnCollisionMarble -= RegisterImpactEnemy;    
         }
 
-        private void RegisterImpactGround(Collision c, float magnitude)
+        private void RegisterImpactGround(Collision c)
         {
+            float magnitude = c.impulse.magnitude;
+
             if (magnitude > _config.minimumCollisionForceRequiredForCameraShake)
             {
                 DoCameraShake(magnitude);    
@@ -54,8 +47,10 @@ namespace MarbleBash
             
         }
 
-        private void RegisterImpactEnemy(Collision c, float magnitude)
+        private void RegisterImpactEnemy(Collision c, Marble m)
         {
+            float magnitude = c.impulse.magnitude;
+
             AudioEngine.PlaySound(_config.impactLowClipSet, Mathf.Log(magnitude, 2f) * 0.5f);
         }
 
