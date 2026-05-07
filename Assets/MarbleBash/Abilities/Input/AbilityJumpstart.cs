@@ -25,5 +25,6 @@ public class AbilityJumpstart : MonoBehaviour
         Abilities abilities = this.GetComponentSafe<Abilities>();
 
         abilities.EquipAbility(new Dash(subject), 0);
+        abilities.EquipAbility(new GroundPound(subject), 1);
     }
 }

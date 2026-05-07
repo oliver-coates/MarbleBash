@@ -70,6 +70,15 @@ public class PlayerMovement : MarbleSubComponent
         }
     }
 
+    private float _distanceToGround;
+    public float distanceToGround
+    {
+        get
+        {
+            return _distanceToGround;
+        }
+    }
+
     protected override void Initialise()
     {
         _config = Configuration.Get<MovementConfig>();
@@ -100,6 +109,11 @@ public class PlayerMovement : MarbleSubComponent
         if (Physics.Raycast(downRay, out RaycastHit hit, 100f, _groundedLayerMask))
         {
             _groundedPosition = hit.point;
+            _distanceToGround = hit.distance;
+        }
+        else
+        {
+            _distanceToGround = 100f;
         }
     }
 

@@ -21,6 +21,7 @@ namespace MarbleBash.Abilities
 
         internal void AttemptActivateAbility(int index)
         {
+            Debug.Log($"Attempt: {index}");
             Ability ability = _abilities[index];
 
             // Ensure there is an ability in this slot.
