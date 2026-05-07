@@ -1,4 +1,3 @@
-using MarbleBash.StatusEffects;
 using UnityEngine;
 
 namespace MarbleBash.Abilities

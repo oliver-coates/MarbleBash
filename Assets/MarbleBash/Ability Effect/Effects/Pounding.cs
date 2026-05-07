@@ -1,10 +1,10 @@
 using TMPro;
 using UnityEngine;
 
-namespace MarbleBash.StatusEffects
+namespace MarbleBash.Abilities
 {
     [System.Serializable]
-    public class Pounding : StatusEffect
+    public class Pounding : AbilityEffect
     {
         private MarbleCollisionEffectManager _collisionManager;
         public Pounding() : base()
@@ -40,7 +40,16 @@ namespace MarbleBash.StatusEffects
 
         private void PoundMarble(Marble toPound, float force)
         {
-            DamageManager.ApplyDamage(subject, toPound, force * 1.5f);
+            // Randomise knockback direction - It doesn't really matter here as the 
+            // physics engine is going to freak out from the player pounding onto the enemy.
+            Vector3 knockbackDir = new Vector3(Random.Range(0,1f), 0, Random.Range(0, 1f)).normalized;
+            
+            DamageManager.ApplyDamage(subject, toPound, force * 1.5f, knockbackDir);
+
+            Vector3 velocity = subject.rigidbody.linearVelocity;
+            velocity.y = -subject.cachedVelocity.y * 0.5f;
+
+            subject.rigidbody.linearVelocity = velocity;
         }
 
         private void PoundGround(Vector3 pos, float force)
@@ -56,7 +65,11 @@ namespace MarbleBash.StatusEffects
                     float distanceL = Vector3.Distance(pos, hitMarble.transform.position) / size;
 
                     float damage = force * distanceL;
-                    DamageManager.ApplyDamage(subject, hitMarble, damage);
+
+                    Vector3 knockbackDir = hitMarble.transform.position - subject.transform.position;
+                    knockbackDir.y = 3f;
+
+                    DamageManager.ApplyDamage(subject, hitMarble, damage, knockbackDir, 1.25f);
                 }
             }
 

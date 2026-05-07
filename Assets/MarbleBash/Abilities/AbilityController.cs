@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace MarbleBash.Abilities
 {
-    public class Abilities : MonoBehaviour
+    public class AbilityController : MonoBehaviour
     {
         [Header("Config:")]
         [Tooltip("Tick this to enable enemy AI activating abilities"), SerializeField] private bool _isEnemy;

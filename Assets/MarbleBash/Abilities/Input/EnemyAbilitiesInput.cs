@@ -8,11 +8,11 @@ namespace MarbleBash.Abilities
         [SerializeField] private float _timeToActivate = 2;
         [SerializeField] private float _timer;
 
-        private Abilities _abilities;
+        private AbilityController _abilities;
 
         private void Awake()
         {
-            _abilities = this.GetComponentSafe<Abilities>();
+            _abilities = this.GetComponentSafe<AbilityController>();
         }
 
         private void Update()

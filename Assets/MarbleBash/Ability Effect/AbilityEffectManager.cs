@@ -2,30 +2,30 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace MarbleBash.StatusEffects
+namespace MarbleBash.Abilities
 {
 
-    public class StatusEffectManager : MarbleSubComponent
+    public class AbilityEffectManager : MarbleSubComponent
     {
-        [SerializeField] private List<StatusEffect> _currentEffects;
+        [SerializeField] private List<AbilityEffect> _currentEffects;
 
         #region Initialisation & Destruction
 
         protected override void Initialise()
         {
-            StatusEffect.OnEffectFinished += RemoveEffect;
+            AbilityEffect.OnEffectFinished += RemoveEffect;
             
-            _currentEffects = new List<StatusEffect>();
+            _currentEffects = new List<AbilityEffect>();
         }
 
         private void OnDestroy()
         {
-            StatusEffect.OnEffectFinished -= RemoveEffect;            
+            AbilityEffect.OnEffectFinished -= RemoveEffect;            
         }
 
         #endregion
 
-        public void AddEffect<TEffectType>() where TEffectType : StatusEffect, new()
+        public void AddEffect<TEffectType>() where TEffectType : AbilityEffect, new()
         {
             // Create a new instance of the provided type:
             TEffectType effect = new TEffectType();
@@ -34,7 +34,7 @@ namespace MarbleBash.StatusEffects
             _currentEffects.Add(effect);
         }
 
-        private void RemoveEffect(StatusEffect effect)
+        private void RemoveEffect(AbilityEffect effect)
         {
             _currentEffects.Remove(effect);
         }
@@ -48,7 +48,7 @@ namespace MarbleBash.StatusEffects
 
         private void TickCurrentEffects()
         {
-            foreach (StatusEffect effect in _currentEffects)
+            foreach (AbilityEffect effect in _currentEffects)
             {
                 effect.Tick();
             }

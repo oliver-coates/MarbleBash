@@ -32,20 +32,7 @@ namespace MarbleBash
             }	
         }
 
-        
-        [SerializeField] private Vector3 _direction;
-        /// <summary>
-        /// The direction of the damage, from the center of the damaging marble towards the damaged marble.
-        /// Calculated automatically in the constructor
-        /// </summary>
-        public Vector3 direction
-        {
-            get
-            {
-                return _direction;
-            }	
-        }
-
+    
         
         [SerializeField] private Vector3 _location;
         /// <summary>
@@ -71,15 +58,18 @@ namespace MarbleBash
         /// </summary>
         public float knockbackAmount;
 
+        /// <summary>
+        /// The direction of the knockback caused by this damage, 
+        /// </summary>
+        public Vector3 knockbackDirection;
+
         public DamageEvent(Marble source, Marble target)
         {
             _source = source; 
             _target = target;
 
             _location = target.transform.position;
-            _direction = (source.transform.position - target.transform.position).normalized;
         }
-    
 
     }
 

@@ -1,10 +1,10 @@
 using System;
 using UnityEngine;
 
-namespace MarbleBash.StatusEffects
+namespace MarbleBash.Abilities
 {
     [System.Serializable]
-    public abstract class StatusEffect
+    public abstract class AbilityEffect
     {
         private Marble _subject;
         public Marble subject
@@ -42,10 +42,10 @@ namespace MarbleBash.StatusEffects
             }	
         }
 
-        public static Action<StatusEffect> OnEffectFinished;
+        public static Action<AbilityEffect> OnEffectFinished;
 
 
-        public StatusEffect()
+        public AbilityEffect()
         {
             _timeElapsed = 0f;
         }

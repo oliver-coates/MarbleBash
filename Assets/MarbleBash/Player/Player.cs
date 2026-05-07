@@ -23,8 +23,8 @@ namespace MarbleBash
         }
 
 
-        [SerializeField] private Abilities.Abilities _abilities;
-        public static Abilities.Abilities abilities
+        [SerializeField] private Abilities.AbilityController _abilities;
+        public static Abilities.AbilityController abilities
         {
             get
             {

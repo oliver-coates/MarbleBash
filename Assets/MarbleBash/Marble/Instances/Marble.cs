@@ -1,5 +1,5 @@
-using MarbleBash.StatusEffects;
 using UnityEngine;
+using MarbleBash.Abilities;
 
 namespace MarbleBash
 {
@@ -59,8 +59,8 @@ namespace MarbleBash
             }
         }
 
-        protected Abilities.Abilities _abilities;
-        public Abilities.Abilities abilities
+        protected Abilities.AbilityController _abilities;
+        public Abilities.AbilityController abilities
         {
             get
             {
@@ -68,8 +68,8 @@ namespace MarbleBash
             }
         }
     
-        protected StatusEffectManager _statusEffects;
-        public StatusEffectManager statusEffects
+        protected AbilityEffectManager _statusEffects;
+        public AbilityEffectManager statusEffects
         {
             get
             {
@@ -82,8 +82,8 @@ namespace MarbleBash
             _health = new MarbleHealth(this);
             
             _rigidbody = this.GetComponentSafe<Rigidbody>();
-            _abilities = this.GetComponentSafe<Abilities.Abilities>();
-            _statusEffects = this.GetComponentSafe<StatusEffectManager>();
+            _abilities = this.GetComponentSafe<Abilities.AbilityController>();
+            _statusEffects = this.GetComponentSafe<AbilityEffectManager>();
 
             _cachedVelocity = new Vector3();
 

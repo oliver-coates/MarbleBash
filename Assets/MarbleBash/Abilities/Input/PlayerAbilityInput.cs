@@ -5,7 +5,7 @@ namespace MarbleBash.Abilities
 {
     public class PlayerAbilityInput : MonoBehaviour
     {
-        [SerializeField] private Abilities _target;
+        [SerializeField] private AbilityController _target;
 
         
         [Header("Input:")]

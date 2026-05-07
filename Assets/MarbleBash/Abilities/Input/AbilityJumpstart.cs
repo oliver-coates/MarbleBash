@@ -22,7 +22,7 @@ public class AbilityJumpstart : MonoBehaviour
     public void Setup()
     {
         Marble subject = this.GetComponentSafe<Marble>();
-        Abilities abilities = this.GetComponentSafe<Abilities>();
+        AbilityController abilities = this.GetComponentSafe<AbilityController>();
 
         abilities.EquipAbility(new Dash(subject), 0);
         abilities.EquipAbility(new GroundPound(subject), 1);

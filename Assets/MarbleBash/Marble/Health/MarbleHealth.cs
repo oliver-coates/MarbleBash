@@ -120,7 +120,7 @@ namespace MarbleBash
             }
 
             // Apply knockback:
-            Vector3 knockbackForce = damageEvent.knockbackAmount * (-damageEvent.direction + (Vector3.up * 0.33f));
+            Vector3 knockbackForce = damageEvent.knockbackAmount * damageEvent.knockbackDirection.normalized;
             _marble.rigidbody.AddForce(knockbackForce, ForceMode.Impulse);
         
             // Finish by firing event
