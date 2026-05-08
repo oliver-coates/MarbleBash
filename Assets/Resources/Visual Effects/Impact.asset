@@ -1,0 +1,16 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4be2563bac6e48d46a231e5053ca4134, type: 3}
+  m_Name: Impact
+  m_EditorClassIdentifier: Assembly-CSharp::KahuInteractive.VisualFX.OneShotEffectType
+  _prefab: {fileID: 7918670568811036236, guid: 7876614cd10d0fa4ea1b76b8106407fa, type: 3}
+  _useCase: 1

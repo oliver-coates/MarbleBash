@@ -9,7 +9,7 @@ namespace KahuInteractive.VisualFX
         public Vector3 position;
         public Quaternion rotation;
         public float strength;
-    
+
         public OneShotEffectData(string name, Vector3 position)
         {
             this.name = name;

@@ -12,7 +12,15 @@ namespace KahuInteractive.VisualFX
 
         private static bool _Initialised;
 
-        private static Transform _playbackHolder;
+        private static Transform _instanceContainer;
+        public static Transform instanceContainer
+        {
+            get
+            {
+                return _instanceContainer;
+            }
+        }
+
 
         #region Initialisation
         public static void Initialise()
@@ -25,8 +33,8 @@ namespace KahuInteractive.VisualFX
 
             _Initialised = true;
 
-            _playbackHolder = new GameObject("[KahuVFX] Effect Holder").transform;
-            GameObject.DontDestroyOnLoad(_playbackHolder);
+            _instanceContainer = new GameObject("[KahuVFX] Effect Holder").transform;
+            GameObject.DontDestroyOnLoad(_instanceContainer);
 
             SetupEffectDictionary();
         }
@@ -47,7 +55,10 @@ namespace KahuInteractive.VisualFX
                     OneShotEffectType effect = loadedObject as OneShotEffectType; 
                     
                     AddEffectToDictionary(effect);
-                    SetupEffectWithSceneInstance(effect);
+                    if (effect.useCase == OneShotEffectType.UseCase.Reuse)
+                    {
+                        SetupEffectWithSceneInstance(effect);                    
+                    }
                 }
             }
         }
@@ -65,10 +76,10 @@ namespace KahuInteractive.VisualFX
         
         private static void SetupEffectWithSceneInstance(OneShotEffectType effect)
         {
-            GameObject newInstance = GameObject.Instantiate(effect.prefab, _playbackHolder);
+            GameObject newInstance = GameObject.Instantiate(effect.prefab, _instanceContainer);
             newInstance.name = $"{effect.name} Scene Instance"; 
             
-            effect.SetSceneInstance(newInstance.GetComponent<VisualEffectHandler>());        
+            effect.SetReusableInstance(newInstance.GetComponent<VisualEffectHandler>());        
         }
 
         #endregion

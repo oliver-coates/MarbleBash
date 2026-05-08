@@ -78,8 +78,20 @@ namespace MarbleBash
     
         private void CreateImpactDecal(Collision c, float force)
         {
-            ImpactDecal decal = Instantiate(_config.impactDecalPrefab).GetComponent<ImpactDecal>();
-            decal.Setup(c, force);   
+            // ImpactDecal decal = Instantiate(_config.impactDecalPrefab).GetComponent<ImpactDecal>();
+            // decal.Setup(c, force);   
+            ContactPoint p = c.contacts[0];
+            Vector3 position = p.point + (p.normal * 0.09f);
+            Quaternion rotation = Quaternion.LookRotation(-p.normal);
+            float size = force / 10f;
+
+            OneShotEffectData impactData = new OneShotEffectData("Impact", position)
+            {
+                rotation = rotation,
+                strength = size
+            };
+
+            VFX.Play(impactData);
         }
 
 

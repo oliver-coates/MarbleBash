@@ -6,6 +6,12 @@ namespace KahuInteractive.VisualFX
     [CreateAssetMenu(fileName = "Unnamed Effect", menuName = "Kahu Interactive/VFX/One Shot")]
     public class OneShotEffectType : ScriptableObject
     {
+        public enum UseCase
+        {
+            Reuse,
+            CreateNewEachTime
+        }
+
         [SerializeField] private GameObject _prefab;
         public GameObject prefab
         {
@@ -14,17 +20,38 @@ namespace KahuInteractive.VisualFX
                 return _prefab;
             }
         }
-    
-        private VisualEffectHandler _instance;
 
-        public void SetSceneInstance(VisualEffectHandler instance)
+        [SerializeField] private UseCase _useCase;
+        public UseCase useCase
         {
-            _instance = instance;
+            get
+            {
+                return _useCase;
+            }	
+        }
+
+
+        private VisualEffectHandler _reusableInstance;
+
+        public void SetReusableInstance(VisualEffectHandler instance)
+        {
+            _reusableInstance = instance;
         }
 
         public void Play(OneShotEffectData data)
         {
-            _instance.Play(data);
+            switch (_useCase)
+            {
+                case UseCase.Reuse:
+                    _reusableInstance.Play(data);
+                    break;
+
+                case UseCase.CreateNewEachTime:
+                    VisualEffectHandler effectInstance = Instantiate(_prefab, VFX.instanceContainer).GetComponent<VisualEffectHandler>();
+                    effectInstance.Play(data);
+                    break;
+            }
+            
         }
     }
 
