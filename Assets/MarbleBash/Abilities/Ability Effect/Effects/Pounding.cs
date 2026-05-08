@@ -59,7 +59,11 @@ namespace MarbleBash.Abilities
             VisualEffectManager.CreateEffect("Ground Pound", pos, size);
         }
 
-        protected override void Update() {}
+        protected override void Update()
+        {
+            Vector3 force = Vector3.down * 1000 * Time.deltaTime;
+            subject.rigidbody.AddForce(force);
+        }
 
         protected override void Finished()
         {

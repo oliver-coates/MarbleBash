@@ -9,21 +9,10 @@ namespace MarbleBash.Abilities
     {
         [SerializeField] private List<AbilityEffect> _currentEffects;
 
-        #region Initialisation & Destruction
-
         protected override void Initialise()
         {
-            AbilityEffect.OnEffectFinished += RemoveEffect;
-            
             _currentEffects = new List<AbilityEffect>();
         }
-
-        private void OnDestroy()
-        {
-            AbilityEffect.OnEffectFinished -= RemoveEffect;            
-        }
-
-        #endregion
 
         public void AddEffect<TEffectType>() where TEffectType : AbilityEffect, new()
         {
@@ -34,25 +23,32 @@ namespace MarbleBash.Abilities
             _currentEffects.Add(effect);
         }
 
-        private void RemoveEffect(AbilityEffect effect)
-        {
-            _currentEffects.Remove(effect);
-        }
 
         private void Update()
         {
             TickCurrentEffects();
         }
 
-
-
         private void TickCurrentEffects()
         {
-            foreach (AbilityEffect effect in _currentEffects)
+            int adjustedIndex = 0;
+            for (int index = 0; index < _currentEffects.Count; index++)
             {
+                AbilityEffect effect = _currentEffects[adjustedIndex]; 
                 effect.Tick();
+
+                if (effect.isFinished)
+                {
+                    _currentEffects.Remove(effect);
+                }   
+                else
+                {
+                    adjustedIndex++;
+                }
             }
         }
+
+        
     }
 
 

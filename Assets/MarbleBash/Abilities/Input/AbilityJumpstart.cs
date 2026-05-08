@@ -26,5 +26,6 @@ public class AbilityJumpstart : MonoBehaviour
 
         abilities.EquipAbility(new Dash(subject), 0);
         abilities.EquipAbility(new GroundPound(subject), 1);
+        abilities.EquipAbility(new Charge(subject), 2);
     }
 }

@@ -33,6 +33,14 @@ namespace MarbleBash
             }
         }
 
+        private void Update()
+        {
+            if (transform.position.y < -25f)
+            {
+                Die();
+            }
+        }
+
         private void Die()
         {
             // Disable behaviour

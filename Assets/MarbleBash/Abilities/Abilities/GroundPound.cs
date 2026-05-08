@@ -14,11 +14,10 @@ namespace MarbleBash.Abilities
 
         protected override void Activate()
         {
-            Vector3 force = Vector3.down * 700f;
-
+            Vector3 force = Vector3.down * 350f;
             _subject.rigidbody.AddForce(force);
 
-            _subject.statusEffects.AddEffect<Pounding>();
+            _subject.abilityEffects.AddEffect<Pounding>();
         }
 
         protected override EnemyAbilityUseRequirement[] GetEnemyUseRequirements()

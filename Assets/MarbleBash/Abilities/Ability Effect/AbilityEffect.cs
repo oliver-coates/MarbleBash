@@ -42,11 +42,18 @@ namespace MarbleBash.Abilities
             }	
         }
 
-        public static Action<AbilityEffect> OnEffectFinished;
-
+        [SerializeField] private bool _isFinished;
+        public bool isFinished
+        {
+            get
+            {
+                return _isFinished;
+            }	
+        }
 
         public AbilityEffect()
         {
+            _isFinished = false;
             _timeElapsed = 0f;
         }
 
@@ -90,8 +97,8 @@ namespace MarbleBash.Abilities
         /// </summary>
         protected void StopEffect()
         {
+            _isFinished = true;
             Finished();
-            OnEffectFinished?.Invoke(this);
         }
 
         /// <summary>

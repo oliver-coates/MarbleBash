@@ -69,7 +69,7 @@ namespace MarbleBash
         }
     
         protected AbilityEffectManager _statusEffects;
-        public AbilityEffectManager statusEffects
+        public AbilityEffectManager abilityEffects
         {
             get
             {
