@@ -1,6 +1,7 @@
 using System;
 using KahuInteractive.HassleFreeAudio;
 using KahuInteractive.HassleFreeConfig;
+using KahuInteractive.VisualFX;
 using Unity.Cinemachine;
 using UnityEngine;
 
@@ -44,7 +45,6 @@ namespace MarbleBash
             }
 
             AudioEngine.PlaySound(_config.impactLowClipSet, Mathf.Log(magnitude, 2f) * 0.5f);
-            
         }
 
         private void RegisterImpactEnemy(Collision c, Marble m)
@@ -52,7 +52,9 @@ namespace MarbleBash
             float magnitude = c.impulse.magnitude;
 
             AudioEngine.PlaySound(_config.impactLowClipSet, Mathf.Log(magnitude, 2f) * 0.5f);
+            VFX.Play(new OneShotEffectData("Marble Hit Shards", m.transform.position));            
         }
+
 
         private void DoCameraShake(float force)
         {

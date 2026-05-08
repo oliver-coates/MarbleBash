@@ -7,7 +7,7 @@ using UnityEngine.Audio;
 namespace KahuInteractive.HassleFreeAudio
 {
 
-    [CreateAssetMenu(fileName = "New Clip Set", menuName = "KahuInteractive/HassleFreeAudio/ClipSet", order = 1)]
+    [CreateAssetMenu(fileName = "New Clip Set", menuName = "Kahu Interactive/HassleFreeAudio/ClipSet", order = 1)]
     public class ClipSet : ScriptableObject
     {
         [SerializeField] private AudioClip[] _clips;

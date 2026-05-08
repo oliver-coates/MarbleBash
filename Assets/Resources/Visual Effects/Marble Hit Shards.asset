@@ -1,0 +1,15 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4be2563bac6e48d46a231e5053ca4134, type: 3}
+  m_Name: Marble Hit Shards
+  m_EditorClassIdentifier: Assembly-CSharp::KahuInteractive.VisualFX.OneShotEffectType
+  _prefab: {fileID: 3542773550640104737, guid: 679a8dd115b95334d85e2ac6e3967d2a, type: 3}
