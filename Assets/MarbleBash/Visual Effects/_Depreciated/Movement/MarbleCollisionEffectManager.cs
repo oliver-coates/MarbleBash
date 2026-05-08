@@ -21,6 +21,7 @@ namespace MarbleBash
         
             PlayerCollisionHandler.OnCollisionGround += RegisterImpactGround;
             PlayerCollisionHandler.OnCollisionMarble += RegisterImpactEnemy;
+            MarbleHealth.OnDamageTakenGlobal += RegisterDamage;
 
         }
 
@@ -28,6 +29,7 @@ namespace MarbleBash
         {
             PlayerCollisionHandler.OnCollisionGround -= RegisterImpactGround;
             PlayerCollisionHandler.OnCollisionMarble -= RegisterImpactEnemy;    
+            MarbleHealth.OnDamageTakenGlobal -= RegisterDamage;
         }
 
         private void RegisterImpactGround(Collision c)
@@ -51,8 +53,17 @@ namespace MarbleBash
         {
             float magnitude = c.impulse.magnitude;
 
-            AudioEngine.PlaySound(_config.impactLowClipSet, Mathf.Log(magnitude, 2f) * 0.5f);
-            VFX.Play(new OneShotEffectData("Marble Hit Shards", m.transform.position));            
+            AudioEngine.PlaySound(_config.impactLowClipSet, Mathf.Log(magnitude, 2f) * 0.5f);            
+        }
+
+        private void RegisterDamage(MarbleHealth.HealthChangedEvent damageEvent)
+        {
+            OneShotEffectData effect = new OneShotEffectData("Marble Hit Shards", damageEvent.marble.transform.position) 
+            {
+                strength = damageEvent.totalHealthChange
+            }; 
+
+            VFX.Play(effect);
         }
 
 

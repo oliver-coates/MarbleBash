@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 7743485826561357409}
   - component: {fileID: 9011971189106917890}
   - component: {fileID: 6084772136278984149}
-  - component: {fileID: 454749794876976594}
+  - component: {fileID: 4340603122133139752}
   m_Layer: 0
   m_Name: Marble Hit Particles
   m_TagString: Untagged
@@ -866,7 +866,7 @@ ParticleSystem:
           m_PostInfinity: 2
           m_RotationOrder: 4
   EmissionModule:
-    enabled: 1
+    enabled: 0
     serializedVersion: 4
     rateOverTime:
       serializedVersion: 2
@@ -4904,7 +4904,7 @@ ParticleSystemRenderer:
   m_MeshWeighting1: 1
   m_MeshWeighting2: 1
   m_MeshWeighting3: 1
---- !u!114 &454749794876976594
+--- !u!114 &4340603122133139752
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -4913,6 +4913,6 @@ MonoBehaviour:
   m_GameObject: {fileID: 3542773550640104737}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b3cedc7a2fc96b543968fb829fc22f10, type: 3}
+  m_Script: {fileID: 11500000, guid: a5445c8bc20542d4d92aaa823c1265ad, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::MarbleBash.VFX.VFX_SimplePlay
+  m_EditorClassIdentifier: Assembly-CSharp::MarbleBash.VisualEffects.VFX_MarbleShards
