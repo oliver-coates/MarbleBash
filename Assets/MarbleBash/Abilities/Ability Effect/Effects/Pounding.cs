@@ -45,7 +45,7 @@ namespace MarbleBash.Abilities
                 if (hit.tag is "Enemy" or "Player")
                 {
                     Marble hitMarble = hit.gameObject.GetComponent<Marble>();
-                    float distanceL = Vector3.Distance(pos, hitMarble.transform.position) / size;
+                    float distanceL = 1f - (Vector3.Distance(pos, hitMarble.transform.position) / size);
 
                     float damage = force * distanceL;
 
