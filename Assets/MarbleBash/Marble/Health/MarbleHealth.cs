@@ -16,6 +16,8 @@ namespace MarbleBash
         /// </summary>
         public event Action<int> OnLivesChanged;
 
+        public event Action OnDied;
+
         /// <summary>
         /// Called when taken damage from any source.
         /// HealthChangedEvent contains all the information regarding the change in health.
@@ -33,6 +35,16 @@ namespace MarbleBash
             }	
         }    
     
+        [SerializeField] private bool _isDead;
+        public bool isDead
+        {
+            get
+            {
+                return _isDead;
+            }	
+        }
+
+
         [Header("Health:")]
         [SerializeField] private float _hp;
         public float health
@@ -92,8 +104,7 @@ namespace MarbleBash
                 return;
             }
             
-            HealthChangedEvent newEvent = new (damageEvent.target);
-            newEvent.totalHealthChange = -damageEvent.amount;
+            HealthChangedEvent newEvent = new (damageEvent);
 
             // Apply shield:
             if (_shield >= 0)
@@ -134,17 +145,44 @@ namespace MarbleBash
             _hp = _maxHealth;
             _shield = _maxShield;
 
+            if (_lives == 0)
+            {
+                Die();
+            }
+
             OnLivesChanged?.Invoke(_lives);
+        }
+
+        public void FellOffMap()
+        {
+            DamageEvent fallDamage = new DamageEvent(null, _marble)
+            {
+                amount = 100000,
+                knockbackAmount = 0,
+                knockbackDirection = Vector3.zero,
+                doDamageEffects = false
+            };
+
+            TakeDamage(fallDamage);
+        }
+
+        private void Die()
+        {
+            _isDead = true;
+            OnDied?.Invoke();
         }
 
         public class HealthChangedEvent
         {
-            public HealthChangedEvent(Marble marble)
+            public HealthChangedEvent(DamageEvent damageEvent)
             {
-                this.marble = marble;
+                this.marble = damageEvent.target;
+                this.damage = damageEvent;
+                this.totalHealthChange = -damageEvent.amount;
             }
 
             public Marble marble;
+            public DamageEvent damage;
             public float totalHealthChange;
             public float healthChange;
             public float shieldChange;

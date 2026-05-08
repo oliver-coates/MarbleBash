@@ -34,6 +34,12 @@ namespace MarbleBash
                 return;
             }
 
+            // Ignore if damage numbers are disabled
+            if (healthChangeEvent.damage.doDamageEffects == false)
+            {
+                return;
+            }
+
             if (healthChangeEvent.totalHealthChange < 0)
             {
                 CreateDamageNumber(healthChangeEvent.marble, Mathf.Abs(healthChangeEvent.totalHealthChange));

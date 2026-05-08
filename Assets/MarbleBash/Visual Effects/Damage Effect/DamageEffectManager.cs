@@ -53,7 +53,10 @@ namespace MarbleBash
 
         private void DamageTaken(MarbleHealth.HealthChangedEvent @event)
         {
-            ApplyDamageTakenEffect(@event.healthChange);
+            if (@event.damage.doDamageEffects)
+            {
+                ApplyDamageTakenEffect(@event.healthChange);            
+            }
         }
 
 

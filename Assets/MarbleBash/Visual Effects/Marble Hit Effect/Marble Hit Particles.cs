@@ -27,6 +27,11 @@ namespace MarbleBash
 
         private void MarbleTakenDamage(MarbleHealth.HealthChangedEvent @event)
         {
+            if (@event.damage.doDamageEffects == false)
+            {
+                return;
+            }
+            
             Vector3 location = @event.marble.transform.position;
             int amount = UnityEngine.Random.Range(0, 4) + Mathf.CeilToInt(-@event.totalHealthChange / 10);
 

@@ -59,8 +59,8 @@ namespace MarbleBash
             }
         }
 
-        protected Abilities.AbilityController _abilities;
-        public Abilities.AbilityController abilities
+        protected AbilityController _abilities;
+        public AbilityController abilities
         {
             get
             {
@@ -76,6 +76,8 @@ namespace MarbleBash
                 return _statusEffects;
             }
         }
+
+        
 
         internal void Initialise()
         {

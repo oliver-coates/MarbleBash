@@ -57,7 +57,7 @@ namespace MarbleBash
             {
                 HitGround();
             }
-            else if (transform.position.y < -25f)
+            else if (transform.position.y < -30f)
             {
                 HitGround();
             }

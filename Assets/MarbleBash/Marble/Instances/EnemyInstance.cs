@@ -21,23 +21,14 @@ namespace MarbleBash
             // In future, enemies should be setup with a method:
             _stats = new MarbleStats();
 
-            _health.OnLivesChanged += LivesChanged;
-        }
-
-        private void LivesChanged(int livesRemaining)
-        {
-            // Check to see if we have died:
-            if (livesRemaining == 0)
-            {
-                Die();
-            }
+            _health.OnDied += Die;
         }
 
         private void Update()
         {
-            if (transform.position.y < -25f)
+            if (!_health.isDead && transform.position.y < -25f)
             {
-                Die();
+                _health.FellOffMap();
             }
         }
 

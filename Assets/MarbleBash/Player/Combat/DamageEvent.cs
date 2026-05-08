@@ -63,12 +63,21 @@ namespace MarbleBash
         /// </summary>
         public Vector3 knockbackDirection;
 
+        /// <summary>
+        /// Whether effects like floating damage numbers should be shown for this event.
+        /// True by default
+        /// </summary>
+        public bool doDamageEffects;
+
         public DamageEvent(Marble source, Marble target)
         {
             _source = source; 
             _target = target;
 
             _location = target.transform.position;
+
+            doDamageEffects = true;
+            
         }
 
     }
