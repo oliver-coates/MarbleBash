@@ -4,7 +4,7 @@ using UnityEngine;
 namespace MarbleBash.VisualEffects
 {
 
-    public class VFX_SimplePlay : VisualEffectHandler
+    public class VFX_MarbleShards : VFX_OneShotHandler
     {
         private ParticleSystem _particles;
 
@@ -18,7 +18,9 @@ namespace MarbleBash.VisualEffects
             transform.position = data.position;
             transform.rotation = data.rotation;
 
-            _particles.Play();
+            int emitCount = Random.Range(0, 4) + Mathf.CeilToInt(-data.strength / 10);;
+
+            _particles.Emit(emitCount);
         }
     }
 

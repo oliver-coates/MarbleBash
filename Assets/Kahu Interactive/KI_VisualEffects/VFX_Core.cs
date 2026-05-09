@@ -9,6 +9,8 @@ namespace KahuInteractive.VisualFX
     {
         private const string IMPORT_PATH = "Visual Effects/";
         private static Dictionary<string, OneShotEffectType> _effectDict;
+        private static Dictionary<string, List<Action<float>>> _rtpcListenerDict;
+
 
         private static bool _Initialised;
 
@@ -36,12 +38,14 @@ namespace KahuInteractive.VisualFX
             _instanceContainer = new GameObject("[KahuVFX] Effect Holder").transform;
             GameObject.DontDestroyOnLoad(_instanceContainer);
 
+
             SetupEffectDictionary();
         }
 
         private static void SetupEffectDictionary()
         {
             _effectDict = new ();
+            _rtpcListenerDict = new Dictionary<string, List<Action<float>>>();
 
             // Load all from the specified path:
             UnityEngine.Object[] objects = Resources.LoadAll(IMPORT_PATH);
@@ -59,6 +63,10 @@ namespace KahuInteractive.VisualFX
                     {
                         SetupEffectWithSceneInstance(effect);                    
                     }
+                }
+                else if (loadedObject is RtpcType)
+                {
+                    AddRtpcToDictionary(loadedObject as RtpcType);
                 }
             }
         }
@@ -79,16 +87,38 @@ namespace KahuInteractive.VisualFX
             GameObject newInstance = GameObject.Instantiate(effect.prefab, _instanceContainer);
             newInstance.name = $"{effect.name} Scene Instance"; 
             
-            effect.SetReusableInstance(newInstance.GetComponent<VisualEffectHandler>());        
+            effect.SetReusableInstance(newInstance.GetComponent<VFX_OneShotHandler>());        
+        }
+
+        private static void AddRtpcToDictionary(RtpcType rtpc)
+        {
+            if (!_rtpcListenerDict.ContainsKey(rtpc.rtpcName))
+            {
+                _rtpcListenerDict.Add(rtpc.rtpcName, new List<Action<float>>());
+            }   
         }
 
         #endregion
+
 
         public static void Play(OneShotEffectData data)
         {
             OneShotEffectType effect = GetEffectFromString(data.name);
             
             effect.Play(data);
+        }
+
+        public static void UpdateRTPC(string name, float value)
+        {
+            foreach (Action<float> action in _rtpcListenerDict[name])
+            {
+                action.Invoke(value);
+            }
+        }
+
+        public static void UpdateRTPC(RtpcType rtpc, float value)
+        {
+            UpdateRTPC(rtpc.rtpcName, value);
         }
 
         private static OneShotEffectType GetEffectFromString(string name)
@@ -103,6 +133,17 @@ namespace KahuInteractive.VisualFX
                 return null;
             }
         }
+    
+
+        public static void RegisterRtpcListener(string name, Action<float> callback)
+        {
+            _rtpcListenerDict[name].Add(callback);
+        }  
+
+        public static void DeregisterRptcLisener(string name, Action<float> callback)
+        {
+            _rtpcListenerDict[name].Remove(callback);
+        } 
     }
 
 

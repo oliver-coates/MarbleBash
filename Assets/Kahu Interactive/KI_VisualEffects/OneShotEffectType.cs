@@ -31,9 +31,9 @@ namespace KahuInteractive.VisualFX
         }
 
 
-        private VisualEffectHandler _reusableInstance;
+        private VFX_OneShotHandler _reusableInstance;
 
-        public void SetReusableInstance(VisualEffectHandler instance)
+        public void SetReusableInstance(VFX_OneShotHandler instance)
         {
             _reusableInstance = instance;
         }
@@ -47,7 +47,7 @@ namespace KahuInteractive.VisualFX
                     break;
 
                 case UseCase.CreateNewEachTime:
-                    VisualEffectHandler effectInstance = Instantiate(_prefab, VFX.instanceContainer).GetComponent<VisualEffectHandler>();
+                    VFX_OneShotHandler effectInstance = Instantiate(_prefab, VFX.instanceContainer).GetComponent<VFX_OneShotHandler>();
                     effectInstance.Play(data);
                     break;
             }

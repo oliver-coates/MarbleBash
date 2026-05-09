@@ -10,9 +10,9 @@ GameObject:
   m_Component:
   - component: {fileID: 4493547223912264699}
   - component: {fileID: 833905760589043162}
-  - component: {fileID: 2361210388580925406}
   - component: {fileID: 997874121792199774}
   - component: {fileID: 763923031062502513}
+  - component: {fileID: 5254784321126358471}
   m_Layer: 6
   m_Name: Speed Effect Manager
   m_TagString: Untagged
@@ -154,20 +154,6 @@ TrailRenderer:
   m_Autodestruct: 0
   m_Emitting: 1
   m_ApplyActiveColorSpace: 1
---- !u!114 &2361210388580925406
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 819041744776417016}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8ae8d8dd33ecd454ca807cb2e88a1cbb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::MarbleBash.TrailRendererManager
-  _targetIntensity: 0
-  _emissionIntensity: 0
 --- !u!199 &997874121792199774
 ParticleSystemRenderer:
   serializedVersion: 7
@@ -4981,6 +4967,19 @@ ParticleSystem:
         m_PostInfinity: 2
         m_RotationOrder: 4
     vectorLabel1_3: W
+--- !u!114 &5254784321126358471
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 819041744776417016}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c0ecdcdbe5b763347b9ac96137d455cc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MarbleBash.VisualEffects.VFX_LineRendererSize
+  _rtpc: {fileID: 11400000, guid: 83c73b4e60acb3b4e84c6308b57fa978, type: 2}
 --- !u!1 &2001852699742128830
 GameObject:
   m_ObjectHideFlags: 0
@@ -5429,6 +5428,7 @@ MonoBehaviour:
       _value: 1
   _health:
     _lives: 0
+    _isDead: 0
     _hp: 0
     _maxHealth: 0
     _shield: 0

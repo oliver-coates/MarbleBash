@@ -18,7 +18,7 @@ MonoBehaviour:
   _minimumCollisionForceRequiredForCameraShake: 8
   _minimumVelocityForTrail: 12
   _maxVelocityForTrail: 30
-  _trailIntensityMultiplier: 0.5
+  _trailIntensityMultiplier: 0.35
   _trailIntensityChangeTightness: 2
   _impactLowClipSet: {fileID: 11400000, guid: 409e401c61332e64097df95f91aeb1f3, type: 2}
   _impactDecalPrefab: {fileID: 7918670568811036236, guid: 7876614cd10d0fa4ea1b76b8106407fa, type: 3}

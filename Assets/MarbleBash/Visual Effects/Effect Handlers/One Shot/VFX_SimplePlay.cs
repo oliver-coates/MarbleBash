@@ -3,7 +3,8 @@ using UnityEngine;
 
 namespace MarbleBash.VisualEffects
 {
-    public class VFX_SizeAdjustedPlay : VisualEffectHandler
+
+    public class VFX_SimplePlay : VFX_OneShotHandler
     {
         private ParticleSystem _particles;
 
@@ -12,19 +13,15 @@ namespace MarbleBash.VisualEffects
             _particles = this.GetComponentSafe<ParticleSystem>();
         }
 
-
-        
         public override void Play(OneShotEffectData data)
         {
             transform.position = data.position;
-            transform.rotation = Quaternion.identity;
+            transform.rotation = data.rotation;
 
-            var shape = _particles.shape;
-            shape.radius = data.strength / 2f;
-
-            int emitCount = Mathf.CeilToInt(data.strength) * 5;
-
-            _particles.Emit(emitCount);            
+            _particles.Play();
         }
     }
+
+
 }
+

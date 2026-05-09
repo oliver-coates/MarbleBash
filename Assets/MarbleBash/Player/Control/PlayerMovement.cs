@@ -1,5 +1,6 @@
 using System;
 using KahuInteractive.HassleFreeConfig;
+using KahuInteractive.VisualFX;
 using MarbleBash;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -93,6 +94,8 @@ public class PlayerMovement : MarbleSubComponent
         UpdateGroundedState();
 
         MoveHorizontally();
+
+        VFX.UpdateRTPC("Player Speed", _marble.cachedVelocity.magnitude);
     }
 
     private void UpdateGroundedState()

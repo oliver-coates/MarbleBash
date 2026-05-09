@@ -7,7 +7,7 @@ using UnityEngine.Rendering.Universal;
 namespace MarbleBash.VisualEffects
 {
     [RequireComponent(typeof(DecalProjector))]
-    public class ImpactDecal : VisualEffectHandler
+    public class ImpactDecal : VFX_OneShotHandler
     {
         private DecalProjector _projector;
         [SerializeField] private ParticleSystem _dustParticles;
