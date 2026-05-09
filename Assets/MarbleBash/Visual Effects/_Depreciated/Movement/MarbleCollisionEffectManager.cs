@@ -58,10 +58,11 @@ namespace MarbleBash
 
         private void RegisterDamage(MarbleHealth.HealthChangedEvent damageEvent)
         {
-            OneShotEffectData effect = new OneShotEffectData("Marble Hit Shards", damageEvent.marble.transform.position) 
-            {
-                strength = damageEvent.totalHealthChange
-            }; 
+            OneShotEffectData effect = new OneShotEffectData(
+                "Marble Hit Shards", 
+                damageEvent.marble.transform.position,
+                Quaternion.identity,
+                damageEvent.totalHealthChange); 
 
             VFX.Play(effect);
         }
@@ -85,11 +86,7 @@ namespace MarbleBash
             Quaternion rotation = Quaternion.LookRotation(-p.normal);
             float size = force / 10f;
 
-            OneShotEffectData impactData = new OneShotEffectData("Impact", position)
-            {
-                rotation = rotation,
-                strength = size
-            };
+            OneShotEffectData impactData = new OneShotEffectData("Impact", position, rotation, size);
 
             VFX.Play(impactData);
         }

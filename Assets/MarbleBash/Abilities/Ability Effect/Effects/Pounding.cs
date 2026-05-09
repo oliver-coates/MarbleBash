@@ -1,3 +1,4 @@
+using KahuInteractive.VisualFX;
 using TMPro;
 using UnityEngine;
 
@@ -55,8 +56,8 @@ namespace MarbleBash.Abilities
                     DamageManager.ApplyDamage(subject, hitMarble, damage, knockbackDir, 1.25f);
                 }
             }
-
-            VisualEffectManager.CreateEffect("Ground Pound", pos, size);
+            
+            VFX.Play(new OneShotEffectData("Ground Pound", pos, Quaternion.identity, size));
         }
 
         protected override void Update()

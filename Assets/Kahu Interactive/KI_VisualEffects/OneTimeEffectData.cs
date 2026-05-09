@@ -10,12 +10,12 @@ namespace KahuInteractive.VisualFX
         public Quaternion rotation;
         public float strength;
 
-        public OneShotEffectData(string name, Vector3 position)
+        public OneShotEffectData(string name, Vector3 position, Quaternion rotation, float strength = 1f)
         {
             this.name = name;
             this.position = position;
-            rotation = Quaternion.identity;
-            strength = 1f;
+            this.rotation = rotation;
+            this.strength = strength;
         }
     }
 
