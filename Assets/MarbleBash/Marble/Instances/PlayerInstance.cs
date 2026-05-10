@@ -24,10 +24,5 @@ namespace MarbleBash
         {
             _stats = new MarbleStats();
         }
-
-        protected override Vector3 GetLookDirection()
-        {
-            return Player.look.pitchForward;
-        }
     }
 }

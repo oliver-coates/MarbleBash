@@ -36,14 +36,6 @@ namespace MarbleBash
             }	
         }
 
-        public Vector3 lookDirection
-        {
-            get
-            {
-                return GetLookDirection();
-            }
-        }
-
         protected Rigidbody _rigidbody;
         public new Rigidbody rigidbody
         {
@@ -92,10 +84,6 @@ namespace MarbleBash
         }
 
         protected abstract void Setup();
-
-        protected abstract Vector3 GetLookDirection();
-
-        
 
     }
 }

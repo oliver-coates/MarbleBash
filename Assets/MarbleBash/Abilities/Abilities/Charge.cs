@@ -12,7 +12,7 @@ namespace MarbleBash.Abilities
 
         protected override void Activate()
         {
-            Vector3 startForce = _subject.lookDirection * 250f;
+            Vector3 startForce = _subject.movement.lookDirection * 250f;
             startForce.y = 0;
 
             _subject.rigidbody.AddForce(startForce);
@@ -27,8 +27,9 @@ namespace MarbleBash.Abilities
 
         protected override bool IsAbleToActivate()
         {
-            // TODO: Extract movement class out so isGrounded be accessed by '_subject.movement.distanceToGround'
-            return Player.movement.isGrounded;
+            float alignedVelocity = Vector3.Dot(_subject.movement.lookDirection, _subject.movement.cachedVelocity.normalized);
+
+            return _subject.movement.isGrounded && (alignedVelocity > 0.90f);
         }
     }
 

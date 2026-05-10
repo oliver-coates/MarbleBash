@@ -173,4 +173,9 @@ public class PlayerMovement : MarbleMovement
 
         return isGrounded;
     }
+
+    protected override Vector3 GetLookDirection()
+    {
+        return Player.look.pitchForward;
+    }
 }

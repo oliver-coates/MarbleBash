@@ -102,6 +102,11 @@ namespace MarbleBash.Enemy
         {
             return isGrounded;
         }
+
+        protected override Vector3 GetLookDirection()
+        {
+            return (Player.transform.position - transform.position).normalized;
+        }
         #endregion
 
 

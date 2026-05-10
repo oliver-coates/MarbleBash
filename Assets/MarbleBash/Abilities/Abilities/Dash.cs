@@ -21,7 +21,7 @@ namespace MarbleBash.Abilities
 
         protected override void Activate()
         {
-            Vector3 force = _subject.lookDirection * 350f;
+            Vector3 force = _subject.movement.lookDirection * 350f;
 
             _subject.rigidbody.AddForce(force);
         }

@@ -27,8 +27,7 @@ namespace MarbleBash.Abilities
 
         protected override bool IsAbleToActivate()
         {
-            // TODO: Extract movement class out so distanceToGround can be accessed by '_subject.movement.distanceToGround'
-            return Player.movement.distanceToGround > HEIGHT_ABOVE_GROUND_TO_ACTIVATE;
+            return _subject.movement.distanceToGround > HEIGHT_ABOVE_GROUND_TO_ACTIVATE;
         }
     }
 }

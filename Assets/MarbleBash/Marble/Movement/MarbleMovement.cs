@@ -9,7 +9,7 @@ namespace MarbleBash
         protected MovementConfig _config;
 
 
-        [Header("State:")]
+        [Header("Velocity:")]
         [SerializeField] private Vector3 _velocity;
         public Vector3 velocity
         {
@@ -28,6 +28,7 @@ namespace MarbleBash
             }	
         }
 
+        [Header("Cached velocity:")]
         [SerializeField] private Vector3 _cachedVelocity;
         public Vector3 cachedVelocity
         {
@@ -46,6 +47,7 @@ namespace MarbleBash
             }	
         }
 
+        [Header("Grounded:")]
         [SerializeField] private bool _isGrounded;
         public bool isGrounded
         {
@@ -64,7 +66,18 @@ namespace MarbleBash
             }	
         }
 
+        [Header("Additional:")]
+        public Vector3 lookDirection
+        {
+            get
+            {
+                return GetLookDirection();
+            }
+        }
+
         protected abstract bool CheckIsGrounded(out float distanceToGround);
+        protected abstract Vector3 GetLookDirection();
+
 
         protected override void Initialise()
         {            

@@ -72,11 +72,6 @@ namespace MarbleBash
             XpGlob glob = Instantiate(_combatConfig.xpPrefab).GetComponent<XpGlob>();
             glob.Initialise(this, xp);
         }
-
-        protected override Vector3 GetLookDirection()
-        {
-            return (Player.transform.position - transform.position).normalized;
-        }
     }
 
 
