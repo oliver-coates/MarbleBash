@@ -80,7 +80,8 @@ namespace MarbleBash.Enemy
         private void Update()
         {            
             int numRequestsProcessedThisFrame = 0;
-            while (numRequestsProcessedThisFrame < _numRequestsAllowedPerFrame)
+            int numIterations = 0;
+            while (numRequestsProcessedThisFrame < _numRequestsAllowedPerFrame && numIterations < _numRequesters)
             {            
                 // Advance along linked list
                 // Wrap back around if needed
@@ -96,8 +97,10 @@ namespace MarbleBash.Enemy
                 if (_currentRequesterNode.Value.agent.IsRequestingPath())
                 {
                     CalculatePathFor(_currentRequesterNode.Value);
-                    numRequestsProcessedThisFrame++;    
+                    numRequestsProcessedThisFrame++;
                 }
+
+                numIterations++;
             }
         }
 

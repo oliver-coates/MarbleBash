@@ -3,12 +3,6 @@ using MarbleBash.Abilities;
 
 namespace MarbleBash
 {
-    /// <summary>
-    /// Marble class acts as a shared access point for abilities to act upon.
-    /// When an ability does a certain action, it is applied against the components
-    /// defined in this class. (Example: the dash ability pushes the rigidbody in
-    /// the direction of _lookDirection)
-    /// </summary>
     [System.Serializable]
     public abstract class Marble : MonoBehaviour
     {
@@ -86,6 +80,7 @@ namespace MarbleBash
             _rigidbody = this.GetComponentSafe<Rigidbody>();
             _abilities = this.GetComponentSafe<AbilityController>();
             _statusEffects = this.GetComponentSafe<AbilityEffectManager>();
+            _movement = this.GetComponentSafe<MarbleMovement>();
 
             // Setup subcomponents:
             foreach (MarbleSubComponent subcomponent in transform.GetComponentsInChildren<MarbleSubComponent>())
