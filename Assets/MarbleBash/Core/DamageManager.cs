@@ -92,7 +92,8 @@ namespace MarbleBash
         #region Internal damage calculation methods
         private static float FindAlignedVelocity(Marble primaryBody, Marble hitBody)
         {
-            Vector3 velocity = primaryBody.cachedVelocity;
+            Vector3 velocity = primaryBody.movement.cachedVelocity;
+            float speed = primaryBody.movement.cachedSpeed;
 
             // Find direction between entities
             Vector3 directionToHitMarble = (hitBody.transform.position - primaryBody.transform.position).normalized;
@@ -101,7 +102,7 @@ namespace MarbleBash
             float velocityAlignment = Vector3.Dot(velocity.normalized, directionToHitMarble);
 
             // Scale damage by how much the current velocity aligns with the hit marble:
-            float alignedVelocity = velocity.magnitude * velocityAlignment;
+            float alignedVelocity = speed * velocityAlignment;
 
             return alignedVelocity;
         }

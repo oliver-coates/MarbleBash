@@ -93,8 +93,11 @@ namespace MarbleBash.Enemy
                     _currentRequesterNode = _currentRequesterNode.Next;                
                 }
 
-                CalculatePathFor(_currentRequesterNode.Value);
-                numRequestsProcessedThisFrame++;
+                if (_currentRequesterNode.Value.agent.IsRequestingPath())
+                {
+                    CalculatePathFor(_currentRequesterNode.Value);
+                    numRequestsProcessedThisFrame++;    
+                }
             }
         }
 
@@ -131,7 +134,16 @@ namespace MarbleBash.Enemy
 
     public interface IDistributedPathingAgent
     {
+        /// <summary>
+        /// Is this pathing agent currently requesting a path? If false, this will be skipped over.
+        /// </summary>
+        public bool IsRequestingPath();
+
+        /// <summary>
+        /// Sets the path of this agent.
+        /// </summary>
         public void SetPath(NavMeshPath path);
+
         public Vector3 GetPathingTargetPosition();
         public Vector3 GetCurrentPosition();
     }

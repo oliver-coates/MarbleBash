@@ -5340,13 +5340,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9ffb16499c189d6469d276fd44222531, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerMovement
+  _velocity: {x: 0, y: 0, z: 0}
+  _speed: 0
+  _cachedVelocity: {x: 0, y: 0, z: 0}
+  _cachedSpeed: 0
+  _isGrounded: 0
+  _distanceToGround: 0
   _playerLook: {fileID: 0}
   _inputActions: {fileID: -944628639613478452, guid: 052faaac586de48259a63d0c4782560b, type: 3}
-  _speed: 350
-  _groundedLayerMask:
-    serializedVersion: 2
-    m_Bits: 55
-  _isGrounded: 0
+  _movementSpeed: 350
   _isAgainstWall: 0
   _wallNormal: {x: 0, y: 0, z: 0}
 --- !u!114 &7359521683227966099
@@ -5433,6 +5435,7 @@ MonoBehaviour:
     _maxHealth: 0
     _shield: 0
     _maxShield: 0
+  _movement: {fileID: 0}
 --- !u!114 &592690296531654841
 MonoBehaviour:
   m_ObjectHideFlags: 0

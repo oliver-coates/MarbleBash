@@ -1,0 +1,98 @@
+using KahuInteractive.HassleFreeConfig;
+using UnityEngine;
+
+namespace MarbleBash
+{
+    [DefaultExecutionOrder(-5)]
+    public abstract class MarbleMovement : MarbleSubComponent
+    {
+        protected MovementConfig _config;
+
+
+        [Header("State:")]
+        [SerializeField] private Vector3 _velocity;
+        public Vector3 velocity
+        {
+            get
+            {
+                return _velocity;
+            }	
+        }
+
+        [SerializeField] private float _speed;
+        public float speed
+        {
+            get
+            {
+                return _speed;
+            }	
+        }
+
+        [SerializeField] private Vector3 _cachedVelocity;
+        public Vector3 cachedVelocity
+        {
+            get
+            {
+                return _cachedVelocity;
+            }	
+        }
+
+        [SerializeField] private float _cachedSpeed;
+        public float cachedSpeed
+        {
+            get
+            {
+                return _cachedSpeed;
+            }	
+        }
+
+        [SerializeField] private bool _isGrounded;
+        public bool isGrounded
+        {
+            get
+            {
+                return _isGrounded;
+            }	
+        }
+
+        [SerializeField] private float _distanceToGround;
+        public float distanceToGround
+        {
+            get
+            {
+                return _distanceToGround;
+            }	
+        }
+
+        protected abstract bool CheckIsGrounded(out float distanceToGround);
+
+        protected override void Initialise()
+        {            
+            _config = Configuration.Get<MovementConfig>();
+        }
+
+        protected virtual void LateUpdate()
+        {
+            _cachedVelocity = _marble.rigidbody.linearVelocity;
+            _cachedSpeed = _cachedVelocity.magnitude;
+        }
+
+        protected virtual void Update()
+        {
+            _velocity = _marble.rigidbody.linearVelocity; 
+            _speed = _velocity.magnitude;
+
+            _isGrounded = CheckIsGrounded(out _distanceToGround);
+        }
+
+        protected bool IsObjectOnGroundedLayer(GameObject obj)
+        {
+            return ((_config.groundedLayerMask.value & (1 << obj.layer)) > 0); 
+        }
+
+    }
+
+
+
+}
+

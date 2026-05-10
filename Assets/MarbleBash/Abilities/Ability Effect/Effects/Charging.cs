@@ -41,13 +41,13 @@ namespace MarbleBash.Abilities
 
         private void HitMarble(Collision c, Marble m)
         {
-            Vector3 cachedVelocity = subject.cachedVelocity;
+            Vector3 cachedVelocity = subject.movement.cachedVelocity;
             
             subject.rigidbody.linearVelocity = cachedVelocity;
 
             Vector3 knockbackDir = cachedVelocity.normalized + (Vector3.up * 0.33f);
 
-            DamageManager.ApplyDamage(subject, m, cachedVelocity.magnitude, knockbackDir);
+            DamageManager.ApplyDamage(subject, m, m.movement.cachedSpeed, knockbackDir);
 
         }
 

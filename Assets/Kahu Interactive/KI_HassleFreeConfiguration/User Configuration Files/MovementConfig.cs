@@ -8,6 +8,16 @@ namespace MarbleBash
     [CreateAssetMenu(fileName = "Movement Config", menuName = "Configuration/Movement")]
     public class MovementConfig : ConfigBase
     {
+        [Header("Layer Masks:")]
+        [SerializeField] private LayerMask _groundedLayerMask;
+        public LayerMask groundedLayerMask
+        {
+            get
+            {
+                return _groundedLayerMask;
+            }
+        }
+
         [Header("Jump:")]
         [SerializeField] private float _jumpForceMultiplier = 1f;
         public float jumpForceMultiplier

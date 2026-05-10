@@ -9,12 +9,11 @@ namespace MarbleBash
     public class EnemyInstance : Marble
     {
         private CombatConfig _combatConfig;
-        private EnemyMovement _movement;
-
+        private EnemyMovement _movementTEMP;
 
         protected override void Setup()
         {
-            _movement = this.GetComponentSafe<EnemyMovement>();
+            _movementTEMP = this.GetComponentSafe<EnemyMovement>();
 
             _combatConfig = Configuration.Get<CombatConfig>();
 
@@ -35,7 +34,7 @@ namespace MarbleBash
         private void Die()
         {
             // Disable behaviour
-            _movement.enabled = false;
+            _movementTEMP.enabled = false;
             _abilities.enabled = false;
 
             gameObject.layer = LayerMask.NameToLayer("Debris");

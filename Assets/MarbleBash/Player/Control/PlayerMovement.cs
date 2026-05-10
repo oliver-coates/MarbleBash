@@ -5,13 +5,11 @@ using MarbleBash;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class PlayerMovement : MarbleSubComponent
+public class PlayerMovement : MarbleMovement
 {
-    private MovementConfig _config;
 
     [Header("References:")]
     [SerializeField] private PlayerLook _playerLook;
-    private Rigidbody _rb;
 
     #region Input
     [Header("Input:")]
@@ -28,19 +26,9 @@ public class PlayerMovement : MarbleSubComponent
     #endregion
 
     [Header("Settings:")]
-    [SerializeField] private float _speed;
-    [SerializeField] private LayerMask _groundedLayerMask;
+    [SerializeField] private float _movementSpeed;
 
     [Header("State:")]
-    [SerializeField] private bool _isGrounded;
-    public bool isGrounded
-    {
-        get
-        {
-            return _isGrounded;
-        }
-    }
-    
     [SerializeField] private bool _isAgainstWall;
     public bool isAgainstWall
     {
@@ -71,56 +59,23 @@ public class PlayerMovement : MarbleSubComponent
         }
     }
 
-    private float _distanceToGround;
-    public float distanceToGround
-    {
-        get
-        {
-            return _distanceToGround;
-        }
-    }
 
     protected override void Initialise()
     {
-        _config = Configuration.Get<MovementConfig>();
-        _rb = GetComponent<Rigidbody>();
+        base.Initialise();
 
         SetupInput();
     }
 
 
-    private void Update()
+    protected override void Update()
     {
-        UpdateGroundedState();
+        base.Update();
 
         MoveHorizontally();
 
-        VFX.UpdateRTPC("Player Speed", _marble.cachedVelocity.magnitude);
+        VFX.UpdateRTPC("Player Speed", cachedSpeed);
     }
-
-    private void UpdateGroundedState()
-    {
-        // Check to see if we are grounded:
-        float halfScale = transform.localScale.x / 2f;
-        Vector3 groundBoxPosition = transform.position + (Vector3.down * halfScale);
-        Vector3 goundBoxSize = new Vector3(halfScale * 0.5f, 0.15f, halfScale * 0.5f);
-
-        _isGrounded = Physics.CheckBox(groundBoxPosition, goundBoxSize, Quaternion.identity, _groundedLayerMask);
-        
-        // Update our grounded position:
-        Ray downRay = new Ray(transform.position, Vector3.down);
-        if (Physics.Raycast(downRay, out RaycastHit hit, 100f, _groundedLayerMask))
-        {
-            _groundedPosition = hit.point;
-            _distanceToGround = hit.distance;
-        }
-        else
-        {
-            _distanceToGround = 100f;
-        }
-    }
-
-
 
     private void MoveHorizontally()
     {
@@ -128,7 +83,7 @@ public class PlayerMovement : MarbleSubComponent
 
         Vector3 forceThisFrame = (_playerLook.yawForward * movementInput.y) + _playerLook.yawRight * movementInput.x;
 
-        _rb.AddForce(_speed * Time.deltaTime * forceThisFrame);
+        _marble.rigidbody.AddForce(_movementSpeed * Time.deltaTime * forceThisFrame);
     }
 
     private void AttemptJump(InputAction.CallbackContext context)
@@ -145,27 +100,27 @@ public class PlayerMovement : MarbleSubComponent
 
     private void Jump()
     {
-        _rb.AddForce(Vector3.up  * _config.jumpForceMultiplier, ForceMode.VelocityChange);
+        _marble.rigidbody.AddForce(Vector3.up  * _config.jumpForceMultiplier, ForceMode.VelocityChange);
     }
 
     private void WallJump()
     {
         Vector3 direction = (_wallNormal + Vector3.up).normalized;
 
-        Vector3 velocity = _rb.linearVelocity;
+        Vector3 velocity = _marble.rigidbody.linearVelocity;
         if (velocity.y < 0)
         {
             velocity.y = velocity.y / 2f;
-            _rb.linearVelocity = velocity;
+            _marble.rigidbody.linearVelocity = velocity;
         } 
-        _rb.AddForce(direction  * _config.wallJumpForceMultiplier, ForceMode.VelocityChange);
+        _marble.rigidbody.AddForce(direction  * _config.wallJumpForceMultiplier, ForceMode.VelocityChange);
 
         _isAgainstWall = false;
     }
 
     private void OnCollisionEnter(Collision collision)
     {
-        if (_isGrounded == false && IsObjectOnGroundedLayer(collision.gameObject))
+        if (isGrounded == false && IsObjectOnGroundedLayer(collision.gameObject))
         {
             if (IsCollisionAgainstWall(collision))
             {
@@ -177,15 +132,10 @@ public class PlayerMovement : MarbleSubComponent
 
     private void OnCollisionExit(Collision collision)
     {
-        if ((_groundedLayerMask.value & (1 << collision.gameObject.layer)) > 0)
+        if (IsObjectOnGroundedLayer(collision.gameObject))
         {
             _isAgainstWall = false;
         }
-    }
-
-    private bool IsObjectOnGroundedLayer(GameObject obj)
-    {
-        return ((_groundedLayerMask.value & (1 << obj.layer)) > 0); 
     }
 
     private bool IsCollisionAgainstWall(Collision collision)
@@ -197,5 +147,30 @@ public class PlayerMovement : MarbleSubComponent
         return yDiff < 0.2f; 
     }
 
+    protected override bool CheckIsGrounded(out float distanceToGround)
+    {
+        // Check to see if we are grounded:
+        float halfScale = transform.localScale.x / 2f;
+        
+        // Find the position at the very bottom of our marble
+        Vector3 floorPosition = transform.position + (Vector3.down * halfScale) + (Vector3.up * 0.05f);
+        
+        Vector3 goundBoxSize = new Vector3(halfScale * 0.5f, 0.15f, halfScale * 0.5f);
 
+        bool isGrounded = Physics.CheckBox(floorPosition, goundBoxSize, Quaternion.identity, _config.groundedLayerMask);
+        
+        // Update our grounded position:
+        Ray downRay = new Ray(floorPosition, Vector3.down);
+        if (Physics.Raycast(downRay, out RaycastHit hit, 100f, _config.groundedLayerMask))
+        {
+            _groundedPosition = hit.point;
+            distanceToGround = hit.distance;
+        }
+        else
+        {
+            distanceToGround = 100f;
+        }
+
+        return isGrounded;
+    }
 }

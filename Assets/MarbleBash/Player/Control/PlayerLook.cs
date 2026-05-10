@@ -104,7 +104,7 @@ public class PlayerLook : MonoBehaviour
         
         RotateAroundPlayerByInput();
 
-        RecaclulateCameraFov(_playerRB.linearVelocity.magnitude);
+        RecaclulateCameraFov(Player.movement.speed);
     }
 
     private void RotateAroundPlayerByInput()

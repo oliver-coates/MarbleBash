@@ -29,7 +29,7 @@ namespace MarbleBash.Abilities
             Vector3 velocity = subject.rigidbody.linearVelocity;
             velocity.x = velocity.x * 0.66f;
             velocity.z = velocity.z * 0.66f;
-            velocity.y = -subject.cachedVelocity.y * 0.75f;
+            velocity.y = -subject.movement.cachedVelocity.y * 0.5f;
 
             subject.transform.position += Vector3.up * 0.5f;
 

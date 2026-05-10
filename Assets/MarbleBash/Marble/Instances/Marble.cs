@@ -32,14 +32,14 @@ namespace MarbleBash
             }
         }
 
-
-        private Vector3 _cachedVelocity;
-        public Vector3 cachedVelocity
+        [Header("Movement:")]
+        [SerializeField] private MarbleMovement _movement;
+        public MarbleMovement movement
         {
             get
             {
-                return _cachedVelocity;
-            }
+                return _movement;
+            }	
         }
 
         public Vector3 lookDirection
@@ -84,10 +84,8 @@ namespace MarbleBash
             _health = new MarbleHealth(this);
             
             _rigidbody = this.GetComponentSafe<Rigidbody>();
-            _abilities = this.GetComponentSafe<Abilities.AbilityController>();
+            _abilities = this.GetComponentSafe<AbilityController>();
             _statusEffects = this.GetComponentSafe<AbilityEffectManager>();
-
-            _cachedVelocity = new Vector3();
 
             // Setup subcomponents:
             foreach (MarbleSubComponent subcomponent in transform.GetComponentsInChildren<MarbleSubComponent>())
@@ -96,11 +94,6 @@ namespace MarbleBash
             }
 
             Setup();
-        }
-
-        private void FixedUpdate()
-        {
-            _cachedVelocity = _rigidbody.linearVelocity;
         }
 
         protected abstract void Setup();

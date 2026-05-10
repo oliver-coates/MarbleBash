@@ -1,22 +1,18 @@
-// #define DEBUG_DRAW_PATH
+#define DEBUG_DRAW_PATH
 
 using UnityEngine;
 using UnityEngine.AI;
 
 namespace MarbleBash.Enemy
 {
-    public class EnemyMovement : MonoBehaviour, IDistributedPathingAgent
+    public class EnemyMovement : MarbleMovement, IDistributedPathingAgent
     {
         private NavMeshPath _path;
-        private Rigidbody _rb;
-        private EnemyInstance _enemy;
 
-        
-
-        private void Awake()
+        #region Initialisation & Destruction
+        protected override void Initialise()
         {
-            _rb = this.GetComponentSafe<Rigidbody>();
-            _enemy = this.GetComponentSafe<EnemyInstance>();
+            base.Initialise();
 
             PathingLoadDistributor.SubscribeTo(this);
         }
@@ -25,9 +21,12 @@ namespace MarbleBash.Enemy
         {
             PathingLoadDistributor.UnsubscribeFrom(this);
         }
+        #endregion
 
-        private void Update()
+        protected override void Update()
         {
+            base.Update();
+
             if (_path != null)
             {
                 // This method only has a body if the DEBUG_DRAW_PATH precompiler bool is true.
@@ -36,6 +35,27 @@ namespace MarbleBash.Enemy
             
                 ChasePlayer();            
             }
+        }
+
+        protected override bool CheckIsGrounded(out float distanceToGround)
+        {
+            float halfScale = transform.localScale.x / 2f;
+            
+            // Find the position at the very bottom of our marble
+            Vector3 floorPosition = transform.position + (Vector3.down * halfScale);
+
+            // Update our grounded position:
+            Ray downRay = new Ray(floorPosition + (Vector3.up * 0.05f), Vector3.down);
+            if (Physics.Raycast(downRay, out RaycastHit hit, 100f, _config.groundedLayerMask))
+            {
+                distanceToGround = hit.distance;
+            }
+            else
+            {
+                distanceToGround = 100f;
+            }
+
+            return distanceToGround < 0.1f;    
         }
 
         private void ChasePlayer()
@@ -57,8 +77,8 @@ namespace MarbleBash.Enemy
 
             Vector3 force = direction * speed * Time.deltaTime;
 
-            _rb.AddForce(force);
-            // Debug.DrawLine(transform.position, transform.position + direction * 2, Color.hotPink);
+            _marble.rigidbody.AddForce(force);
+            Debug.DrawLine(transform.position, transform.position + direction * 2, Color.hotPink);
         }
 
 
@@ -76,6 +96,11 @@ namespace MarbleBash.Enemy
         public void SetPath(NavMeshPath path)
         {
             _path = path;
+        }
+
+        public bool IsRequestingPath()
+        {
+            return isGrounded;
         }
         #endregion
 
@@ -103,7 +128,8 @@ namespace MarbleBash.Enemy
             }  
             #endif
         }
+
         #endregion
-    
+
     }
 }
