@@ -13,9 +13,12 @@ MonoBehaviour:
   m_Name: main
   m_EditorClassIdentifier: Assembly-CSharp::KahuInteractive.HassleFreeConfig.ConfigDataFile
   _values:
-  - name: test
-    value: 0
-  - name: asd
-    value: 0
-  - name: zxz
-    value: 0
+  - name: A
+    value: 23
+    path: 
+  - name: B
+    value: 12
+    path: Test Group
+  - name: C
+    value: 200
+    path: Test Group

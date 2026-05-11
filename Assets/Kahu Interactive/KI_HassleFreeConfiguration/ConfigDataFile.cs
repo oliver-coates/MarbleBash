@@ -8,6 +8,16 @@ namespace KahuInteractive.HassleFreeConfig
     public class ConfigDataFile : ScriptableObject
     {
         [SerializeField] private List<ConfigValue> _values; 
+        
+        private ConfigValueGroup _root;
+        public ConfigValueGroup root
+        {
+            get
+            {
+                return _root;
+            }
+        }
+        
         private Dictionary<string, ConfigValue> _dict;
 
         /// <summary>
@@ -17,8 +27,14 @@ namespace KahuInteractive.HassleFreeConfig
         {
             _values = new List<ConfigValue>();
             _dict = new Dictionary<string, ConfigValue>();
+            _root = new ConfigValueGroup(".", null);
 
-            AddValue(new ConfigValue("My Config Value 1", 23f));
+            // AddValue(new ConfigValue("My Config Value 1", 23f, "ExampleGroup"));
+            AddValue(new ConfigValue("A", 23f));
+            AddValue(new ConfigValue("B", 12f, "Test Group"));
+            AddValue(new ConfigValue("C", 200f, "Test Group"));
+
+            _root = ReconstructValuesTree(_values);
         }
 
         /// <summary>
@@ -27,6 +43,7 @@ namespace KahuInteractive.HassleFreeConfig
         public void Initialise()
         {
             _dict = ReconstructDictionary(_values);
+            _root = ReconstructValuesTree(_values);
         }
 
 
@@ -43,9 +60,48 @@ namespace KahuInteractive.HassleFreeConfig
             return output;
         }
 
+        private ConfigValueGroup ReconstructValuesTree(List<ConfigValue> configValues)
+        {
+            ConfigValueGroup root = new ConfigValueGroup(".", null);
+
+            foreach (ConfigValue value in configValues)
+            {
+                Debug.Log($"Examing value: {value.name} with path {value.path}");
+                string[] pathElements = value.path.Split('/'); 
+
+                // Start path navigating from the root:
+                ConfigValueGroup currentGroup = root;
+                foreach (string pathElement in pathElements)
+                {
+                    if (pathElement == "")
+                    {
+                        continue;
+                    }
+                    
+                    Debug.Log($"Does child group with {pathElement} exist?");
+                    if (currentGroup.ChildGroupExists(pathElement, out ConfigValueGroup groupAtPath))
+                    {
+                        Debug.Log("Yes!");
+                        currentGroup = groupAtPath;
+                        // Continue with the loop.
+                    }
+                    else
+                    {
+                        Debug.Log("No. Creating...");
+                        currentGroup = currentGroup.AddChildGroup(pathElement);
+                    }
+                }
+
+                Debug.Log($"Done.. Adding config value as child of group {currentGroup.name}");
+                currentGroup.AddValue(value);
+            }
+
+            return root;
+        }
+
         public void AddValue(ConfigValue newValue)
         {
-            _values = new List<ConfigValue>();
+            _values.Add(newValue);
             _dict.Add(newValue.name, newValue);
         }
 
@@ -79,17 +135,91 @@ namespace KahuInteractive.HassleFreeConfig
         }
     }
 
+
     [System.Serializable]
-    public class ConfigValue
+    public class ConfigValue : IConfigValueOrGroup
     {
         public string name;
         public float value;
+        public string path;
 
-        public ConfigValue(string name, float value)
+        public ConfigValue(string name, float value, string path = "")
         {
             this.name = name;
             this.value = value;
+            this.path = path;
         }
+
+        public string GetName()
+        {
+            return name;
+        }
+    
+    }
+
+    public class ConfigValueGroup : IConfigValueOrGroup
+    {
+        public string name;
+
+        public ConfigValueGroup parent;
+        private List<ConfigValueGroup> _children; 
+        private List<ConfigValue> _values;
+
+        public ConfigValueGroup(string name, ConfigValueGroup parent)
+        {
+            this.name = name;
+            this.parent = parent;
+
+            _children = new List<ConfigValueGroup>();
+            _values = new List<ConfigValue>();
+        }
+    
+        public bool ChildGroupExists(string name, out ConfigValueGroup outGroup)
+        {
+            foreach (ConfigValueGroup group in _children)
+            {
+                if (group.name == name)
+                {
+                    outGroup = group;
+                    return true;
+                }
+            }
+
+            outGroup = null;
+            return false;
+        }
+    
+        public ConfigValueGroup AddChildGroup(string name)
+        {
+            ConfigValueGroup newGroup = new ConfigValueGroup(name, this); 
+            _children.Add(newGroup);
+            return newGroup;
+        }
+
+        public void AddValue(ConfigValue v)
+        {
+            _values.Add(v);
+        }
+    
+        public List<ConfigValue> GetValues()
+        {
+            return _values;
+        }
+
+        public List<ConfigValueGroup> GetSubGroups()
+        {
+            return _children;
+        }
+
+        public string GetName()
+        {
+            return name;
+        }
+    }
+
+    public interface IConfigValueOrGroup
+    {
+        public string GetName();
     }
 }
 
