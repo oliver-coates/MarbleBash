@@ -66,7 +66,6 @@ namespace KahuInteractive.HassleFreeConfig
 
             foreach (ConfigValue value in configValues)
             {
-                Debug.Log($"Examing value: {value.name} with path {value.path}");
                 string[] pathElements = value.path.Split('/'); 
 
                 // Start path navigating from the root:
@@ -78,21 +77,16 @@ namespace KahuInteractive.HassleFreeConfig
                         continue;
                     }
                     
-                    Debug.Log($"Does child group with {pathElement} exist?");
                     if (currentGroup.ChildGroupExists(pathElement, out ConfigValueGroup groupAtPath))
                     {
-                        Debug.Log("Yes!");
                         currentGroup = groupAtPath;
-                        // Continue with the loop.
                     }
                     else
                     {
-                        Debug.Log("No. Creating...");
                         currentGroup = currentGroup.AddChildGroup(pathElement);
                     }
                 }
 
-                Debug.Log($"Done.. Adding config value as child of group {currentGroup.name}");
                 currentGroup.AddValue(value);
             }
 

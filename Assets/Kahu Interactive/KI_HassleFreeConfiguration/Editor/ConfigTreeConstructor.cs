@@ -15,33 +15,30 @@ namespace KahuInteractive.HassleFreeConfig
             _idIterator = 0;
 
             _data = new List<TreeViewItemData<IConfigValueOrGroup>>();
-            _data.Add(ConvertToTreeViewData(root, 0));
+            _data.Add(ConvertToTreeViewData(root));
         }
 
 
-        private TreeViewItemData<IConfigValueOrGroup> ConvertToTreeViewData(ConfigValue value, int id)
+        private TreeViewItemData<IConfigValueOrGroup> ConvertToTreeViewData(ConfigValue value)
         {
-            return new TreeViewItemData<IConfigValueOrGroup>(id, value, null);
+            return new TreeViewItemData<IConfigValueOrGroup>(_idIterator++, value, null);
         }
 
-        private TreeViewItemData<IConfigValueOrGroup> ConvertToTreeViewData(ConfigValueGroup value, int id)
+        private TreeViewItemData<IConfigValueOrGroup> ConvertToTreeViewData(ConfigValueGroup value)
         {
             List<TreeViewItemData<IConfigValueOrGroup>> childrenElements = new ();
-            int thisId = id;
-            id++;
 
             // Get child elements here....
             foreach (ConfigValueGroup childGroup in value.GetSubGroups())
             {
-                childrenElements.Add(ConvertToTreeViewData(childGroup, id));
+                childrenElements.Add(ConvertToTreeViewData(childGroup));
             }
             foreach (ConfigValue childValue in value.GetValues())
             {
-                childrenElements.Add(ConvertToTreeViewData(childValue, id));
-                id++;                
+                childrenElements.Add(ConvertToTreeViewData(childValue));
             }
 
-            return new TreeViewItemData<IConfigValueOrGroup>(thisId, value, childrenElements);
+            return new TreeViewItemData<IConfigValueOrGroup>(_idIterator++, value, childrenElements);
         }
 
 

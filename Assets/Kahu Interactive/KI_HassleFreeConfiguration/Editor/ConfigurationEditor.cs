@@ -55,7 +55,7 @@ public class ConfigurationEditor : EditorWindow
 
     private void BindConfigValueToListIndex(VisualElement element, int index, TreeView treeView)
     {
-        IConfigValueOrGroup treeElement = treeView.GetItemDataForId<IConfigValueOrGroup>(index);
+        IConfigValueOrGroup treeElement = treeView.GetItemDataForIndex<IConfigValueOrGroup>(index);
 
         if (treeElement is ConfigValue)
         {
