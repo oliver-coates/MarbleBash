@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 namespace MarbleBash
@@ -5,18 +6,29 @@ namespace MarbleBash
     [System.Serializable]
     public class CoreStat
     {
-        [SerializeField] private int _value;
-        public int value
+        [SerializeField] private int _level;
+        public int level
         {
             get
             {
-                return _value;
+                return _level;
             }
         }
     
+        public event Action<int> OnChange;
+
+
+
         public CoreStat()
         {
-            _value = 1;
+            _level = 1;
+        }
+
+        public void LevelUp()
+        {
+            _level += 1;
+
+            OnChange?.Invoke(_level);
         }
     }
 

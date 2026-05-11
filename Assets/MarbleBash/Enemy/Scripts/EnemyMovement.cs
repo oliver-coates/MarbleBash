@@ -73,12 +73,9 @@ namespace MarbleBash.Enemy
 
             Vector3 direction = (targetPositon - myPosition).normalized;
 
-            float speed = 350f;
-
-            Vector3 force = direction * speed * Time.deltaTime;
+            Vector3 force = direction * _marble.stats.movementSpeed.value * Time.deltaTime;
 
             _marble.rigidbody.AddForce(force);
-            Debug.DrawLine(transform.position, transform.position + direction * 2, Color.hotPink);
         }
 
 

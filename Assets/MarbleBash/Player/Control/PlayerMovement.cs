@@ -25,9 +25,6 @@ public class PlayerMovement : MarbleMovement
 
     #endregion
 
-    [Header("Settings:")]
-    [SerializeField] private float _movementSpeed;
-
     [Header("State:")]
     [SerializeField] private bool _isAgainstWall;
     public bool isAgainstWall
@@ -83,7 +80,7 @@ public class PlayerMovement : MarbleMovement
 
         Vector3 forceThisFrame = (_playerLook.yawForward * movementInput.y) + _playerLook.yawRight * movementInput.x;
 
-        _marble.rigidbody.AddForce(_movementSpeed * Time.deltaTime * forceThisFrame);
+        _marble.rigidbody.AddForce(_marble.stats.movementSpeed.value * Time.deltaTime * forceThisFrame);
     }
 
     private void AttemptJump(InputAction.CallbackContext context)

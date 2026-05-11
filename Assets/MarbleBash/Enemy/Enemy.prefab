@@ -145,9 +145,9 @@ Rigidbody:
   m_ImplicitTensor: 1
   m_UseGravity: 1
   m_IsKinematic: 0
-  m_Interpolate: 0
+  m_Interpolate: 1
   m_Constraints: 0
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
 --- !u!114 &2412970716671330613
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -165,23 +165,25 @@ MonoBehaviour:
     _xp: 0
     _xpNeededForLevelUp: 100
     mass:
-      _value: 1
+      _level: 1
     agility:
-      _value: 1
+      _level: 1
     recharge:
-      _value: 1
+      _level: 1
     block:
-      _value: 1
+      _level: 1
     luck:
-      _value: 1
+      _level: 1
     energy:
-      _value: 1
+      _level: 1
   _health:
     _lives: 0
+    _isDead: 0
     _hp: 0
     _maxHealth: 0
     _shield: 0
     _maxShield: 0
+  _movement: {fileID: 0}
 --- !u!114 &5163346413169798622
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -194,6 +196,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ae26baf5d04d16e4ca90b86d13cc2d2a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MarbleBash.Enemy.EnemyMovement
+  _velocity: {x: 0, y: 0, z: 0}
+  _speed: 0
+  _cachedVelocity: {x: 0, y: 0, z: 0}
+  _cachedSpeed: 0
+  _isGrounded: 0
+  _distanceToGround: 0
 --- !u!114 &8815133265322639581
 MonoBehaviour:
   m_ObjectHideFlags: 0
