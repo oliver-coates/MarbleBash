@@ -28,6 +28,12 @@ namespace KahuInteractive.HassleFreeConfig
             return _dict[name];
         }
 
+        public void SetValue(string name, float value)
+        {
+            _dict[name].value = value;
+            Debug.Log($"Done!");
+        }
+
         public List<ConfigValue> GetAllConfigValues()
         {
             return _dict.Values.ToList();

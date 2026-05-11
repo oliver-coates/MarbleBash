@@ -10,7 +10,11 @@ using UnityEngine.UIElements;
 public class ConfigurationEditor : EditorWindow
 {
     [SerializeField]
-    private VisualTreeAsset m_VisualTreeAsset = default;
+    private VisualTreeAsset root_uxml = default;
+
+    [SerializeField]
+    private VisualTreeAsset configValueField_uxml = default;
+
 
     private ConfigDataFile _data;
 
@@ -24,21 +28,10 @@ public class ConfigurationEditor : EditorWindow
 
     public void CreateGUI()
     {
-        // // Each editor window contains a root VisualElement object
-        // VisualElement root = rootVisualElement;
-
-        // _data = GetOrCreateDataFile(); 
-
-        // ListView listView = root.Q<ListView>();
-        // Debug.Log($"GOT: {listView}");
-
-        // // Instantiate UXML
-        // VisualElement labelFromUXML = m_VisualTreeAsset.Instantiate();
-        // root.Add(labelFromUXML);
-
         _data = GetOrCreateDataFile(); 
 
-        m_VisualTreeAsset.CloneTree(rootVisualElement);
+        root_uxml.CloneTree(rootVisualElement);
+        
         var listView = rootVisualElement.Q<ListView>();
 
         List<ConfigValue> values = _data.GetAllConfigValues(); 
@@ -52,17 +45,19 @@ public class ConfigurationEditor : EditorWindow
 
     private VisualElement CreateConfigValueField()
     {
-        VisualElement root = new VisualElement();
+        // VisualElement root = new VisualElement();
 
-        Label label = new Label();  
+        // Label label = new Label();  
         
-        FloatField field = new FloatField();
+        // FloatField field = new FloatField();
         
-        var layout = field.layout;
-        layout.position = new Vector2(100, 0);
+        // var layout = field.layout;
+        // layout.position = new Vector2(100, 0);
 
-        root.Add(label);
-        root.Add(field);
+        // root.Add(label);
+        // root.Add(field);
+
+        VisualElement root = configValueField_uxml.CloneTree();
 
         return root;
     }
@@ -71,16 +66,28 @@ public class ConfigurationEditor : EditorWindow
     {
         ConfigValue v = _data.GetAllConfigValues()[index];
 
-        var children = element.Children().ToArray();
-
-        Label label = (children[0] as Label); 
-        label.text = v.name;
+        TextField nameField = element.Q<TextField>("name");
+        nameField.value = v.name;
+        nameField.isDelayed = true;
+        nameField.RegisterValueChangedCallback(evt => 
+        {
+            // _data.SetValue(v.name, )
+        });
         
-        FloatField field = (children[1] as FloatField);
-        field.value = v.value;
-        field.isDelayed = true;
-        field.RegisterValueChangedCallback(evt => v.value = evt.newValue); 
+
+        FloatField valueField = element.Q<FloatField>("value");
+        valueField.value = v.value;
+        valueField.isDelayed = true;
+        valueField.RegisterValueChangedCallback(evt => 
+        {
+            _data.SetValue(v.name, evt.newValue);
+        });
     }
+
+    // private void OnFieldValueChanged(ChangeEvent<float> evt)
+    // {
+    //     evt.
+    // }
 
     protected IList<TreeViewItemData<ConfigValue>> GetListData(ConfigDataFile f)
     {
