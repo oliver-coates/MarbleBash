@@ -7,19 +7,45 @@ namespace KahuInteractive.HassleFreeConfig
  
     public class ConfigDataFile : ScriptableObject
     {
+        [SerializeField] private List<ConfigValue> _values; 
         private Dictionary<string, ConfigValue> _dict;
 
+        /// <summary>
+        /// Call when first creating this object.
+        /// </summary>
+        public void FirstTimeSetup()
+        {
+            _values = new List<ConfigValue>();
+            _dict = new Dictionary<string, ConfigValue>();
+
+            AddValue(new ConfigValue("My Config Value 1", 23f));
+        }
+
+        /// <summary>
+        /// Call everytime this object is loaded into memory
+        /// </summary>
         public void Initialise()
         {
-            _dict = new();
+            _dict = ReconstructDictionary(_values);
+        }
 
-            AddValue(new ConfigValue("Hey", 3));
-            AddValue(new ConfigValue("Ho", 213));
-            AddValue(new ConfigValue("Hi", Mathf.PI));
+
+
+        private Dictionary<string, ConfigValue> ReconstructDictionary(List<ConfigValue> configValues)
+        {
+            Dictionary<string, ConfigValue> output = new ();
+
+            foreach (ConfigValue value in configValues)
+            {
+                output.Add(value.name, value);
+            }
+            
+            return output;
         }
 
         public void AddValue(ConfigValue newValue)
         {
+            _values = new List<ConfigValue>();
             _dict.Add(newValue.name, newValue);
         }
 
@@ -31,15 +57,29 @@ namespace KahuInteractive.HassleFreeConfig
         public void SetValue(string name, float value)
         {
             _dict[name].value = value;
-            Debug.Log($"Done!");
+        }
+
+        public void ChangeName(string oldName, string newName)
+        {
+            ConfigValue toRename = _dict[oldName];
+            _dict.Remove(oldName);
+
+            toRename.name = newName;
+            _dict.Add(newName, toRename);
         }
 
         public List<ConfigValue> GetAllConfigValues()
         {
-            return _dict.Values.ToList();
+            return _values;
+        }
+
+        public bool IsNameAlreadyInUse(string name)
+        {
+            return _dict.ContainsKey(name);
         }
     }
 
+    [System.Serializable]
     public class ConfigValue
     {
         public string name;

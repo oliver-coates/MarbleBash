@@ -12,3 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4ca07d532c1efa94d99956b81a68c91d, type: 3}
   m_Name: main
   m_EditorClassIdentifier: Assembly-CSharp::KahuInteractive.HassleFreeConfig.ConfigDataFile
+  _values:
+  - name: test
+    value: 0
+  - name: asd
+    value: 0
+  - name: zxz
+    value: 0

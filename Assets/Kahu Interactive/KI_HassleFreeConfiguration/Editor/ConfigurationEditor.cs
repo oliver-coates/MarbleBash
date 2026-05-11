@@ -45,18 +45,6 @@ public class ConfigurationEditor : EditorWindow
 
     private VisualElement CreateConfigValueField()
     {
-        // VisualElement root = new VisualElement();
-
-        // Label label = new Label();  
-        
-        // FloatField field = new FloatField();
-        
-        // var layout = field.layout;
-        // layout.position = new Vector2(100, 0);
-
-        // root.Add(label);
-        // root.Add(field);
-
         VisualElement root = configValueField_uxml.CloneTree();
 
         return root;
@@ -71,7 +59,15 @@ public class ConfigurationEditor : EditorWindow
         nameField.isDelayed = true;
         nameField.RegisterValueChangedCallback(evt => 
         {
-            // _data.SetValue(v.name, )
+            // Prevent naming to an existing name.
+            if (_data.IsNameAlreadyInUse(evt.newValue))
+            {
+                nameField.value = evt.previousValue;
+                return;
+            }
+
+            _data.ChangeName(evt.previousValue, evt.newValue);
+            AssetDatabase.SaveAssets();
         });
         
 
@@ -81,13 +77,9 @@ public class ConfigurationEditor : EditorWindow
         valueField.RegisterValueChangedCallback(evt => 
         {
             _data.SetValue(v.name, evt.newValue);
+            AssetDatabase.SaveAssets();
         });
     }
-
-    // private void OnFieldValueChanged(ChangeEvent<float> evt)
-    // {
-    //     evt.
-    // }
 
     protected IList<TreeViewItemData<ConfigValue>> GetListData(ConfigDataFile f)
     {
@@ -104,23 +96,27 @@ public class ConfigurationEditor : EditorWindow
         return list;
     }
 
+    #region File Loading & Selection
     private ConfigDataFile GetOrCreateDataFile()
     {
-        string path = "Kahu Interactive/Configuration/main.asset";
-        if (AssetDatabase.AssetPathExists(path))
+        string path = "Kahu Interactive/Configuration/main";
+        if (AssetDatabase.AssetPathExists("Assets/Resources/Kahu Interactive/Configuration/main.asset"))
         {
-            return Resources.Load<ConfigDataFile>(path);;            
+            ConfigDataFile dataFile = Resources.Load<ConfigDataFile>(path);
+            dataFile.Initialise();
+
+            return dataFile;
         }
         else
         {
             ConfigDataFile file = ScriptableObject.CreateInstance<ConfigDataFile>();
+            file.FirstTimeSetup();
 
             ValidateStoragePathExists();
 
             AssetDatabase.CreateAsset(file, "Assets/Resources/Kahu Interactive/Configuration/main.asset");
             AssetDatabase.SaveAssets();
 
-            file.Initialise();
 
             return file;
         }
@@ -144,4 +140,5 @@ public class ConfigurationEditor : EditorWindow
         }
 
     }
+    #endregion
 }
