@@ -103,6 +103,11 @@ namespace KahuInteractive.HassleFreeConfig
             return _dict[name];
         }
 
+        public float Read(string name)
+        {
+            return _dict[name].value;
+        }
+
         public void SetValue(string name, float value)
         {
             _dict[name].value = value;

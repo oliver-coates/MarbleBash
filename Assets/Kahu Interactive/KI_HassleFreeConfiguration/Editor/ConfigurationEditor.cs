@@ -147,8 +147,6 @@ public class ConfigurationEditor : EditorWindow
         }
     }
 
-
-
     #region File Loading & Selection
     private ConfigDataFile GetOrCreateDataFile()
     {

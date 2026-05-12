@@ -1,3 +1,4 @@
+using KahuInteractive.HassleFreeConfig;
 using UnityEngine;
 
 namespace MarbleBash.Abilities
@@ -21,7 +22,7 @@ namespace MarbleBash.Abilities
 
         protected override void Activate()
         {
-            Vector3 force = _subject.movement.lookDirection * 350f;
+            Vector3 force = _subject.movement.lookDirection * Configuration.Read("dash force base");
 
             _subject.rigidbody.AddForce(force);
         }

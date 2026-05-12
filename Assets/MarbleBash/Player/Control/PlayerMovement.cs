@@ -56,12 +56,17 @@ public class PlayerMovement : MarbleMovement
         }
     }
 
+    private float _speedTuner;
+    private float _jumpHeightTuner;
 
     protected override void Initialise()
     {
         base.Initialise();
 
         SetupInput();
+
+        _speedTuner = Configuration.Read("player_movement_speed");
+        _jumpHeightTuner = Configuration.Read("player_jump_height");
     }
 
 
@@ -80,7 +85,7 @@ public class PlayerMovement : MarbleMovement
 
         Vector3 forceThisFrame = (_playerLook.yawForward * movementInput.y) + _playerLook.yawRight * movementInput.x;
 
-        _marble.rigidbody.AddForce(_marble.stats.movementSpeed.value * Time.deltaTime * forceThisFrame);
+        _marble.rigidbody.AddForce(_marble.stats.movementSpeed.value * Time.deltaTime * forceThisFrame * _speedTuner);
     }
 
     private void AttemptJump(InputAction.CallbackContext context)
@@ -97,7 +102,9 @@ public class PlayerMovement : MarbleMovement
 
     private void Jump()
     {
-        _marble.rigidbody.AddForce(Vector3.up  * _config.jumpForceMultiplier, ForceMode.VelocityChange);
+        Vector3 jumpForce = Vector3.up * _jumpHeightTuner * _marble.stats.movementSpeed.value;
+        
+        _marble.rigidbody.AddForce(jumpForce);
     }
 
     private void WallJump()

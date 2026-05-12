@@ -14,12 +14,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::KahuInteractive.HassleFreeConfig.ConfigDataFile
   _name: Production
   _values:
-  - name: A
-    value: 23
-    path: 
-  - name: B
-    value: 12
-    path: Test Group
-  - name: C
-    value: 200
-    path: Test Group
+  - name: player_movement_speed
+    value: 1
+    path: Player/Movement
+  - name: dash_force_base
+    value: 250
+    path: Abilities/Dash
+  - name: player_jump_height
+    value: 1
+    path: Player/Movement
