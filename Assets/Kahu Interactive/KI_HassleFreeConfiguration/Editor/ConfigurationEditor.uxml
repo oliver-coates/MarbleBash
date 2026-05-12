@@ -1,3 +1,17 @@
 <ui:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
-    <ui:TreeView name="config_tree_view"/>
+    <ui:VisualElement style="flex-grow: 1; flex-direction: row; max-height: 24px;">
+        <ui:Label text="Hassle Free Configuration" style="-unity-text-align: middle-left;"/>
+    </ui:VisualElement>
+    <ui:TreeView name="config_tree_view" style="max-height: 80%;"/>
+    <ui:VisualElement name="value_editor_panel" style="flex-grow: 1; flex-direction: column; max-height: none;">
+        <ui:VisualElement style="flex-grow: 1; -unity-font-style: bold; flex-direction: row; max-height: 20px;">
+            <ui:Label text="Configuration Value:" style="-unity-text-align: middle-left; justify-content: center;"/>
+            <ui:Button text="+" name="new_value_button" style="width: 20px; height: 20px; justify-content: flex-start; align-content: auto; align-items: stretch; -unity-font-style: bold; font-size: 12px; flex-direction: row; align-self: center;"/>
+        </ui:VisualElement>
+        <ui:VisualElement style="flex-grow: 1; flex-direction: row; max-width: none; max-height: 40px; flex-shrink: 0; align-content: auto; align-items: auto; margin-top: 5px; margin-bottom: 5px;">
+            <ui:TextField label="" placeholder-text="filler text" name="selected_value_name_field" style="width: 200px;"/>
+            <ui:FloatField label="" value="42.2" name="selected_value_value_field" style="width: 120px;"/>
+        </ui:VisualElement>
+        <ui:TextField label="" placeholder-text="filler text" name="selected_value_path_field"/>
+    </ui:VisualElement>
 </ui:UXML>

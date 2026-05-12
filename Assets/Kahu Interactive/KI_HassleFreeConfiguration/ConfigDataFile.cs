@@ -7,6 +7,7 @@ namespace KahuInteractive.HassleFreeConfig
  
     public class ConfigDataFile : ScriptableObject
     {
+        [SerializeField, ReadOnly] private string _name;
         [SerializeField] private List<ConfigValue> _values; 
         
         private ConfigValueGroup _root;
@@ -25,12 +26,12 @@ namespace KahuInteractive.HassleFreeConfig
         /// </summary>
         public void FirstTimeSetup()
         {
+            _name = "Production";
             _values = new List<ConfigValue>();
             _dict = new Dictionary<string, ConfigValue>();
-            _root = new ConfigValueGroup(".", null);
 
             // AddValue(new ConfigValue("My Config Value 1", 23f, "ExampleGroup"));
-            AddValue(new ConfigValue("A", 23f));
+            AddValue(new ConfigValue("A", 23f, ""));
             AddValue(new ConfigValue("B", 12f, "Test Group"));
             AddValue(new ConfigValue("C", 200f, "Test Group"));
 
@@ -46,8 +47,6 @@ namespace KahuInteractive.HassleFreeConfig
             _root = ReconstructValuesTree(_values);
         }
 
-
-
         private Dictionary<string, ConfigValue> ReconstructDictionary(List<ConfigValue> configValues)
         {
             Dictionary<string, ConfigValue> output = new ();
@@ -62,7 +61,7 @@ namespace KahuInteractive.HassleFreeConfig
 
         private ConfigValueGroup ReconstructValuesTree(List<ConfigValue> configValues)
         {
-            ConfigValueGroup root = new ConfigValueGroup(".", null);
+            ConfigValueGroup root = new ConfigValueGroup(_name, null);
 
             foreach (ConfigValue value in configValues)
             {
@@ -127,8 +126,14 @@ namespace KahuInteractive.HassleFreeConfig
         {
             return _dict.ContainsKey(name);
         }
-    }
 
+        public void ChangePath(string name, string newPath)
+        {
+            Debug.Log($"Changing path!");
+            GetValue(name).path = newPath;
+            _root = ReconstructValuesTree(_values);
+        }
+    }
 
     [System.Serializable]
     public class ConfigValue : IConfigValueOrGroup
@@ -137,7 +142,7 @@ namespace KahuInteractive.HassleFreeConfig
         public float value;
         public string path;
 
-        public ConfigValue(string name, float value, string path = "")
+        public ConfigValue(string name, float value, string path)
         {
             this.name = name;
             this.value = value;
