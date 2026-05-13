@@ -9,11 +9,13 @@ namespace KahuInteractive.HassleFreeConfig
     {
         private int _idIterator;
         private List<TreeViewItemData<IConfigValueOrGroup>> _data;
+        private Dictionary<IConfigValueOrGroup, int> _configValueIdDict;
 
         public ConfigTree(ConfigValueGroup root)
         {
             _idIterator = 0;
 
+            _configValueIdDict = new Dictionary<IConfigValueOrGroup, int>();
             _data = new List<TreeViewItemData<IConfigValueOrGroup>>();
             _data.Add(ConvertToTreeViewData(root));
         }
@@ -21,6 +23,7 @@ namespace KahuInteractive.HassleFreeConfig
 
         private TreeViewItemData<IConfigValueOrGroup> ConvertToTreeViewData(ConfigValue value)
         {
+            _configValueIdDict.Add(value, _idIterator);
             return new TreeViewItemData<IConfigValueOrGroup>(_idIterator++, value, null);
         }
 
@@ -38,6 +41,7 @@ namespace KahuInteractive.HassleFreeConfig
                 childrenElements.Add(ConvertToTreeViewData(childValue));
             }
 
+            _configValueIdDict.Add(value, _idIterator);
             return new TreeViewItemData<IConfigValueOrGroup>(_idIterator++, value, childrenElements);
         }
 
@@ -45,6 +49,11 @@ namespace KahuInteractive.HassleFreeConfig
         public IList<TreeViewItemData<IConfigValueOrGroup>> Get()
         {
             return _data;
+        }
+
+        public int GetElementId(IConfigValueOrGroup toGet)
+        {
+            return _configValueIdDict[toGet];
         }
     }
 

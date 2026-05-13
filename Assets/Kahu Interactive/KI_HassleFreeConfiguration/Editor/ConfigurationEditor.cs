@@ -7,11 +7,14 @@ using UnityEngine.UIElements;
 
 public class ConfigurationEditor : EditorWindow
 {
+
+
     [SerializeField]
     private VisualTreeAsset root_uxml = default;
 
 
     private ConfigDataFile _data;
+    private ConfigTree _tree;
     private ConfigValue _currentlySelectedValue;
 
 
@@ -21,6 +24,8 @@ public class ConfigurationEditor : EditorWindow
     private TextField _valueNameField;
     private FloatField _valueFloatField;
     private TextField _valuePathField;
+
+    private const string NEW_VALUE_NAME = "Unnamed config value";
 
 
     [MenuItem("Window/Kahu Interactive/Hassle Free Config/Editor")]
@@ -51,11 +56,14 @@ public class ConfigurationEditor : EditorWindow
         _valuePathField.isDelayed = true;
         _valuePathField.RegisterValueChangedCallback(OnPathChanged);
 
+        rootVisualElement.Q<Button>("refresh_tree_button").RegisterCallback<ClickEvent>((e) => RefreshTree());
+        rootVisualElement.Q<Button>("new_value_button").RegisterCallback<ClickEvent>((e) => AttemptCreateNewValue());
+        rootVisualElement.Q<Button>("delete_value_button").RegisterCallback<ClickEvent>((e) => AttemptDeleteValue());
+
         List<ConfigValue> values = _data.GetAllConfigValues();
         ConfigValueGroup root = _data.root;
 
-        ConfigTree viewTree = new ConfigTree(root);
-        _treeView.SetRootItems(viewTree.Get());
+        RefreshTree();
 
         _treeView.makeItem = () => new Label();
         _treeView.bindItem = (VisualElement element, int index ) => BindConfigValueToListIndex(element, index, _treeView);
@@ -94,9 +102,7 @@ public class ConfigurationEditor : EditorWindow
         _data.ChangePath(_currentlySelectedValue.name, evt.newValue);
         AssetDatabase.SaveAssets();
 
-        _treeView.SetRootItems(new ConfigTree(_data.root).Get());
-
-        _treeView.Rebuild();
+        _treeView.RefreshItems();
     }
 
     private void UpdateValueSelection(IEnumerable<object> enumerable)
@@ -126,6 +132,55 @@ public class ConfigurationEditor : EditorWindow
     {
         _valueEditorHolder.SetEnabled(false);
         _valueEditorHolder.style.opacity = 0.1f;
+    }
+
+    private void RefreshTree()
+    {
+        _tree = new ConfigTree(_data.root);
+        _treeView.SetRootItems(_tree.Get());
+        
+        _treeView.Rebuild();
+
+        if (_currentlySelectedValue != null)
+        {
+            FocusTreeOnValue(_currentlySelectedValue);
+        }
+    }
+
+    private void AttemptCreateNewValue()
+    {
+        // Ensure a newly created value isn't currently sitting within the dictionary...
+        if (_data.IsNameAlreadyInUse(NEW_VALUE_NAME))
+        {
+            FocusTreeOnValue(_data.GetValue(NEW_VALUE_NAME));
+            return;
+        }
+
+        ConfigValue newValue = new ConfigValue(NEW_VALUE_NAME, 0f, "");
+
+        _data.AddValue(newValue);
+
+        RefreshTree();
+
+        FocusTreeOnValue(newValue);
+    }
+
+    private void FocusTreeOnValue(ConfigValue configValue)
+    {
+        int newValueId = _tree.GetElementId(configValue);
+        _treeView.SetSelectionById(newValueId);   
+    }
+
+    private void AttemptDeleteValue()
+    {
+        if (_currentlySelectedValue == null)
+        {
+            return;
+        }
+        
+        _data.RemoveValue(_currentlySelectedValue);
+
+        RefreshTree();
     }
 
     private void BindConfigValueToListIndex(VisualElement element, int index, TreeView treeView)

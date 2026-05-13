@@ -96,6 +96,8 @@ namespace KahuInteractive.HassleFreeConfig
         {
             _values.Add(newValue);
             _dict.Add(newValue.name, newValue);
+
+            _root = ReconstructValuesTree(_values);
         }
 
         public ConfigValue GetValue(string name)
@@ -134,8 +136,15 @@ namespace KahuInteractive.HassleFreeConfig
 
         public void ChangePath(string name, string newPath)
         {
-            Debug.Log($"Changing path!");
             GetValue(name).path = newPath;
+            _root = ReconstructValuesTree(_values);
+        }
+
+        public void RemoveValue(ConfigValue value)
+        {
+            _dict.Remove(value.name);
+            _values.Remove(value);
+
             _root = ReconstructValuesTree(_values);
         }
     }

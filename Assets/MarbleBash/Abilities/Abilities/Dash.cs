@@ -22,7 +22,7 @@ namespace MarbleBash.Abilities
 
         protected override void Activate()
         {
-            Vector3 force = _subject.movement.lookDirection * Configuration.Read("dash force base");
+            Vector3 force = _subject.movement.lookDirection * Configuration.Read("dash_force_base");
 
             _subject.rigidbody.AddForce(force);
         }

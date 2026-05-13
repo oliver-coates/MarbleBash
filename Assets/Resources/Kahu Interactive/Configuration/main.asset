@@ -18,8 +18,11 @@ MonoBehaviour:
     value: 1
     path: Player/Movement
   - name: dash_force_base
-    value: 250
+    value: 100
     path: Abilities/Dash
   - name: player_jump_height
-    value: 1
+    value: 0.75
     path: Player/Movement
+  - name: ground_pound_initial_force
+    value: 200
+    path: Abilities/Ground Pound
