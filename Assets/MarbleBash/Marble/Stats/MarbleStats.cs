@@ -87,7 +87,6 @@ namespace MarbleBash
         // ENERGY:
         public MutableStat maxEnergy;
         public MutableStat shieldRechargeRate;
-
         #endregion
 
         public MarbleStats()
@@ -132,6 +131,9 @@ namespace MarbleBash
             maxEnergy = new MutableStat(40f, energy, 10f);
             shieldRechargeRate = new MutableStat(5f, energy, 2.5f);
         
+            // Additional:
+            
+
             _allMutableStats = new MutableStat[]
             {
                marbleSize, rigidbodyMass, maxHealth,

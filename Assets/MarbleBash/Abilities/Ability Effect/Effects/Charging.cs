@@ -8,7 +8,7 @@ namespace MarbleBash.Abilities
     {
         public Charging() : base()
         {
-            _duration = 3f;
+            _duration = 1f;
         }
 
         protected override void Start()
@@ -23,12 +23,13 @@ namespace MarbleBash.Abilities
         {
             Vector3 dir = Player.look.yawForward;
 
-            Player.rigidbody.AddForce(1000f * Time.deltaTime * dir);
+            subject.rigidbody.AddForce(1000f * Time.deltaTime * dir);
         }
 
         protected override void Finished()
         {
             PlayerCollisionHandler.UnassignDamageListener();
+            PlayerCollisionHandler.OnCollisionGround -= CollisionGround;
         }
 
         private void CollisionGround(Collision collision)
@@ -36,7 +37,14 @@ namespace MarbleBash.Abilities
             if (collision.impulse.magnitude > 0.5f)
             {
                 StopEffect();
+                StunSubjectMarble();
             }
+        }
+
+        private void StunSubjectMarble()
+        {
+            Stunned s = subject.abilityEffects.AddEffect<Stunned>();
+            s.SetDuration(1.5f);
         }
 
         private void HitMarble(Collision c, Marble m)

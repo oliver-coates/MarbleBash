@@ -69,10 +69,14 @@ namespace MarbleBash
                 _value += _linkedCoreStat.level * _valueModifierPerCoreStatLevel;
             }
 
+            float multiplier = 1;
             foreach (MutableStatModifier modifier in _modifiers)
             {
-                _value += modifier.value;
+                _value += modifier.addition;
+                multiplier *= modifier.multiplier;
             }
+
+            _value *= multiplier;
 
             OnChange?.Invoke(_value);
         }
