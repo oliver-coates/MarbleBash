@@ -136,14 +136,19 @@ public class ConfigurationEditor : EditorWindow
 
     private void RefreshTree()
     {
+        ConfigValue prevSelection = _currentlySelectedValue;
+
         _tree = new ConfigTree(_data.root);
         _treeView.SetRootItems(_tree.Get());
         
         _treeView.Rebuild();
 
-        if (_currentlySelectedValue != null)
+        if (prevSelection != null)
         {
-            FocusTreeOnValue(_currentlySelectedValue);
+            if (_data.IsNameAlreadyInUse(prevSelection.name))
+            {
+                FocusTreeOnValue(prevSelection);            
+            }
         }
     }
 
