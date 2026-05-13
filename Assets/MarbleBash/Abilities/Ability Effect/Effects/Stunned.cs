@@ -8,21 +8,14 @@ namespace MarbleBash.Abilities
     {
         private MutableStatModifier _movementSpeedModifier;
 
-        public void Initialise(float duration)
+        protected override void Start()
         {
-            _duration = duration;
-        
             // Disable movement speed:
             _movementSpeedModifier = new MutableStatModifier(0f, 0f);
             subject.stats.movementSpeed.AddModifier(_movementSpeedModifier);
 
             // Particles:
             VFX.Play(new OneShotEffectData("Dazed", Vector3.zero, Quaternion.identity, _duration, subject.transform));
-        }
-
-        protected override void Start()
-        {
-            
         }
 
         protected override void Update()

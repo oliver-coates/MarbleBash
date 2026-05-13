@@ -27,7 +27,7 @@ namespace MarbleBash
             OnCollisionAll?.Invoke(collision);
 
             if (collision.collider.CompareTag("Untagged"))
-            {
+            {             
                 OnCollisionGround?.Invoke(collision);
             }
             if (collision.collider.CompareTag("Enemy"))

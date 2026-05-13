@@ -7,11 +7,16 @@ namespace MarbleBash
 
     public static class DamageManager
     {
-        private static CombatConfig _config;
+
+        private static float globalKnockbackMultiplier;
+        private static float globalDamageMultiplier;
+        private static float minimumDamageThreshold;
 
         public static void Initialise()
         {
-            _config = Configuration.Get<CombatConfig>();    
+            globalKnockbackMultiplier = Configuration.Read("knockback_multiplier");
+            globalDamageMultiplier = Configuration.Read("damage_multiplier");
+            minimumDamageThreshold = Configuration.Read("damage_ignore_less_than");
         }
 
         #region Public Methods
@@ -26,7 +31,7 @@ namespace MarbleBash
         public static void ApplyDamage(Marble from, Marble to, float amount, Vector3 knockbackDirection, float knockbackMultiplier=1f)
         {
             // Ignore if less than the minimum damage threshold.
-            if (amount < _config.minimumDamageThreshold)
+            if (amount < minimumDamageThreshold)
             {
                 return;
             }
@@ -34,8 +39,8 @@ namespace MarbleBash
             // Damage events hold all information regarding the damage being dealt:
             DamageEvent damage = new DamageEvent(from, to)
             {
-                amount = amount * _config.damageMultiplier,
-                knockbackAmount = amount * knockbackMultiplier * _config.knockbackMultiplier,
+                amount = amount * globalDamageMultiplier,
+                knockbackAmount = amount * knockbackMultiplier * globalKnockbackMultiplier,
                 knockbackDirection = knockbackDirection
             };
 

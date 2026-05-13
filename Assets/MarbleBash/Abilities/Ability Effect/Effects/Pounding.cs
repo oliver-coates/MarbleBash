@@ -7,15 +7,15 @@ namespace MarbleBash.Abilities
     [System.Serializable]
     public class Pounding : AbilityEffect
     {
-        public Pounding() : base()
-        {
-            _duration = 10f;
-        }
-
         protected override void Start()
         {
-            PlayerCollisionHandler.OnCollisionGround += HitGround;
-            PlayerCollisionHandler.AssignDamageListener(HitMarble);
+            _duration = 10f;
+
+            if (subject == Player.instance)
+            {
+                PlayerCollisionHandler.OnCollisionGround += HitGround;
+                PlayerCollisionHandler.AssignDamageListener(HitMarble);    
+            }
         }
 
         private void PoundMarble(Marble toPound, float force)

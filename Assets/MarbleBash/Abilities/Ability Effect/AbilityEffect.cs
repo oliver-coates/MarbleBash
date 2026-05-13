@@ -57,9 +57,10 @@ namespace MarbleBash.Abilities
             _timeElapsed = 0f;
         }
 
-        public void Initialise(Marble subject)
+        public void Initialise(Marble subject, float duration)
         {
             _subject = subject;
+            _duration = duration;
             
             Start();
         }

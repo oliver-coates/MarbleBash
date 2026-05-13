@@ -6,30 +6,37 @@ namespace MarbleBash.Abilities
 
     public class Charging : AbilityEffect
     {
-        public Charging() : base()
-        {
-            _duration = 1f;
-        }
+        private MutableStatModifier moveSpeedModifier;
+
 
         protected override void Start()
         {
-            PlayerCollisionHandler.AssignDamageListener(HitMarble);
-            PlayerCollisionHandler.OnCollisionGround += CollisionGround;
-        }
+            _duration = 1f;
 
-        
+            if (subject == Player.instance)
+            {
+                PlayerCollisionHandler.AssignDamageListener(HitMarble);
+                PlayerCollisionHandler.OnCollisionGround += CollisionGround;    
+            }
+
+            // Increase move speed by 50%!
+            moveSpeedModifier = new MutableStatModifier(0.5f);
+            subject.stats.movementSpeed.AddModifier(moveSpeedModifier);            
+        }
 
         protected override void Update()
         {
-            Vector3 dir = Player.look.yawForward;
-
-            subject.rigidbody.AddForce(1000f * Time.deltaTime * dir);
         }
 
         protected override void Finished()
         {
-            PlayerCollisionHandler.UnassignDamageListener();
-            PlayerCollisionHandler.OnCollisionGround -= CollisionGround;
+            if (subject == Player.instance)
+            {
+                PlayerCollisionHandler.UnassignDamageListener();
+                PlayerCollisionHandler.OnCollisionGround -= CollisionGround;   
+            }
+
+            subject.stats.movementSpeed.RemoveModifier(moveSpeedModifier);            
         }
 
         private void CollisionGround(Collision collision)
@@ -43,8 +50,7 @@ namespace MarbleBash.Abilities
 
         private void StunSubjectMarble(Collision collision)
         {
-            Stunned s = subject.abilityEffects.AddEffect<Stunned>();
-            s.Initialise(1.5f);
+            subject.abilityEffects.AddEffect<Stunned>(1.5f);
 
             Vector3 knockbackDir = (collision.contacts[0].normal + Vector3.up).normalized;
             
@@ -61,11 +67,15 @@ namespace MarbleBash.Abilities
             
             subject.rigidbody.linearVelocity = cachedVelocity;
 
-            Vector3 knockbackDir = cachedVelocity.normalized + (Vector3.up * 0.33f);
+            Vector3 knockbackDir = cachedVelocity.normalized + Vector3.up;
 
-            DamageManager.ApplyDamage(subject, m, m.movement.cachedSpeed, knockbackDir);
+            float damage = m.movement.cachedSpeed;
+            DamageManager.ApplyDamage(subject, m, damage, knockbackDir);
 
+            float stunDuration = damage * 0.25f;
+            m.abilityEffects.AddEffect<Stunned>(stunDuration);
         }
+
 
     }
 

@@ -14,16 +14,17 @@ namespace MarbleBash.Abilities
             _currentEffects = new List<AbilityEffect>();
         }
 
-        public TEffectType AddEffect<TEffectType>() where TEffectType : AbilityEffect, new()
+        public TEffectType AddEffect<TEffectType>(float duration = 1f) where TEffectType : AbilityEffect, new()
         {
             // Create a new instance of the provided type:
             TEffectType effect = new TEffectType();
-            effect.Initialise(_marble);
+            effect.Initialise(_marble, duration);
 
             _currentEffects.Add(effect);
         
             return effect;
         }
+
 
 
 
