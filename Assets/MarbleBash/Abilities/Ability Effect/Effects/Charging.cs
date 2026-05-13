@@ -37,14 +37,22 @@ namespace MarbleBash.Abilities
             if (collision.impulse.magnitude > 0.5f)
             {
                 StopEffect();
-                StunSubjectMarble();
+                StunSubjectMarble(collision);
             }
         }
 
-        private void StunSubjectMarble()
+        private void StunSubjectMarble(Collision collision)
         {
             Stunned s = subject.abilityEffects.AddEffect<Stunned>();
-            s.SetDuration(1.5f);
+            s.Initialise(1.5f);
+
+            Vector3 knockbackDir = (collision.contacts[0].normal + Vector3.up).normalized;
+            
+            Vector3 knockbackVelocity = subject.movement.cachedSpeed * knockbackDir;
+            Vector3 currentVelocity = subject.rigidbody.linearVelocity;
+
+            subject.rigidbody.linearVelocity = (knockbackVelocity * 0.2f) + (currentVelocity * 0.2f);
+            subject.rigidbody.angularVelocity = subject.rigidbody.angularVelocity * 0.25f;
         }
 
         private void HitMarble(Collision c, Marble m)
