@@ -19,6 +19,7 @@ GameObject:
   - component: {fileID: 4555060791517180805}
   - component: {fileID: 5118750658469363972}
   - component: {fileID: 910302221631095127}
+  - component: {fileID: 2294801459881049985}
   m_Layer: 0
   m_Name: Enemy
   m_TagString: Enemy
@@ -160,22 +161,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4127173ed166aa342af1364fcacb82d2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Enemy
-  _stats:
-    _level: 1
-    _xp: 0
-    _xpNeededForLevelUp: 100
-    mass:
-      _level: 1
-    agility:
-      _level: 1
-    recharge:
-      _level: 1
-    block:
-      _level: 1
-    luck:
-      _level: 1
-    energy:
-      _level: 1
   _health:
     _lives: 0
     _isDead: 0
@@ -253,6 +238,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ab2dc93cb22d2824c9459e98ebc6ab82, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::AbilityJumpstart
+--- !u!114 &2294801459881049985
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2296398700786242156}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 69110e680fddad4448f160ee3433f022, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MarbleBash.MarbleCollisionHandler
 --- !u!1 &6201345053150659996
 GameObject:
   m_ObjectHideFlags: 0

@@ -11,10 +11,10 @@ namespace MarbleBash.Abilities
         {
             _duration = 10f;
 
-            if (subject == Player.instance)
+            subject.collisionHandler.OnCollisionGround += HitGround;
+            if (subject.isPlayer)
             {
-                PlayerCollisionHandler.OnCollisionGround += HitGround;
-                PlayerCollisionHandler.AssignDamageListener(HitMarble);    
+                subject.collisionHandler.AssignDamageListener(HitMarble);    
             }
         }
 
@@ -68,8 +68,11 @@ namespace MarbleBash.Abilities
 
         protected override void Finished()
         {
-            PlayerCollisionHandler.OnCollisionGround -= HitGround;
-            PlayerCollisionHandler.UnassignDamageListener();
+            subject.collisionHandler.OnCollisionGround -= HitGround;
+            if (subject.isPlayer)
+            {
+                subject.collisionHandler.UnassignDamageListener();            
+            }
         }
 
         private void HitGround(Collision c)

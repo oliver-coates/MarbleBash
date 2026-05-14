@@ -5193,11 +5193,11 @@ GameObject:
   - component: {fileID: 7359521683227966099}
   - component: {fileID: 6716917274229926903}
   - component: {fileID: 4815312233933786222}
-  - component: {fileID: 3828636568881872556}
   - component: {fileID: 9199519569152521705}
   - component: {fileID: 592690296531654841}
   - component: {fileID: 6137216703217506774}
   - component: {fileID: 21806275588996396}
+  - component: {fileID: 1839149400753253045}
   m_Layer: 6
   m_Name: Player Marble
   m_TagString: Player
@@ -5348,7 +5348,6 @@ MonoBehaviour:
   _distanceToGround: 0
   _playerLook: {fileID: 0}
   _inputActions: {fileID: -944628639613478452, guid: 052faaac586de48259a63d0c4782560b, type: 3}
-  _movementSpeed: 350
   _isAgainstWall: 0
   _wallNormal: {x: 0, y: 0, z: 0}
 --- !u!114 &7359521683227966099
@@ -5388,18 +5387,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ab2dc93cb22d2824c9459e98ebc6ab82, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::AbilityJumpstart
---- !u!114 &3828636568881872556
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8260454692025462916}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e02ab0161ec1db44f9dfd8793369f71e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::MarbleBash.PlayerDamageManager
 --- !u!114 &9199519569152521705
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5412,22 +5399,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d0735726b8f4a374f9754f3f3fd156ac, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MarbleBash.PlayerInstance
-  _stats:
-    _level: 1
-    _xp: 0
-    _xpNeededForLevelUp: 100
-    mass:
-      _value: 1
-    agility:
-      _value: 1
-    recharge:
-      _value: 1
-    block:
-      _value: 1
-    luck:
-      _value: 1
-    energy:
-      _value: 1
   _health:
     _lives: 0
     _isDead: 0
@@ -5514,3 +5485,15 @@ MonoBehaviour:
     DissipationDistance: 100
     PropagationSpeed: 343
   DefaultVelocity: {x: 0.2, y: -0.7, z: 0}
+--- !u!114 &1839149400753253045
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8260454692025462916}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 69110e680fddad4448f160ee3433f022, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MarbleBash.MarbleCollisionHandler

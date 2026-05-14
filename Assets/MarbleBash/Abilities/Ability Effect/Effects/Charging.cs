@@ -13,10 +13,10 @@ namespace MarbleBash.Abilities
         {
             _duration = 1f;
 
-            if (subject == Player.instance)
+            subject.collisionHandler.OnCollisionGround += CollisionGround;    
+            if (subject.isPlayer)
             {
-                PlayerCollisionHandler.AssignDamageListener(HitMarble);
-                PlayerCollisionHandler.OnCollisionGround += CollisionGround;    
+                subject.collisionHandler.AssignDamageListener(HitMarble);
             }
 
             // Increase move speed by 50%!
@@ -30,10 +30,10 @@ namespace MarbleBash.Abilities
 
         protected override void Finished()
         {
-            if (subject == Player.instance)
+            subject.collisionHandler.UnassignDamageListener();
+            if (subject.isPlayer)
             {
-                PlayerCollisionHandler.UnassignDamageListener();
-                PlayerCollisionHandler.OnCollisionGround -= CollisionGround;   
+                subject.collisionHandler.OnCollisionGround -= CollisionGround;   
             }
 
             subject.stats.movementSpeed.RemoveModifier(moveSpeedModifier);            

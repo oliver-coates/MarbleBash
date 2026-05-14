@@ -63,7 +63,23 @@ namespace MarbleBash
             }
         }
 
-        
+        protected MarbleCollisionHandler _collisionHandler;
+        public MarbleCollisionHandler collisionHandler
+        {
+            get
+            {
+                return _collisionHandler;
+            }
+        }
+
+        protected bool _isPlayer;
+        public bool isPlayer
+        {
+            get
+            {
+                return _isPlayer;
+            }
+        }
 
         internal void Initialise()
         {
@@ -73,6 +89,9 @@ namespace MarbleBash
             _abilities = this.GetComponentSafe<AbilityController>();
             _statusEffects = this.GetComponentSafe<AbilityEffectManager>();
             _movement = this.GetComponentSafe<MarbleMovement>();
+            _collisionHandler = this.GetComponentSafe<MarbleCollisionHandler>();
+
+            _isPlayer = this == Player.instance;
 
             // Setup subcomponents:
             foreach (MarbleSubComponent subcomponent in transform.GetComponentsInChildren<MarbleSubComponent>())

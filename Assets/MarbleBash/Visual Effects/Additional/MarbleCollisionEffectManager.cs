@@ -19,16 +19,16 @@ namespace MarbleBash
         {
             _config = Configuration.Get<MovementConfig>();
         
-            PlayerCollisionHandler.OnCollisionGround += RegisterImpactGround;
-            PlayerCollisionHandler.OnCollisionMarble += RegisterImpactEnemy;
+            _marble.collisionHandler.OnCollisionGround += RegisterImpactGround;
+            _marble.collisionHandler.OnCollisionMarble += RegisterImpactEnemy;
             MarbleHealth.OnDamageTakenGlobal += RegisterDamage;
 
         }
 
         private void OnDestroy()
         {
-            PlayerCollisionHandler.OnCollisionGround -= RegisterImpactGround;
-            PlayerCollisionHandler.OnCollisionMarble -= RegisterImpactEnemy;    
+            _marble.collisionHandler.OnCollisionGround -= RegisterImpactGround;
+            _marble.collisionHandler.OnCollisionMarble -= RegisterImpactEnemy;    
             MarbleHealth.OnDamageTakenGlobal -= RegisterDamage;
         }
 
