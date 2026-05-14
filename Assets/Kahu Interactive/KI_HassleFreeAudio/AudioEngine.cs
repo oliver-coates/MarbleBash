@@ -69,6 +69,13 @@ namespace KahuInteractive.HassleFreeAudio
 
     }
 
+    /// <summary>
+    /// Play data for the audio engine:
+    /// ClipSet - The clipset to play,
+    /// Volume - The volume multiplier,
+    /// WorldLocation - The position to play in world,
+    /// AttachedTrasnform - A transform for this object to attach itself to.
+    /// </summary>
     public struct AudioPlayData
     {
         public ClipSet clipSet;

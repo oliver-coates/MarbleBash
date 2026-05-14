@@ -67,6 +67,15 @@ namespace MarbleBash
                 return _this._instance;
             }
         }
+
+        [SerializeField] private PlayerCameraShakeHandler _camShake;
+        public static PlayerCameraShakeHandler camShake
+        {
+            get
+            {
+                return _this._camShake;
+            }	
+        }
     }
 
 }

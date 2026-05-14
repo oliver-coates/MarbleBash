@@ -18,16 +18,6 @@ namespace MarbleBash
             }
         }
 
-        [Header("Jump:")]
-        [SerializeField] private float _jumpForceMultiplier = 1f;
-        public float jumpForceMultiplier
-        {
-            get
-            {
-                return _jumpForceMultiplier;
-            }	
-        }
-
         [Header("Wall Jump:")]
         [SerializeField] private float _wallJumpForceMultiplier = 1f;
         public float wallJumpForceMultiplier
@@ -38,24 +28,6 @@ namespace MarbleBash
             }	
         }
 
-        [Header("Camera Shake:")]
-        [SerializeField] private float _collisionCameraShakeForceMultiplier;
-        public float collisionCameraShakeForceMultiplier
-        {
-            get
-            {
-                return _collisionCameraShakeForceMultiplier; 
-            }	
-        }
-
-        [SerializeField] private float _minimumCollisionForceRequiredForCameraShake;
-        public float minimumCollisionForceRequiredForCameraShake
-        {
-            get
-            {
-                return _minimumCollisionForceRequiredForCameraShake;
-            }	
-        }
 
         [Header("Movement Trail:")]
         [SerializeField] private float _minimumVelocityForTrail = 10;
@@ -105,67 +77,12 @@ namespace MarbleBash
         }
     
         [Header("Impact decals:")]
-        [SerializeField] private GameObject _impactDecalPrefab;
-        public GameObject impactDecalPrefab
-        {
-            get
-            {
-                return _impactDecalPrefab;
-            }	
-        }
-    
         [SerializeField] private float _minimumVelocityRequiredForImpactDecal = 5;
         public float minimumVelocityRequiredForImpactDecal
         {
             get
             {
                 return _minimumVelocityRequiredForImpactDecal;
-            }	
-        }
-
-        [SerializeField] private float _maxVelocityForImpactDecal = 40;
-        public float maxVelocityForImpactDecal
-        {
-            get
-            {
-                return _maxVelocityForImpactDecal;
-            }	
-        }
-    
-        [SerializeField] private AnimationCurve _impactStartOpacityCurve;
-        public AnimationCurve impactStartOpacityCurve
-        {
-            get
-            {
-                return _impactStartOpacityCurve;
-            }	
-        }
-
-
-        [SerializeField] private float _impactDecalMinSize;
-        public float impactDecalMinSize
-        {
-            get
-            {
-                return _impactDecalMinSize;
-            }	
-        }
-    
-        [SerializeField] private float _impactDecalMaxSize;
-        public float impactDecalMaxSize
-        {
-            get
-            {
-                return _impactDecalMaxSize;
-            }	
-        }
-
-        [SerializeField] private AnimationCurve _impactDecalSizeCurve;
-        public AnimationCurve impactDecalSizeCurve
-        {
-            get
-            {
-                return _impactDecalSizeCurve;
             }	
         }
    

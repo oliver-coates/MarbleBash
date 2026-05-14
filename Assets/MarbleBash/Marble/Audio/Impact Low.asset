@@ -25,10 +25,28 @@ MonoBehaviour:
   _mixer: {fileID: -5686910420705490230, guid: 227af2f2877c541449ad6a81671b30f3, type: 2}
   _pitchVariance: 0.2
   _volumeVariance: 0
-  maxDistance: 0
+  maxDistance: 50
   spatialisationCurve:
     serializedVersion: 2
-    m_Curve: []
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: -3.3704746
+      outSlope: -3.3704746
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0.026166406
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
