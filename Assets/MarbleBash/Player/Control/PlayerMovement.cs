@@ -83,9 +83,11 @@ public class PlayerMovement : MarbleMovement
     {
         Vector3 movementInput = _moveAction.ReadValue<Vector2>();
 
-        Vector3 forceThisFrame = (_playerLook.yawForward * movementInput.y) + _playerLook.yawRight * movementInput.x;
+        Vector3 movementDir = (_playerLook.yawForward * movementInput.y) + _playerLook.yawRight * movementInput.x;
 
-        _marble.rigidbody.AddForce(_marble.stats.movementSpeed.value * Time.deltaTime * forceThisFrame * _speedTuner);
+        float speedMultiplier = _marble.stats.movementSpeed.value * _speedTuner * Time.deltaTime;
+
+        _marble.rigidbody.AddForce(speedMultiplier * movementDir);
     }
 
     private void AttemptJump(InputAction.CallbackContext context)
@@ -102,7 +104,7 @@ public class PlayerMovement : MarbleMovement
 
     private void Jump()
     {
-        Vector3 jumpForce = Vector3.up * _jumpHeightTuner * _marble.stats.movementSpeed.value;
+        Vector3 jumpForce = Vector3.up * _jumpHeightTuner * _marble.stats.jumpHeight.value;
         
         _marble.rigidbody.AddForce(jumpForce);
     }

@@ -53,7 +53,19 @@ namespace KahuInteractive.HassleFreeConfig
 
         public int GetElementId(IConfigValueOrGroup toGet)
         {
-            return _configValueIdDict[toGet];
+            try
+            {
+                int id = _configValueIdDict[toGet];
+                return id;              
+            }
+            catch
+            {
+                // Debug.LogError(e);
+                // Debug.LogError($"Could not find key: {toGet.GetName()}");
+                return 0;
+            }
+
+            
         }
     }
 

@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using KahuInteractive.HassleFreeConfig;
 using UnityEngine;
 
 namespace MarbleBash
@@ -9,7 +10,6 @@ namespace MarbleBash
     /// Class representing the status of a marble:
     /// - Health, level, xp, name, etc
     /// </summary>
-    [System.Serializable]
     public class MarbleStats
     {
         #region Events:
@@ -70,7 +70,7 @@ namespace MarbleBash
 
         // AGILITY:
         public MutableStat movementSpeed;
-        public MutableStat rigidbodyDrag;
+        public MutableStat jumpHeight;
 
         // RECHARGE:
         public MutableStat energyRechargeRate;
@@ -87,6 +87,10 @@ namespace MarbleBash
         // ENERGY:
         public MutableStat maxEnergy;
         public MutableStat shieldRechargeRate;
+        
+        // ADDITIONAL:
+        public MutableStat rigidbodyDrag;
+
         #endregion
 
         public MarbleStats()
@@ -102,36 +106,88 @@ namespace MarbleBash
         {
             // Mass:
             mass = new CoreStat();
-            marbleSize = new MutableStat(0.70f, mass, 0.05f);
-            rigidbodyMass = new MutableStat(0.20f, mass, 0.05f);
-            maxHealth = new MutableStat(20f, mass, 5f);
+            marbleSize = new MutableStat(
+                Configuration.Read("mass_marble_size_base"), 
+                mass,
+                Configuration.Read("mass_marble_size_per_level")
+            );
+            rigidbodyMass = new MutableStat(
+                Configuration.Read("mass_mass_base"),
+                mass,
+                Configuration.Read("mass_mass_per_level")
+            );
+            maxHealth = new MutableStat(
+                Configuration.Read("mass_maxhealth_base"),
+                mass,
+                Configuration.Read("mass_maxhealth_per_level")
+            );
 
             // Agility:
             agility = new CoreStat();
-            movementSpeed = new MutableStat(50f, agility, 25f);
-            rigidbodyDrag = new MutableStat(0.05f, agility, 0.05f);
+            movementSpeed = new MutableStat(
+                Configuration.Read("agility_movespeed_base"), 
+                agility,
+                Configuration.Read("agility_movespeed_per_level")
+            );
+            jumpHeight = new MutableStat(
+                Configuration.Read("agility_jump_height_base"),
+                agility,
+                Configuration.Read("agility_movespeed_per_level"));
 
             // Recharge:
             recharge = new CoreStat();
-            energyRechargeRate = new MutableStat(2.5f, recharge, 2.5f);
-            abilityCooldownMultiplier = new MutableStat(1.05f, recharge, -0.05f);
+            energyRechargeRate = new MutableStat(
+                Configuration.Read("recharge_recharge_rate_base"),
+                recharge,
+                Configuration.Read("recharge_recharge_rate_per_level")
+            );
+            abilityCooldownMultiplier = new MutableStat(
+                Configuration.Read("recharge_cooldown_modifier_base"),
+                recharge,
+                Configuration.Read("recharge_cooldown_modifier_per_level")
+            );
 
             // Block:
             block = new CoreStat();
-            maxShield = new MutableStat(0f, block, 10f);
-            blockChance = new MutableStat(0f, block, 0.25f);
+            maxShield = new MutableStat(
+                Configuration.Read("block_max_shield_base"),
+                block,
+                Configuration.Read("block_max_shield_per_level")
+            );
+            blockChance = new MutableStat(
+                Configuration.Read("block_block_chance_base"),
+                block,
+                Configuration.Read("block_block_chance_per_level")
+            );
 
             // Luck:
             luck = new CoreStat();
-            criticalChance = new MutableStat(0.5f, luck, 0.5f);
-            lootRarity = new MutableStat(0.95f, luck, 0.05f);
+            criticalChance = new MutableStat(
+                Configuration.Read("luck_critical_chance_base"),
+                luck,
+                Configuration.Read("luck_critical_chance_per_level")
+            );
+            lootRarity = new MutableStat(
+                Configuration.Read("luck_loot_rarity_base"),
+                luck,
+                Configuration.Read("luck_loot_rarity_per_level")
+            );
 
             // Energy:
             energy = new CoreStat();
-            maxEnergy = new MutableStat(40f, energy, 10f);
-            shieldRechargeRate = new MutableStat(5f, energy, 2.5f);
+            maxEnergy = new MutableStat(
+                Configuration.Read("energy_max_energy_base"),
+                energy,
+                Configuration.Read("energy_max_energy_per_level")
+            );
+            shieldRechargeRate = new MutableStat(
+                Configuration.Read("energy_shield_recharge_base"),
+                energy,
+                Configuration.Read("energy_shield_recharge_per_level")
+            );
         
             // Additional:
+            rigidbodyDrag = new MutableStat(0.25f);
             
 
             _allMutableStats = new MutableStat[]

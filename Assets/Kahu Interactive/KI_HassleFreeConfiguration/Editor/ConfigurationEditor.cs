@@ -25,8 +25,8 @@ public class ConfigurationEditor : EditorWindow
     private FloatField _valueFloatField;
     private TextField _valuePathField;
 
-    private const string NEW_VALUE_NAME = "Unnamed config value";
-
+    public const string NEW_VALUE_NAME = "Unnamed config value";
+    private string _lastSelectedPath;
 
     [MenuItem("Window/Kahu Interactive/Hassle Free Config/Editor")]
     public static void Summon()
@@ -100,6 +100,7 @@ public class ConfigurationEditor : EditorWindow
     private void OnPathChanged(ChangeEvent<string> evt)
     {
         _data.ChangePath(_currentlySelectedValue.name, evt.newValue);
+        _lastSelectedPath = evt.newValue;
         AssetDatabase.SaveAssets();
 
         _treeView.RefreshItems();
@@ -112,6 +113,7 @@ public class ConfigurationEditor : EditorWindow
         if (i is null or ConfigValueGroup)
         {
             _currentlySelectedValue = null;
+            _lastSelectedPath = "";
             DisableValueEditor();
         }
         else
@@ -121,7 +123,8 @@ public class ConfigurationEditor : EditorWindow
 
             _valueEditorHolder.SetEnabled(true);
             _valueEditorHolder.style.opacity = 1f;
-            
+            _lastSelectedPath = configValue.path;
+
             _valueNameField.SetValueWithoutNotify(configValue.name);
             _valueFloatField.SetValueWithoutNotify(configValue.value);
             _valuePathField.SetValueWithoutNotify(configValue.path);
@@ -150,6 +153,7 @@ public class ConfigurationEditor : EditorWindow
                 FocusTreeOnValue(prevSelection);            
             }
         }
+
     }
 
     private void AttemptCreateNewValue()
@@ -161,19 +165,24 @@ public class ConfigurationEditor : EditorWindow
             return;
         }
 
-        ConfigValue newValue = new ConfigValue(NEW_VALUE_NAME, 0f, "");
+        ConfigValue newValue = new ConfigValue(NEW_VALUE_NAME, 0f, _lastSelectedPath);
+        _currentlySelectedValue = newValue;
 
         _data.AddValue(newValue);
 
-        RefreshTree();
-
-        FocusTreeOnValue(newValue);
+        RefreshTree();     
     }
 
     private void FocusTreeOnValue(ConfigValue configValue)
     {
+        if (_data.IsNameAlreadyInUse(configValue.name) == false)
+        {
+            return;
+        }
+
         int newValueId = _tree.GetElementId(configValue);
         _treeView.SetSelectionById(newValueId);   
+        // _treeView.SetSelectionByIdWithoutNotify(new int[1] {newValueId});   
     }
 
     private void AttemptDeleteValue()
