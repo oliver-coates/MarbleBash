@@ -12,11 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3649bc85a6d793a42b3c6f97337eff4f, type: 3}
   m_Name: Camera Shake Config
   m_EditorClassIdentifier: Assembly-CSharp::MarbleBash.CameraShakeConfig
-  _minimumForce: 1
+  _minimumForce: 8
   _maximumForce: 40
   _minimumDamage: 2
   _maximumDamage: 100
-  _damageIntensityMultiplier: 12
+  _damageIntensityMultiplier: 10
   _impactForceintensityMultiplier: 4
   _intensityCurve:
     serializedVersion: 2

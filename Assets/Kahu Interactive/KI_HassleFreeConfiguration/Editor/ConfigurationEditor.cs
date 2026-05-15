@@ -76,7 +76,7 @@ public class ConfigurationEditor : EditorWindow
     private void OnValueChanged(ChangeEvent<float> evt)
     {
         _data.SetValue(_currentlySelectedValue.name, evt.newValue);
-        AssetDatabase.SaveAssets();
+        EditorUtility.SetDirty(_data);
 
         _treeView.RefreshItems();
     }
@@ -92,7 +92,7 @@ public class ConfigurationEditor : EditorWindow
         }
 
         _data.ChangeName(evt.previousValue, evt.newValue);
-        AssetDatabase.SaveAssets();
+        EditorUtility.SetDirty(_data);
 
         _treeView.RefreshItems();
     }
@@ -101,7 +101,7 @@ public class ConfigurationEditor : EditorWindow
     {
         _data.ChangePath(_currentlySelectedValue.name, evt.newValue);
         _lastSelectedPath = evt.newValue;
-        AssetDatabase.SaveAssets();
+        EditorUtility.SetDirty(_data);
 
         _treeView.RefreshItems();
     }

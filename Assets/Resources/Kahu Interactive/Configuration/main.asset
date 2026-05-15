@@ -16,13 +16,100 @@ MonoBehaviour:
   _values:
   - name: player_movement_speed
     value: 1
-    path: Player/Movement
+    path: Player/Global
   - name: dash_force_base
-    value: 100
+    value: 350
     path: Abilities/Dash
   - name: player_jump_height
-    value: 0.75
-    path: Player/Movement
+    value: 1
+    path: Player/Global
   - name: ground_pound_initial_force
     value: 200
     path: Abilities/Ground Pound
+  - name: mass_marble_size_base
+    value: 0.7
+    path: Stats/Mass/Marble Size
+  - name: mass_marble_size_per_level
+    value: 0.05
+    path: Stats/Mass/Marble Size
+  - name: mass_mass_base
+    value: 1
+    path: Stats/Mass/Mass
+  - name: mass_mass_per_level
+    value: 0.01
+    path: Stats/Mass/Mass
+  - name: mass_maxhealth_base
+    value: 20
+    path: Stats/Mass/Max Health
+  - name: mass_maxhealth_per_level
+    value: 5
+    path: Stats/Mass/Max Health
+  - name: agility_movespeed_base
+    value: 200
+    path: Stats/Agility/Move Speed
+  - name: agility_movespeed_per_level
+    value: 50
+    path: Stats/Agility/Move Speed
+  - name: agility_jump_height_base
+    value: 200
+    path: Stats/Agility/Jump Height
+  - name: agility_jump_height_per_level
+    value: 0.05
+    path: Stats/Agility/Jump Height
+  - name: recharge_recharge_rate_base
+    value: 10
+    path: Stats/Recharge/Energy Recharge
+  - name: recharge_recharge_rate_per_level
+    value: 5
+    path: Stats/Recharge/Energy Recharge
+  - name: recharge_cooldown_modifier_base
+    value: 1.05
+    path: Stats/Recharge/Ability Cooldown
+  - name: recharge_cooldown_modifier_per_level
+    value: -0.05
+    path: Stats/Recharge/Ability Cooldown
+  - name: block_max_shield_base
+    value: 40
+    path: Stats/Block/Maximum Shield
+  - name: block_max_shield_per_level
+    value: 10
+    path: Stats/Block/Maximum Shield
+  - name: luck_critical_chance_base
+    value: 0.05
+    path: Stats/Luck/Critical Chance
+  - name: luck_critical_chance_per_level
+    value: 0.05
+    path: Stats/Luck/Critical Chance
+  - name: luck_loot_rarity_base
+    value: 0.99
+    path: Stats/Luck/Loot Rarity
+  - name: luck_loot_rarity_per_level
+    value: 0.01
+    path: Stats/Luck/Loot Rarity
+  - name: block_block_chance_base
+    value: 0
+    path: Stats/Block/Block Chance
+  - name: block_block_chance_per_level
+    value: 0.025
+    path: Stats/Block/Block Chance
+  - name: energy_max_energy_base
+    value: 40
+    path: Stats/Energy/Maximum Energy
+  - name: energy_max_energy_per_level
+    value: 10
+    path: Stats/Energy/Maximum Energy
+  - name: energy_shield_recharge_base
+    value: 4
+    path: Stats/Energy/Shield Recharge Rate
+  - name: energy_shield_recharge_per_level
+    value: 1
+    path: Stats/Energy/Shield Recharge Rate
+  - name: knockback_multiplier
+    value: 1.8
+    path: Combat/Global
+  - name: damage_multiplier
+    value: 1
+    path: Combat/Global
+  - name: damage_ignore_less_than
+    value: 1
+    path: Combat/Global
