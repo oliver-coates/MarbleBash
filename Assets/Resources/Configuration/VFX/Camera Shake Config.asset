@@ -17,7 +17,7 @@ MonoBehaviour:
   _minimumDamage: 2
   _maximumDamage: 100
   _damageIntensityMultiplier: 10
-  _impactForceintensityMultiplier: 4
+  _impactForceintensityMultiplier: 3
   _intensityCurve:
     serializedVersion: 2
     m_Curve:

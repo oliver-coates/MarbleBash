@@ -9,7 +9,7 @@ namespace MarbleBash.VisualEffects
 
     public class TerrainImpactHandler : MonoBehaviour
     {
-        private MovementConfig _config;
+        private ImpactDecalConfig _impactConfig;
 
         private bool _initialised;
         #region Initialisation & Destruction
@@ -23,7 +23,7 @@ namespace MarbleBash.VisualEffects
         {
             _initialised = true;
 
-            _config = Configuration.Get<MovementConfig>();
+            _impactConfig = Configuration.Get<ImpactDecalConfig>();
             
             MarbleCollisionHandler.OnCollisionGroundGlobal += RegisterImpactGround;
             Player.instance.collisionHandler.OnCollisionMarble += RegisterImpactEnemy;
@@ -52,25 +52,25 @@ namespace MarbleBash.VisualEffects
 
             Player.camShake.DoImpactShakeEvent(magnitude, marble.transform.position);
 
-            if (magnitude > _config.minimumVelocityRequiredForImpactDecal)
+            if (magnitude > _impactConfig.minVelocity)
             {
                 CreateImpactDecal(collision, magnitude);            
             }
 
-            AudioPlayData playData = new AudioPlayData()
-            {
-                clipSet = _config.impactLowClipSet,
-                volume = Mathf.Log(magnitude, 2f) * 0.5f,
-                worldLocation = marble.transform.position
-            };
-            AudioEngine.PlaySound(playData);
+            // AudioPlayData playData = new AudioPlayData()
+            // {
+            //     clipSet = _config.impactLowClipSet,
+            //     volume = Mathf.Log(magnitude, 2f) * 0.5f,
+            //     worldLocation = marble.transform.position
+            // };
+            // AudioEngine.PlaySound(playData);
         }
 
         private void RegisterImpactEnemy(Collision c, Marble marble)
         {
             float magnitude = c.impulse.magnitude;
 
-            AudioEngine.PlaySound(_config.impactLowClipSet, Mathf.Log(magnitude, 2f) * 0.5f);    
+            // AudioEngine.PlaySound(_config.impactLowClipSet, Mathf.Log(magnitude, 2f) * 0.5f);    
         }
 
         private void RegisterDamage(MarbleHealth.HealthChangedEvent damageEvent)
@@ -104,7 +104,7 @@ namespace MarbleBash.VisualEffects
             ContactPoint p = c.contacts[0];
             Vector3 position = p.point + (p.normal * 0.09f);
             Quaternion rotation = Quaternion.LookRotation(-p.normal);
-            float size = force / 10f;
+            float size = _impactConfig.GetSizeFromForce(force);
 
             OneShotEffectData impactData = new OneShotEffectData("Impact", position, rotation, size);
 
