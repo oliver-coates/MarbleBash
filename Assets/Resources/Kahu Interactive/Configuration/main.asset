@@ -113,3 +113,9 @@ MonoBehaviour:
   - name: damage_ignore_less_than
     value: 1
     path: Combat/Global
+  - name: enemy_movement_speed
+    value: 1
+    path: Enemy/Global
+  - name: enemy_jump_height
+    value: 1
+    path: Enemy/Global

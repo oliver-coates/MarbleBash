@@ -75,8 +75,15 @@ namespace MarbleBash
             }
         }
 
+        // Settings:
+        protected float _moveSpeedMultiplier;
+        protected float _jumpHeightMultiplier;
+
         protected abstract bool CheckIsGrounded(out float distanceToGround);
         protected abstract Vector3 GetLookDirection();
+        protected abstract Vector3 GetMovementDirection();
+        
+
 
 
         protected override void Initialise()
@@ -92,15 +99,38 @@ namespace MarbleBash
 
         protected virtual void Update()
         {
-            _velocity = _marble.rigidbody.linearVelocity; 
-            _speed = _velocity.magnitude;
+            UpdateVelocityAndSpeed();
 
             _isGrounded = CheckIsGrounded(out _distanceToGround);
+        
+            Move();
+        }
+
+        private void UpdateVelocityAndSpeed()
+        {
+            _velocity = _marble.rigidbody.linearVelocity;
+            _speed = _velocity.magnitude;
         }
 
         protected bool IsObjectOnGroundedLayer(GameObject obj)
         {
             return ((_config.groundedLayerMask.value & (1 << obj.layer)) > 0); 
+        }
+
+        protected void Jump()
+        {
+            Vector3 jumpForce = Vector3.up * _jumpHeightMultiplier * _marble.stats.jumpHeight.value;
+        
+            _marble.rigidbody.AddForce(jumpForce);
+        }
+        
+        protected void Move()
+        {
+            Vector3 movementInput = GetMovementDirection();
+
+            float speedMultiplier = _marble.stats.movementSpeed.value * _moveSpeedMultiplier * Time.deltaTime;
+
+            _marble.rigidbody.AddForce(speedMultiplier * movementInput);
         }
 
     }

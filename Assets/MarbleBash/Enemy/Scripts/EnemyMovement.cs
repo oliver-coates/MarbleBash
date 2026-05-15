@@ -1,5 +1,6 @@
-#define DEBUG_DRAW_PATH
+// #define DEBUG_DRAW_PATH
 
+using KahuInteractive.HassleFreeConfig;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -8,11 +9,15 @@ namespace MarbleBash.Enemy
     public class EnemyMovement : MarbleMovement, IDistributedPathingAgent
     {
         private NavMeshPath _path;
+        private Vector3 _pathingTarget;
 
         #region Initialisation & Destruction
         protected override void Initialise()
         {
             base.Initialise();
+
+            _moveSpeedMultiplier = Configuration.Read("enemy_movement_speed");
+            _jumpHeightMultiplier = Configuration.Read("enemy_jump_height");
 
             PathingLoadDistributor.SubscribeTo(this);
         }
@@ -27,14 +32,9 @@ namespace MarbleBash.Enemy
         {
             base.Update();
 
-            if (_path != null)
-            {
-                // This method only has a body if the DEBUG_DRAW_PATH precompiler bool is true.
-                // If not, the compiler will remove it
-                DebugDrawPath();
-            
-                ChasePlayer();            
-            }
+            // This method only has a body if the DEBUG_DRAW_PATH precompiler bool is true.
+            // If not, the compiler will remove it
+            DebugDrawPath();
         }
 
         protected override bool CheckIsGrounded(out float distanceToGround)
@@ -58,8 +58,13 @@ namespace MarbleBash.Enemy
             return distanceToGround < 0.1f;    
         }
 
-        private void ChasePlayer()
+        protected override Vector3 GetMovementDirection()
         {
+            if (_path == null)
+            {
+                return Vector3.zero;
+            }
+
             Vector3 targetPositon;
             if (_path.corners.Length == 1)
             {
@@ -71,15 +76,15 @@ namespace MarbleBash.Enemy
             }
             Vector3 myPosition = transform.position.ShearTo2D();
 
-            Vector3 direction = (targetPositon - myPosition).normalized;
-
-            Vector3 force = direction * _marble.stats.movementSpeed.value * Time.deltaTime;
-
-            _marble.rigidbody.AddForce(force);
+            return (targetPositon - myPosition).normalized;
         }
 
-
         #region Public Methods
+        public void SetPathingTarget(Vector3 target)
+        {
+            _pathingTarget = target;
+        }
+
         public Vector3 GetCurrentPosition()
         {
             return transform.position;
@@ -87,7 +92,7 @@ namespace MarbleBash.Enemy
 
         public Vector3 GetPathingTargetPosition()
         {
-            return Player.movement.groundedPosition;
+            return _pathingTarget;
         }
 
         public void SetPath(NavMeshPath path)
@@ -106,7 +111,6 @@ namespace MarbleBash.Enemy
         }
         #endregion
 
-
         #region Debug Methods
 
         #if DEBUG_DRAW_PATH
@@ -116,6 +120,11 @@ namespace MarbleBash.Enemy
         private void DebugDrawPath()
         {
             #if DEBUG_DRAW_PATH
+            if (_path == null)
+            {
+                return;     
+            }
+
             Vector3 prev = transform.position;
             int i = 0;
             foreach (Vector3 point in _path.corners)

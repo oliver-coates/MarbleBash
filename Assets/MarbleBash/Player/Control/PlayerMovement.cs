@@ -56,8 +56,6 @@ public class PlayerMovement : MarbleMovement
         }
     }
 
-    private float _speedTuner;
-    private float _jumpHeightTuner;
 
     protected override void Initialise()
     {
@@ -65,8 +63,8 @@ public class PlayerMovement : MarbleMovement
 
         SetupInput();
 
-        _speedTuner = Configuration.Read("player_movement_speed");
-        _jumpHeightTuner = Configuration.Read("player_jump_height");
+        _moveSpeedMultiplier = Configuration.Read("player_movement_speed");
+        _jumpHeightMultiplier = Configuration.Read("player_jump_height");
     }
 
 
@@ -74,20 +72,7 @@ public class PlayerMovement : MarbleMovement
     {
         base.Update();
 
-        MoveHorizontally();
-
         VFX.UpdateRTPC("Player Speed", cachedSpeed);
-    }
-
-    private void MoveHorizontally()
-    {
-        Vector3 movementInput = _moveAction.ReadValue<Vector2>();
-
-        Vector3 movementDir = (_playerLook.yawForward * movementInput.y) + _playerLook.yawRight * movementInput.x;
-
-        float speedMultiplier = _marble.stats.movementSpeed.value * _speedTuner * Time.deltaTime;
-
-        _marble.rigidbody.AddForce(speedMultiplier * movementDir);
     }
 
     private void AttemptJump(InputAction.CallbackContext context)
@@ -100,13 +85,6 @@ public class PlayerMovement : MarbleMovement
         {
             WallJump();    
         }
-    }
-
-    private void Jump()
-    {
-        Vector3 jumpForce = Vector3.up * _jumpHeightTuner * _marble.stats.jumpHeight.value;
-        
-        _marble.rigidbody.AddForce(jumpForce);
     }
 
     private void WallJump()
@@ -124,6 +102,7 @@ public class PlayerMovement : MarbleMovement
         _isAgainstWall = false;
     }
 
+    #region Wall Collision Checking
     private void OnCollisionEnter(Collision collision)
     {
         if (isGrounded == false && IsObjectOnGroundedLayer(collision.gameObject))
@@ -152,6 +131,7 @@ public class PlayerMovement : MarbleMovement
         // We consider against a wall if the difference in y is less than 0.2 units.
         return yDiff < 0.2f; 
     }
+    #endregion
 
     protected override bool CheckIsGrounded(out float distanceToGround)
     {
@@ -183,5 +163,12 @@ public class PlayerMovement : MarbleMovement
     protected override Vector3 GetLookDirection()
     {
         return Player.look.pitchForward;
+    }
+
+    protected override Vector3 GetMovementDirection()
+    {
+        Vector2 movementInput =  _moveAction.ReadValue<Vector2>();
+
+        return (_playerLook.yawForward * movementInput.y) + (_playerLook.yawRight * movementInput.x);
     }
 }
