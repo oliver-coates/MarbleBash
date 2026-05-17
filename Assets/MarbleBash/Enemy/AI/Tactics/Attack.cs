@@ -3,15 +3,20 @@ using UnityEngine;
 namespace MarbleBash.Enemy
 {
 
-    public class Attack : Tactic
+    internal class Attack : Tactic
     {
         protected override void Start()
         {
             _duration = 5f;
+
+            TacticTransition overChasm = new TacticTransition(_brain, typeof(LeapOutOfChasm));
+            overChasm.AddNewCriteria(new IsOverChasm(_brain.marble));
+            _transtions.Add(overChasm);
         }
 
         protected override void Finished()
         {
+            _brain.ChangeTactic<Attack>();
         }
 
         protected override void Update()

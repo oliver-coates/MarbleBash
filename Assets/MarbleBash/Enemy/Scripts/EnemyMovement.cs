@@ -41,14 +41,14 @@ namespace MarbleBash.Enemy
         {
             float halfScale = transform.localScale.x / 2f;
             
-            // Find the position at the very bottom of our marble
-            Vector3 floorPosition = transform.position + (Vector3.down * halfScale);
+            // Since we draw our distance raycast from the center of our marble, we need to subtract the radius of our marble from the found distance to ground.
+            float heightOffset = halfScale;
 
             // Update our grounded position:
-            Ray downRay = new Ray(floorPosition + (Vector3.up * 0.05f), Vector3.down);
+            Ray downRay = new Ray(transform.position, Vector3.down);
             if (Physics.Raycast(downRay, out RaycastHit hit, GROUNDED_RAYCAST_DOWN_MAXIMUM_DISTANCE, _config.groundedLayerMask))
             {
-                distanceToGround = hit.distance;
+                distanceToGround = hit.distance - heightOffset;
                 _groundedPosition = hit.point;
             }
             else

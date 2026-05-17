@@ -7,7 +7,7 @@ namespace MarbleBash
     public abstract class MarbleMovement : MarbleSubComponent
     {
         protected MovementConfig _config;
-        protected const float GROUNDED_RAYCAST_DOWN_MAXIMUM_DISTANCE = 999f;
+        public const float GROUNDED_RAYCAST_DOWN_MAXIMUM_DISTANCE = 999f;
 
 
         [Header("Velocity:")]
@@ -103,6 +103,7 @@ namespace MarbleBash
         protected override void Initialise()
         {            
             _config = Configuration.Get<MovementConfig>();
+            _distanceToGround = 1f;
         }
 
         protected virtual void LateUpdate()

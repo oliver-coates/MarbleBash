@@ -1,17 +1,21 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace MarbleBash.Enemy
 {
-    public abstract class Tactic
+    internal abstract class Tactic
     {
         protected float _duration;
         protected EnemyBrain _brain;
+
+        protected List<TacticTransition> _transtions;
 
         internal void Initialise(EnemyBrain brain)
         {
             _brain = brain;
             _duration = 1f;
+            _transtions = new();
             Start();
         }        
 
@@ -23,6 +27,11 @@ namespace MarbleBash.Enemy
             if (_duration < 0)
             {
                 Finish();
+            }
+
+            foreach (TacticTransition tacticTransition in _transtions)
+            {
+                tacticTransition.Check();
             }
         }
 

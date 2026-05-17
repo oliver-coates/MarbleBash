@@ -8,9 +8,18 @@ namespace MarbleBash.Enemy
 
         private Tactic _currentTactic;
 
+        internal Marble marble
+        {
+            get
+            {
+                return _marble;
+            }
+        }
+
         protected override void Initialise()
         {
             _movement = (EnemyMovement) _marble.movement;
+            ChangeTactic<Attack>();
         }
 
         private void Update()
@@ -24,6 +33,12 @@ namespace MarbleBash.Enemy
 
             newTactic.Initialise(this);
 
+            _currentTactic = newTactic;
+        }
+
+        internal void ChangeTactic(Tactic newTactic)
+        {
+            newTactic.Initialise(this);
             _currentTactic = newTactic;
         }
 
