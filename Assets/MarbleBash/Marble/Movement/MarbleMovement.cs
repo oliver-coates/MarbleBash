@@ -7,6 +7,7 @@ namespace MarbleBash
     public abstract class MarbleMovement : MarbleSubComponent
     {
         protected MovementConfig _config;
+        protected const float GROUNDED_RAYCAST_DOWN_MAXIMUM_DISTANCE = 999f;
 
 
         [Header("Velocity:")]
@@ -64,6 +65,19 @@ namespace MarbleBash
             {
                 return _distanceToGround;
             }	
+        }
+
+        /// <summary>
+        /// The position on the surface directly below the marble.
+        /// Not updated when over no geometry, so will also act as the last position the marble was on the ground. 
+        /// </summary>
+        protected Vector3 _groundedPosition;
+        public Vector3 groundedPosition
+        {
+            get
+            {
+                return _groundedPosition;
+            }
         }
 
         [Header("Additional:")]

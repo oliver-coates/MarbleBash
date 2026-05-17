@@ -46,13 +46,14 @@ namespace MarbleBash.Enemy
 
             // Update our grounded position:
             Ray downRay = new Ray(floorPosition + (Vector3.up * 0.05f), Vector3.down);
-            if (Physics.Raycast(downRay, out RaycastHit hit, 100f, _config.groundedLayerMask))
+            if (Physics.Raycast(downRay, out RaycastHit hit, GROUNDED_RAYCAST_DOWN_MAXIMUM_DISTANCE, _config.groundedLayerMask))
             {
                 distanceToGround = hit.distance;
+                _groundedPosition = hit.point;
             }
             else
             {
-                distanceToGround = 100f;
+                distanceToGround = GROUNDED_RAYCAST_DOWN_MAXIMUM_DISTANCE;
             }
 
             return distanceToGround < 0.1f;    

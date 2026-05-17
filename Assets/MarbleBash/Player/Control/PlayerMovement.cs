@@ -44,19 +44,6 @@ public class PlayerMovement : MarbleMovement
         }	
     }
 
-    /// <summary>
-    /// The position on the surface directly below the player. 
-    /// </summary>
-    private Vector3 _groundedPosition;
-    public Vector3 groundedPosition
-    {
-        get
-        {
-            return _groundedPosition;
-        }
-    }
-
-
     protected override void Initialise()
     {
         base.Initialise();
@@ -147,14 +134,14 @@ public class PlayerMovement : MarbleMovement
         
         // Update our grounded position:
         Ray downRay = new Ray(floorPosition, Vector3.down);
-        if (Physics.Raycast(downRay, out RaycastHit hit, 100f, _config.groundedLayerMask))
+        if (Physics.Raycast(downRay, out RaycastHit hit, GROUNDED_RAYCAST_DOWN_MAXIMUM_DISTANCE, _config.groundedLayerMask))
         {
             _groundedPosition = hit.point;
             distanceToGround = hit.distance;
         }
         else
         {
-            distanceToGround = 100f;
+            distanceToGround = GROUNDED_RAYCAST_DOWN_MAXIMUM_DISTANCE;
         }
 
         return isGrounded;

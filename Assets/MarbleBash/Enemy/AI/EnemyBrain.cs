@@ -1,11 +1,12 @@
-using MarbleBash.Enemy;
 using UnityEngine;
 
-namespace MarbleBash
+namespace MarbleBash.Enemy
 {
     public class EnemyBrain : MarbleSubComponent
     {
         private EnemyMovement _movement;
+
+        private Tactic _currentTactic;
 
         protected override void Initialise()
         {
@@ -14,8 +15,22 @@ namespace MarbleBash
 
         private void Update()
         {
-            _movement.SetPathingTarget(Player.transform.position);
+            _currentTactic.Tick();
         }
+
+        internal void ChangeTactic<T>() where T : Tactic, new()
+        {
+            T newTactic = new ();
+
+            newTactic.Initialise(this);
+
+            _currentTactic = newTactic;
+        }
+
+        internal void SetPathTarget(Vector3 position)
+        {
+            _movement.SetPathingTarget(position);            
+        } 
 
 
         
