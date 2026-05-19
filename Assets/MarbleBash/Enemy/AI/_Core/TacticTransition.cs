@@ -25,13 +25,26 @@ namespace MarbleBash.Enemy
             }
         }
 
+        internal TacticTransition(EnemyBrain brain, Type tacticType, TransitionCriteria[] criteria)
+        {
+            _brain = brain;
+            _transitionCriteria = new List<TransitionCriteria>(criteria);
+        
+            // Ensure provided type is a tactic
+            object o = Activator.CreateInstance(tacticType);
+            if (o is Tactic tactic)
+            {
+                _tacticToTransition = tactic;
+            }
+        }
+
         internal void Check()
         {
             foreach (TransitionCriteria criteria in _transitionCriteria)
             {
                 if (criteria.Evaluate())
                 {
-                    _brain.ChangeTactic(_tacticToTransition);
+                    _brain.TransitionToTactic(_tacticToTransition);
                     return;
                 }
             }

@@ -5,9 +5,9 @@ namespace MarbleBash.Enemy
     {
         protected Marble _subject;
         
-        internal TransitionCriteria(Marble marble)
+        internal TransitionCriteria(EnemyBrain brain)
         {
-            _subject = marble;
+            _subject = brain.marble;
         }
 
         internal abstract bool Evaluate();

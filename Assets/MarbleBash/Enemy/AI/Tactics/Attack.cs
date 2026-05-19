@@ -1,5 +1,3 @@
-using UnityEngine;
-
 namespace MarbleBash.Enemy
 {
 
@@ -9,19 +7,34 @@ namespace MarbleBash.Enemy
         {
             _duration = 5f;
 
-            TacticTransition overChasm = new TacticTransition(_brain, typeof(LeapOutOfChasm));
-            overChasm.AddNewCriteria(new IsOverChasm(_brain.marble));
+            TacticTransition overChasm = new TacticTransition(
+                _brain, 
+                typeof(LeapOutOfChasm),
+                new TransitionCriteria[] {new IsOverChasm(_brain)}
+            );
+
             _transtions.Add(overChasm);
         }
 
-        protected override void Finished()
-        {
-            _brain.ChangeTactic<Attack>();
-        }
 
         protected override void Update()
         {
             _brain.SetPathTarget(Player.movement.groundedPosition);
+        }
+
+        protected override void OnTransition()
+        {
+            
+        }
+
+        protected override void OnDurationFinished()
+        {
+            
+        }
+
+        protected override Tactic GetNextTactic()
+        {
+            return new Attack();
         }
     }
 

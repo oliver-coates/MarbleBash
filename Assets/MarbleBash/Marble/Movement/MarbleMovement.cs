@@ -96,8 +96,6 @@ namespace MarbleBash
         protected abstract bool CheckIsGrounded(out float distanceToGround);
         protected abstract Vector3 GetLookDirection();
         protected abstract Vector3 GetMovementDirection();
-        
-
 
 
         protected override void Initialise()

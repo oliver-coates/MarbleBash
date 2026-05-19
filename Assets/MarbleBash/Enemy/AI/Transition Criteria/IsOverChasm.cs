@@ -5,7 +5,7 @@ namespace MarbleBash.Enemy
 
     internal class IsOverChasm : TransitionCriteria
     {
-        public IsOverChasm(Marble marble) : base(marble) {}
+        public IsOverChasm(EnemyBrain brain) : base(brain) {}
 
         internal override bool Evaluate()
         {

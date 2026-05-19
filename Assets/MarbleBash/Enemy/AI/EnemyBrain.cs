@@ -5,6 +5,13 @@ namespace MarbleBash.Enemy
     public class EnemyBrain : MarbleSubComponent
     {
         private EnemyMovement _movement;
+        internal EnemyMovement movement
+        {
+            get
+            {
+                return _movement;
+            }
+        }
 
         private Tactic _currentTactic;
 
@@ -19,7 +26,7 @@ namespace MarbleBash.Enemy
         protected override void Initialise()
         {
             _movement = (EnemyMovement) _marble.movement;
-            ChangeTactic<Attack>();
+            StartTactic<Attack>();
         }
 
         private void Update()
@@ -27,20 +34,29 @@ namespace MarbleBash.Enemy
             _currentTactic.Tick();
         }
 
-        internal void ChangeTactic<T>() where T : Tactic, new()
+        internal void StartTactic<T>() where T : Tactic, new()
         {
             T newTactic = new ();
-
             newTactic.Initialise(this);
-
             _currentTactic = newTactic;
         }
 
-        internal void ChangeTactic(Tactic newTactic)
+        internal void FlowOnToNextTactic(Tactic newTactic)
         {
+            _currentTactic.Finish(Tactic.FinishReason.DurationExpired);
+
             newTactic.Initialise(this);
             _currentTactic = newTactic;
         }
+
+        internal void TransitionToTactic(Tactic newTactic)
+        {
+            _currentTactic.Finish(Tactic.FinishReason.TransitionOccured);
+
+            newTactic.Initialise(this);
+            _currentTactic = newTactic;
+        }
+
 
         internal void SetPathTarget(Vector3 position)
         {

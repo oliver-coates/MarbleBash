@@ -3,7 +3,7 @@ namespace MarbleBash.Enemy
 
     internal class IsGrounded : TransitionCriteria
     {
-        public IsGrounded(Marble marble) : base(marble) {}
+        public IsGrounded(EnemyBrain brain) : base (brain) {}
 
         internal override bool Evaluate()
         {

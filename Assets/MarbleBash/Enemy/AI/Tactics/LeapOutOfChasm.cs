@@ -2,27 +2,50 @@ using MarbleBash.Enemy;
 using UnityEditorInternal;
 using UnityEngine;
 
-namespace MarbleBash
+namespace MarbleBash.Enemy
 {
 
     internal class LeapOutOfChasm : Tactic
     {
+        /// <summary>
+        /// The position that the marble tries to leap towards.
+        /// </summary>
+        private Vector3 leapTarget;
+
         protected override void Start()
         {
             _duration = 2f;
 
-            TacticTransition backOnGround = new TacticTransition(_brain, typeof(Attack));
-            backOnGround.AddNewCriteria(new IsGrounded(_brain.marble));
+            TacticTransition backOnGround = new(
+                _brain, 
+                typeof(Attack),
+                new TransitionCriteria[] { new IsGrounded(_brain) }
+            );
             _transtions.Add(backOnGround);
-            Debug.Log($"leaping!");
+        
+            leapTarget = _brain.marble.movement.groundedPosition + Vector3.up;
+
+            _brain.movement.MoveTowardsPoint(leapTarget);
         }
 
-        protected override void Finished()
-        {
-        }
+
 
         protected override void Update()
         {
+        }
+
+        protected override void OnTransition()
+        {
+            _brain.movement.MoveAlongPath();
+        }
+
+        protected override void OnDurationFinished()
+        {
+        }
+
+        protected override Tactic GetNextTactic()
+        {
+            return new LeapOutOfChasm();
         }
     }
 }

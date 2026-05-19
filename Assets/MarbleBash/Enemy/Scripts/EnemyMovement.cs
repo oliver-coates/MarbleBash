@@ -1,4 +1,4 @@
-// #define DEBUG_DRAW_PATH
+#define DEBUG_DRAW_PATH
 
 using KahuInteractive.HassleFreeConfig;
 using UnityEngine;
@@ -8,8 +8,33 @@ namespace MarbleBash.Enemy
 {
     public class EnemyMovement : MarbleMovement, IDistributedPathingAgent
     {
+        public enum MovementMode
+        {
+            AlongPath = 0,
+            TowardPoint = 1
+        } 
+
         private NavMeshPath _path;
         private Vector3 _pathingTarget;
+
+        private MovementMode _movementMode;
+        public MovementMode movementMode
+        {
+            get
+            {
+                return _movementMode;
+            }
+        }
+
+        private Vector3 _movementTargetPoint;
+        public Vector3 movementTargetPoint
+        {
+            get
+            {
+                return _movementTargetPoint;
+            }
+        }
+
 
         #region Initialisation & Destruction
         protected override void Initialise()
@@ -61,6 +86,22 @@ namespace MarbleBash.Enemy
 
         protected override Vector3 GetMovementDirection()
         {
+            switch (_movementMode)
+            {
+                case MovementMode.AlongPath:
+                    return GetMovementDirectionAlongPath();
+                
+                case MovementMode.TowardPoint:
+                    return GetMovementDirectionTowardsPoint();
+                
+                default:
+                    Debug.LogError("Unhandled movement mode!");
+                    return Vector3.zero;
+            }
+        }
+
+        private Vector3 GetMovementDirectionAlongPath()
+        {
             if (_path == null)
             {
                 return Vector3.zero;
@@ -78,6 +119,11 @@ namespace MarbleBash.Enemy
             Vector3 myPosition = transform.position.ShearTo2D();
 
             return (targetPositon - myPosition).normalized;
+        }
+
+        private Vector3 GetMovementDirectionTowardsPoint()
+        {
+            return (_movementTargetPoint - transform.position).normalized;
         }
 
         #region Public Methods
@@ -110,6 +156,17 @@ namespace MarbleBash.Enemy
         {
             return (Player.transform.position - transform.position).normalized;
         }
+        
+        public void MoveTowardsPoint(Vector3 point)
+        {
+            _movementMode = MovementMode.TowardPoint;
+            _movementTargetPoint = point;
+        }
+
+        public void MoveAlongPath()
+        {
+            _movementMode = MovementMode.AlongPath;
+        }
         #endregion
 
         #region Debug Methods
@@ -121,6 +178,12 @@ namespace MarbleBash.Enemy
         private void DebugDrawPath()
         {
             #if DEBUG_DRAW_PATH
+            if (_movementMode == MovementMode.TowardPoint)
+            {
+                Debug.DrawLine(transform.position, _movementTargetPoint, Color.magenta);
+                return;
+            }
+            
             if (_path == null)
             {
                 return;     
