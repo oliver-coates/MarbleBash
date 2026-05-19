@@ -44,7 +44,7 @@ namespace MarbleBash.Abilities
         /// <returns>True if it was able to activate</returns>
         internal bool AttemptActivate()
         {            
-            if (CheckIsNotOnCooldown() && IsAbleToActivate())
+            if (CheckIsAbleToActivate())
             {
                 Activate();
                 _cooldownTimer = 2f;
@@ -54,6 +54,11 @@ namespace MarbleBash.Abilities
             {
                 return false;
             }
+        }
+
+        internal bool CheckIsAbleToActivate()
+        {
+            return CheckIsNotOnCooldown() && IsAbleToActivate();
         }
 
         /// <summary>
@@ -84,17 +89,6 @@ namespace MarbleBash.Abilities
         /// <returns> True if able to activate.</returns>
         protected abstract bool IsAbleToActivate();
 
-
-        public void SetupEnemyUseRequirements()
-        {
-            _useRequirements = GetEnemyUseRequirements();
-        }
-
-        /// <summary>
-        /// Gets a list of Ability Use Requirements which dictate whether an enemy AI should use this ability or not.
-        /// For example: The fireball ability requires a line of sight to the player.
-        /// </summary>
-        protected abstract EnemyAbilityUseRequirement[] GetEnemyUseRequirements();
 
         /// <summary>
         /// Loops through all Enemy Ability Use Requirements and ensures they are all true.

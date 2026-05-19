@@ -10,11 +10,13 @@ namespace MarbleBash.Enemy
         /// <summary>
         /// The position that the marble tries to leap towards.
         /// </summary>
-        private Vector3 leapTarget;
+        private Vector3 _leapTarget;
+        private bool _hasLeaped;
 
         protected override void Start()
         {
-            _duration = 2f;
+            _hasLeaped = false;
+            _duration = 5f;
 
             TacticTransition backOnGround = new(
                 _brain, 
@@ -22,16 +24,22 @@ namespace MarbleBash.Enemy
                 new TransitionCriteria[] { new IsGrounded(_brain) }
             );
             _transtions.Add(backOnGround);
-        
-            leapTarget = _brain.marble.movement.groundedPosition + Vector3.up;
 
-            _brain.movement.MoveTowardsPoint(leapTarget);
+            _leapTarget = GetLeapTarget();
+
+            _brain.movement.MoveTowardsPoint(_leapTarget);
         }
-
-
 
         protected override void Update()
         {
+            if (timeSinceStart > 0.25 && !_hasLeaped)
+            {
+                if (_marble.abilities.IsAbilityAbleToActivate("Dash"))
+                {
+                    _marble.rigidbody.linearVelocity *= 0.5f;
+                    _hasLeaped = _marble.abilities.AttemptActivateAbility("Dash");
+                }
+            }
         }
 
         protected override void OnTransition()
@@ -46,6 +54,16 @@ namespace MarbleBash.Enemy
         protected override Tactic GetNextTactic()
         {
             return new LeapOutOfChasm();
+        }
+        
+        private Vector3 GetLeapTarget()
+        {
+            Vector3 groundedPosition = _marble.movement.groundedPosition;
+
+            Vector3 dirToGroundedPosition = (groundedPosition.ShearTo2D() - _marble.transform.position.ShearTo2D()).normalized;
+            
+            
+            return groundedPosition + (Vector3.up * 2f) + (dirToGroundedPosition * 2f);
         }
     }
 }

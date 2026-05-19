@@ -12,6 +12,15 @@ namespace MarbleBash.Enemy
             TransitionOccured=1,
         }
         protected float _duration;
+        private float _timeSinceStart;
+        internal float timeSinceStart
+        {
+            get
+            {
+                return _timeSinceStart;
+            }
+        }
+
         protected EnemyBrain _brain;
         protected EnemyInstance _marble;
 
@@ -23,16 +32,18 @@ namespace MarbleBash.Enemy
             _marble = (EnemyInstance) brain.marble;
 
             _duration = 1f;
+            _timeSinceStart = 0f;
+
             _transtions = new();
             Start();
         }        
 
         internal void Tick()
         {
-            _duration -= Time.deltaTime;
+            _timeSinceStart += Time.deltaTime;
             Update();
 
-            if (_duration < 0)
+            if (_timeSinceStart >= _duration)
             {
                 _brain.FlowOnToNextTactic(GetNextTactic());
                 return;

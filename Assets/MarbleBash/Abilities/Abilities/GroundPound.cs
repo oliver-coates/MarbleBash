@@ -23,12 +23,7 @@ namespace MarbleBash.Abilities
 
             _subject.abilityEffects.AddEffect<Pounding>();
         }
-
-        protected override EnemyAbilityUseRequirement[] GetEnemyUseRequirements()
-        {
-            return new EnemyAbilityUseRequirement[0];
-        }
-
+        
         protected override bool IsAbleToActivate()
         {
             return _subject.movement.distanceToGround > HEIGHT_ABOVE_GROUND_TO_ACTIVATE;

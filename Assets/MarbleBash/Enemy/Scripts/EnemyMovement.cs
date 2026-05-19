@@ -154,7 +154,19 @@ namespace MarbleBash.Enemy
 
         protected override Vector3 GetLookDirection()
         {
-            return (Player.transform.position - transform.position).normalized;
+            switch (movementMode)
+            {
+                case MovementMode.AlongPath:
+                    return (Player.transform.position - transform.position).normalized;
+                
+                case MovementMode.TowardPoint:
+                    return (_movementTargetPoint - transform.position).normalized;
+                
+                default:
+                    Debug.LogError("Unhandled movement mode!");
+                    return Vector3.zero;
+            }
+            
         }
         
         public void MoveTowardsPoint(Vector3 point)

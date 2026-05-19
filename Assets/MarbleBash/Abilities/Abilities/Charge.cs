@@ -20,11 +20,6 @@ namespace MarbleBash.Abilities
             _subject.abilityEffects.AddEffect<Charging>();
         }
 
-        protected override EnemyAbilityUseRequirement[] GetEnemyUseRequirements()
-        {
-            return new EnemyAbilityUseRequirement[0];
-        }
-
         protected override bool IsAbleToActivate()
         {
             float alignedVelocity = Vector3.Dot(_subject.movement.lookDirection, _subject.movement.cachedVelocity.normalized);

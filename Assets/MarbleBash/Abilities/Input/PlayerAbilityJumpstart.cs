@@ -3,7 +3,7 @@ using MarbleBash.Abilities;
 using UnityEngine;
 
 
-public class AbilityJumpstart : MonoBehaviour
+public class PlayerAbilityJumpstart : MonoBehaviour
 {
     #region Initalisation & Destruction
 

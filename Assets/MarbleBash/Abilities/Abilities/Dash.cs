@@ -11,15 +11,6 @@ namespace MarbleBash.Abilities
             _name = "Dash";
         }
 
-        protected override EnemyAbilityUseRequirement[] GetEnemyUseRequirements()
-        {
-            EnemyAbilityUseRequirement[] requirements = new EnemyAbilityUseRequirement[1];
-
-            requirements[0] = new BeNearPlayerRequirement(_subject);
-
-            return requirements;
-        }
-
         protected override void Activate()
         {
             Vector3 force = _subject.movement.lookDirection * Configuration.Read("dash_force_base");

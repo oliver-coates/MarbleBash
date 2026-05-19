@@ -6,40 +6,39 @@ namespace MarbleBash.Abilities
 {
     public class AbilityController : MonoBehaviour
     {
-        [Header("Config:")]
-        [Tooltip("Tick this to enable enemy AI activating abilities"), SerializeField] private bool _isEnemy;
-
         [Header("Equipped Abilities:")]
         [SerializeField] private Ability[] _abilities;
-        
+        private Dictionary<string, Ability> _nameToAbilityDict;
 
 
         private void Awake()
         {
+            _nameToAbilityDict = new();
             _abilities = new Ability[4];
         }
 
-        internal void AttemptActivateAbility(int index)
+        public bool IsAbilityAbleToActivate(string name)
+        {
+            return _nameToAbilityDict[name].CheckIsAbleToActivate();
+        }
+
+        public bool AttemptActivateAbility(string name)
+        {
+            return _nameToAbilityDict[name].AttemptActivate();
+        }
+
+        internal bool AttemptActivateAbility(int index)
         {
             Ability ability = _abilities[index];
 
             // Ensure there is an ability in this slot.
             if (ability == null)
             {
-                return;
-            }
-
-            // Enemies need to check their use reqirements before attempting an activation 
-            if (_isEnemy)
-            {
-                if (ability.EvaluateEnemyUseRequirements() == false)
-                {
-                    return;
-                }
+                return false;
             }
 
             // Attempt activation
-            ability.AttemptActivate();
+            return ability.AttemptActivate();
         }
 
         public void EquipAbility(Ability ability, int slot)
@@ -50,11 +49,7 @@ namespace MarbleBash.Abilities
                 return;
             }
 
-            if (_isEnemy)
-            {
-                ability.SetupEnemyUseRequirements();
-            }
-
+            _nameToAbilityDict[ability.name] = ability;
             _abilities[slot] = ability;
         }
 
