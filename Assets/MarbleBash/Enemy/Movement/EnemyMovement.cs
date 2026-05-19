@@ -1,4 +1,4 @@
-#define DEBUG_DRAW_PATH
+// #define DEBUG_DRAW_PATH
 
 using KahuInteractive.HassleFreeConfig;
 using UnityEngine;
@@ -126,6 +126,27 @@ namespace MarbleBash.Enemy
             return (_movementTargetPoint - transform.position).normalized;
         }
 
+        protected override Vector3 GetLookDirection()
+        {
+            switch (movementMode)
+            {
+                case MovementMode.AlongPath:
+                    float distanceToPlayer = Vector3.Distance(transform.position, Player.transform.position);
+                    Vector3 targetPos = Player.transform.position + (Player.rigidbody.linearVelocity * distanceToPlayer * 0.1f);
+
+                    return (targetPos - transform.position).normalized;
+                
+                case MovementMode.TowardPoint:
+                    return (_movementTargetPoint - transform.position).normalized;
+                
+                default:
+                    Debug.LogError("Unhandled movement mode!");
+                    return Vector3.zero;
+            }
+            
+        }
+        
+
         #region Public Methods
         public void SetPathingTarget(Vector3 target)
         {
@@ -152,23 +173,6 @@ namespace MarbleBash.Enemy
             return isGrounded;
         }
 
-        protected override Vector3 GetLookDirection()
-        {
-            switch (movementMode)
-            {
-                case MovementMode.AlongPath:
-                    return (Player.transform.position - transform.position).normalized;
-                
-                case MovementMode.TowardPoint:
-                    return (_movementTargetPoint - transform.position).normalized;
-                
-                default:
-                    Debug.LogError("Unhandled movement mode!");
-                    return Vector3.zero;
-            }
-            
-        }
-        
         public void MoveTowardsPoint(Vector3 point)
         {
             _movementMode = MovementMode.TowardPoint;
@@ -178,6 +182,14 @@ namespace MarbleBash.Enemy
         public void MoveAlongPath()
         {
             _movementMode = MovementMode.AlongPath;
+        }
+        
+        public void AttemptJump()
+        {
+            if (isGrounded)
+            {
+                Jump();
+            }
         }
         #endregion
 

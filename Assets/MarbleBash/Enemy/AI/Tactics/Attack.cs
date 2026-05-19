@@ -7,13 +7,28 @@ namespace MarbleBash.Enemy
         {
             _duration = 5f;
 
-            TacticTransition overChasm = new TacticTransition(
+            TacticTransition leapFromChasm = new TacticTransition(
                 _brain, 
                 typeof(LeapOutOfChasm),
-                new TransitionCriteria[] {new IsOverChasm(_brain)}
+                new TransitionCriteria[] 
+                {
+                    new IsOverChasm(_brain)
+                }
             );
 
-            _transtions.Add(overChasm);
+            TacticTransition dashAtPlayer = new TacticTransition(
+                _brain,
+                typeof(DashAttack),
+                new TransitionCriteria[]
+                {
+                    new IsAbilityReady(_brain, "Dash"),
+                    new IsWithinDistanceToPlayer(_brain, 0.75f, 3f),
+                    new IsNotMovingAwayFromPlayer(_brain),
+                }
+            );
+            
+            _transtions.Add(leapFromChasm);
+            _transtions.Add(dashAtPlayer);
         }
 
 

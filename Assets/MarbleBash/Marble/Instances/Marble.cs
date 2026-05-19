@@ -72,6 +72,15 @@ namespace MarbleBash
             }
         }
 
+        protected MarbleMaterialAcessor _materials;
+        public MarbleMaterialAcessor materials
+        {
+            get
+            {
+                return _materials;
+            }
+        }
+
         protected bool _isPlayer;
         public bool isPlayer
         {
@@ -90,6 +99,7 @@ namespace MarbleBash
             _statusEffects = this.GetComponentSafe<AbilityEffectManager>();
             _movement = this.GetComponentSafe<MarbleMovement>();
             _collisionHandler = this.GetComponentSafe<MarbleCollisionHandler>();
+            _materials = this.GetComponentInChildren<MarbleMaterialAcessor>();
 
             _isPlayer = this == Player.instance;
 

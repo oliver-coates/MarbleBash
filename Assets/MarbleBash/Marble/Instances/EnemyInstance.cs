@@ -11,9 +11,19 @@ namespace MarbleBash
         private CombatConfig _combatConfig;
         public new EnemyMovement movement;
 
+        private AbilityTelegraphManager _telegraphManager;
+        public AbilityTelegraphManager abilityTelegraph
+        {
+            get
+            {
+                return _telegraphManager;            
+            }
+        }
+
         protected override void Setup()
         {
             movement = this.GetComponentSafe<EnemyMovement>();
+            _telegraphManager = GetComponentInChildren<AbilityTelegraphManager>();
 
             _combatConfig = Configuration.Get<CombatConfig>();
 

@@ -27,6 +27,11 @@ namespace MarbleBash.Abilities
             return _nameToAbilityDict[name].AttemptActivate();
         }
 
+        public bool IsAbilityOnCooldown(string name)
+        {
+            return !_nameToAbilityDict[name].CheckIsNotOnCooldown();
+        }
+
         internal bool AttemptActivateAbility(int index)
         {
             Ability ability = _abilities[index];

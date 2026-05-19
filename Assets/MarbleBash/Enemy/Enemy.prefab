@@ -83,9 +83,11 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 1
   m_Children:
+  - {fileID: 3687339327927538821}
   - {fileID: 1261878707851394993}
   - {fileID: 61060237179993620}
   - {fileID: 7794913164862065441}
+  - {fileID: 6147947057578945405}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &2405609322570374556
@@ -280,6 +282,97 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fd41a9a7ec989bd4dabfde98b9955438, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyAbilityJumpstart
+--- !u!1 &3569598351033456739
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3687339327927538821}
+  - component: {fileID: 6371970652549231047}
+  m_Layer: 0
+  m_Name: Material Acessor
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3687339327927538821
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3569598351033456739}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 1
+  m_Children: []
+  m_Father: {fileID: 2804319341540269791}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &6371970652549231047
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3569598351033456739}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ced638f5f2e07ce4f8f14e1cd8f96f35, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MarbleBash.MarbleMaterialAcessor
+  _damageFlashRenderer: {fileID: 6801128510042636446}
+  _baseRenderer: {fileID: 377172989178642315}
+  _outlineRenderer: {fileID: 8953457807986789310}
+--- !u!1 &5564030859336948182
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6147947057578945405}
+  - component: {fileID: 4592748180557689663}
+  m_Layer: 0
+  m_Name: Ability Telegraph
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6147947057578945405
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5564030859336948182}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 1
+  m_Children: []
+  m_Father: {fileID: 2804319341540269791}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &4592748180557689663
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5564030859336948182}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7a08dba4be35318458fbc8082a435a52, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MarbleBash.AbilityTelegraphManager
 --- !u!1 &6201345053150659996
 GameObject:
   m_ObjectHideFlags: 0
@@ -383,9 +476,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 184ff8dcd0def104085bc03f9b18f20b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MarbleBash.DamageEffectManager
-  _damageFlashRenderer: {fileID: 6801128510042636446}
-  _baseRenderer: {fileID: 377172989178642315}
-  _outlineRenderer: {fileID: 8953457807986789310}
 --- !u!1 &8751506415173554704
 GameObject:
   m_ObjectHideFlags: 0

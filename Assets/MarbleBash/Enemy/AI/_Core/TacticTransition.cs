@@ -42,12 +42,15 @@ namespace MarbleBash.Enemy
         {
             foreach (TransitionCriteria criteria in _transitionCriteria)
             {
-                if (criteria.Evaluate())
+                if (criteria.Evaluate() == false)
                 {
-                    _brain.TransitionToTactic(_tacticToTransition);
                     return;
                 }
             }
+
+            // If none of the criteria evaluate to false, we are good to transition:
+            _brain.TransitionToTactic(_tacticToTransition);
+
         }
 
         internal void AddNewCriteria(TransitionCriteria criteria)

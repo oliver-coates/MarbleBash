@@ -5173,6 +5173,50 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 184ff8dcd0def104085bc03f9b18f20b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MarbleBash.DamageEffectManager
+--- !u!1 &8021503836750542332
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1849196854262010160}
+  - component: {fileID: 3313228479080804073}
+  m_Layer: 0
+  m_Name: Material Acessor
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1849196854262010160
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8021503836750542332}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 14.413622, y: 0, z: 8.636136}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 1
+  m_Children: []
+  m_Father: {fileID: 5316720526632171059}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &3313228479080804073
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8021503836750542332}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ced638f5f2e07ce4f8f14e1cd8f96f35, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MarbleBash.MarbleMaterialAcessor
   _damageFlashRenderer: {fileID: 5905654493668828470}
   _baseRenderer: {fileID: 8406461780192014715}
   _outlineRenderer: {fileID: 7808463192369094271}
@@ -5315,6 +5359,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 1
   m_Children:
+  - {fileID: 1849196854262010160}
   - {fileID: 4493547223912264699}
   - {fileID: 8462606030234502790}
   - {fileID: 5224596361435416579}
@@ -5492,7 +5537,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 055d237ca043a92418dddd4e03746235, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MarbleBash.Abilities.AbilityManager
-  _isEnemy: 0
 --- !u!114 &4815312233933786222
 MonoBehaviour:
   m_ObjectHideFlags: 0

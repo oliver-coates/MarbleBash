@@ -45,7 +45,7 @@ namespace MarbleBash.Enemy
 
             if (_timeSinceStart >= _duration)
             {
-                _brain.FlowOnToNextTactic(GetNextTactic());
+                EndTactic();
                 return;
             }
 
@@ -53,6 +53,11 @@ namespace MarbleBash.Enemy
             {
                 tacticTransition.Check();
             }
+        }
+
+        internal void EndTactic()
+        {
+            _brain.FlowOnToNextTactic(GetNextTactic());
         }
 
         internal void Finish(FinishReason reason)
