@@ -7,11 +7,18 @@ namespace MarbleBash
     public abstract class DroppedEntity : MonoBehaviour
     {   
         // References:
-        private Rigidbody _rb;      
-        private TrailRenderer _trail;
+        protected Rigidbody _rb;      
+        protected TrailRenderer _trail;
 
         // Settings:
         private float _size = 0.1f;
+        protected float size
+        {
+            get
+            {
+                return _size;
+            }
+        }
         protected float _hoverHeight = 0.25f;
         
         // State:
@@ -19,10 +26,12 @@ namespace MarbleBash
         protected bool _isOnGround;
           
         
-
-        protected void InitialiseInternal()
+        /// <summary>
+        /// Gets the components that this object uses.
+        /// Call this from your initialisation method.
+        /// </summary>
+        protected void GetComponents()
         {
-            // Grab components & Set position:
             _rb = this.GetComponentSafe<Rigidbody>();
             _trail = this.GetComponentSafe<TrailRenderer>();
         }
@@ -35,6 +44,7 @@ namespace MarbleBash
             OnHitGround();
         }
         protected abstract void OnHitGround();
+
 
         protected virtual void Update()
         {
@@ -72,6 +82,18 @@ namespace MarbleBash
         }
 
         /// <summary>
+        /// Throws the item in a random direction, using default velocity and verticality calculations.
+        /// </summary>
+        protected void Throw()
+        {
+            float throwForceVariance = 0.66f;
+            float throwForce = 10f * (1 + UnityEngine.Random.Range(-throwForceVariance, throwForceVariance));
+            float throwVerticality = UnityEngine.Random.Range(0.35f, 0.85f);
+
+            Throw(throwForce, throwVerticality);
+        }
+
+        /// <summary>
         /// Throws this item in a random direction.
         /// </summary>
         /// <param name="velocity"> How much force the item should be thrown with. </param>
@@ -87,7 +109,6 @@ namespace MarbleBash
 
         }
 
-
         protected void SetSize(float size)
         {
             _size = size;
@@ -96,8 +117,22 @@ namespace MarbleBash
             _trail.startWidth = size;
 
         }
-        
-        
+           
+
+         
+        /// <summary>
+        /// Positions the gameobject to be in a random point within the marble.
+        /// </summary>
+        /// <param name="marble"></param>
+        /// <param name="upShift">Moves the point upwards, leave at 0 to be entirely within the marble</param>
+        protected void PositionWithinMarble(Marble marble, float upShift = 0)
+        {
+            float radius = marble.transform.localScale.x / 2f;
+            Vector3 randomPosition = UnityEngine.Random.insideUnitSphere * radius;
+            Vector3 upShiftVector = new Vector3(0, upShift, 0);
+
+            transform.position = marble.transform.position + randomPosition + upShiftVector;
+        }
     }
 
 

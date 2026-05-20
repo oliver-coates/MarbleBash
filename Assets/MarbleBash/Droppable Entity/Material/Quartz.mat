@@ -7,7 +7,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Xp Glob
+  m_Name: Quartz
   m_Shader: {fileID: -6465566751694194690, guid: 608f7522f0d236b4099f8f4448a9d97c, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
@@ -118,12 +118,12 @@ Material:
     - _a: 0.26
     - _floatAmount: 0.25
     - _floatSpeed: 0.25
-    - _transparency: 1
+    - _transparency: 0.5
     m_Colors:
     - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
-    - _GlowColour: {r: 191.74892, g: 44.100586, b: 0, a: 1}
+    - _GlowColour: {r: 255.99991, g: 255.99991, b: 255.99991, a: 1}
     - _SpecColor: {r: 0.19999996, g: 0.19999996, b: 0.19999996, a: 1}
   m_BuildTextureStacks: []
   m_AllowLocking: 1

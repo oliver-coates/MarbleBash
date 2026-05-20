@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7794913164862065441}
   - component: {fileID: 1427457417460791613}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Brain
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -63,7 +63,7 @@ GameObject:
   - component: {fileID: 4555060791517180805}
   - component: {fileID: 2294801459881049985}
   - component: {fileID: -2740015639981706090}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Enemy
   m_TagString: Enemy
   m_Icon: {fileID: 0}
@@ -292,7 +292,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3687339327927538821}
   - component: {fileID: 6371970652549231047}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Material Acessor
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -339,7 +339,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6147947057578945405}
   - component: {fileID: 4592748180557689663}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Ability Telegraph
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -385,7 +385,7 @@ GameObject:
   - component: {fileID: 8751956798389522369}
   - component: {fileID: 6801128510042636446}
   - component: {fileID: 1353062936276678646}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Hit Flash
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -487,7 +487,7 @@ GameObject:
   - component: {fileID: 1261878707851394993}
   - component: {fileID: 2760690377227030478}
   - component: {fileID: 8953457807986789310}
-  m_Layer: 6
+  m_Layer: 9
   m_Name: Outline
   m_TagString: Untagged
   m_Icon: {fileID: 0}

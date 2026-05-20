@@ -7,19 +7,18 @@ public class XpGlob : DroppedEntity
 
     public void Initialise(Marble marble, int xp)
     {
-        InitialiseInternal();
+        GetComponents();
 
         transform.position = marble.transform.position + (UnityEngine.Random.insideUnitSphere * marble.transform.localScale.x * 0.5f);
         _hoverHeight = 0.5f;
 
         _xp = xp;
-        SetSize(Mathf.Sqrt(xp * 0.001f)+0.05f);
 
-        float throwForceVariance = 0.66f;
-        float throwForce = 10f * (1 + UnityEngine.Random.Range(-throwForceVariance, throwForceVariance));
-        float throwVerticality = UnityEngine.Random.Range(0.35f, 0.85f);
-        
-        Throw(throwForce, throwVerticality);
+        float size = Mathf.Sqrt(xp * 0.001f)+0.05f; 
+        SetSize(size);
+        PositionWithinMarble(marble, size);
+
+        Throw();
     }
 
     protected override void OnHitGround()
