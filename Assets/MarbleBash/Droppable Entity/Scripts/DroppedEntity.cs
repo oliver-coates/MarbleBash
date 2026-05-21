@@ -123,15 +123,13 @@ namespace MarbleBash
         /// <summary>
         /// Positions the gameobject to be in a random point within the marble.
         /// </summary>
-        /// <param name="marble"></param>
         /// <param name="upShift">Moves the point upwards, leave at 0 to be entirely within the marble</param>
-        protected void PositionWithinMarble(Marble marble, float upShift = 0)
+        protected void PositionWithinMarble(Vector3 marbleCenter, float marbleRadius, float upShift = 0)
         {
-            float radius = marble.transform.localScale.x / 2f;
-            Vector3 randomPosition = UnityEngine.Random.insideUnitSphere * radius;
+            Vector3 randomPosition = UnityEngine.Random.insideUnitSphere * marbleRadius;
             Vector3 upShiftVector = new Vector3(0, upShift, 0);
 
-            transform.position = marble.transform.position + randomPosition + upShiftVector;
+            transform.position = marbleCenter + randomPosition + upShiftVector;
         }
     }
 

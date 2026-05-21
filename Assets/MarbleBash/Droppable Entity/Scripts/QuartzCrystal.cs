@@ -14,17 +14,23 @@ namespace MarbleBash
 
         public void Initialise(Marble marble, int amount)
         {
+            float radius = marble.transform.localScale.x / 2f;
+            Initialise(amount, marble.transform.position, radius);
+        }
+
+        public void Initialise(int amount, Vector3 position, float spawnRadius)
+        {
             GetComponents();
 
             _amount = amount;
             _hoverHeight = 0.25f;
 
             float size = 0.1f;
-            _trigger.radius = size * 100f;
+            _trigger.radius = size * 300f;
             _trigger.GetComponent<TriggerHandle>().onTriggerEnter += TriggerEnter;
             SetSize(size);
 
-            PositionWithinMarble(marble, size);
+            PositionWithinMarble(position, spawnRadius, size);
 
             Throw();
         }
@@ -37,7 +43,7 @@ namespace MarbleBash
             {
                 _chasePlayerTimer += Time.deltaTime;
 
-                transform.position = Vector3.MoveTowards(transform.position, Player.transform.position, _chasePlayerTimer * Time.deltaTime * 2f);
+                transform.position = Vector3.MoveTowards(transform.position, Player.transform.position, _chasePlayerTimer * Time.deltaTime * 5f);
 
                 if (Vector3.Distance(transform.position, Player.transform.position) < size)
                 {

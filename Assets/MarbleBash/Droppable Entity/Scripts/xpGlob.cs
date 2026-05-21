@@ -5,18 +5,26 @@ public class XpGlob : DroppedEntity
 {
     private int _xp;
 
+    
+
     public void Initialise(Marble marble, int xp)
+    {
+        float radius = marble.transform.localScale.x / 2f;
+        
+        this.Initialise(xp, transform.position, radius);
+    }
+
+    public void Initialise(int xp, Vector3 position, float spawnRadius)
     {
         GetComponents();
 
-        transform.position = marble.transform.position + (UnityEngine.Random.insideUnitSphere * marble.transform.localScale.x * 0.5f);
         _hoverHeight = 0.5f;
 
         _xp = xp;
 
         float size = Mathf.Sqrt(xp * 0.001f)+0.05f; 
         SetSize(size);
-        PositionWithinMarble(marble, size);
+        PositionWithinMarble(position, spawnRadius, size);
 
         Throw();
     }
