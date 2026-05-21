@@ -12,6 +12,11 @@ namespace MarbleBash
         [Header("References:")]
         [SerializeField] private SphereCollider _trigger;
 
+        /// <summary>
+        /// Initialisation using a marble rather than a provided position and spawn radius
+        /// </summary>
+        /// <param name="marble"></param>
+        /// <param name="amount"></param>
         public void Initialise(Marble marble, int amount)
         {
             float radius = marble.transform.localScale.x / 2f;
@@ -24,15 +29,37 @@ namespace MarbleBash
 
             _amount = amount;
             _hoverHeight = 0.25f;
-
-            float size = 0.1f;
-            _trigger.radius = size * 300f;
-            _trigger.GetComponent<TriggerHandle>().onTriggerEnter += TriggerEnter;
-            SetSize(size);
+          
+            SetupSize();
 
             PositionWithinMarble(position, spawnRadius, size);
 
-            Throw();
+            Vector3 throwDirection = GetRandomThrowDirection();
+            float force = GetRandomThrowForce();
+            Throw(force, throwDirection);
+        }
+
+        public void Initialise(int amount, Vector3 position, Vector3 direction)
+        {
+            GetComponents();
+
+            _amount = amount;
+            _hoverHeight = 0.25f;
+
+            SetupSize();
+            transform.position = position;
+
+            float force = GetRandomThrowForce();
+            Throw(force, direction);
+        }
+
+        private void SetupSize()
+        {
+            float size = 0.1f;
+            _trigger.radius = size * 300f;
+            _trigger.GetComponent<TriggerHandle>().onTriggerEnter += TriggerEnter;
+
+            SetSize(size);
         }
 
         protected override void Update()

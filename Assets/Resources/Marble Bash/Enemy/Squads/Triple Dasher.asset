@@ -13,4 +13,13 @@ MonoBehaviour:
   m_Name: Triple Dasher
   m_EditorClassIdentifier: Assembly-CSharp::MarbleBash.Encounters.EnemySquad
   _cost: 0
-  _elements: []
+  _elements:
+  - _enemyClass: {fileID: 11400000, guid: a5ff9b2539236da429271334cbc0b2c4, type: 2}
+    _minLevel: 0
+    _maxLevel: 0
+  - _enemyClass: {fileID: 11400000, guid: a5ff9b2539236da429271334cbc0b2c4, type: 2}
+    _minLevel: 0
+    _maxLevel: 0
+  - _enemyClass: {fileID: 11400000, guid: a5ff9b2539236da429271334cbc0b2c4, type: 2}
+    _minLevel: 0
+    _maxLevel: 0

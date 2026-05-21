@@ -6,6 +6,7 @@ namespace MarbleBash
 
     public abstract class DroppedEntity : MonoBehaviour
     {   
+
         // References:
         protected Rigidbody _rb;      
         protected TrailRenderer _trail;
@@ -73,37 +74,17 @@ namespace MarbleBash
             }
         }
 
-        private Vector3 GetThrowDirection()
-        {
-            Vector2 randomOnCircle = UnityEngine.Random.onUnitCircle;
-            Vector3 direction = new (randomOnCircle.x, 0f, randomOnCircle.y);
-        
-            return direction.normalized;
-        }
-
-        /// <summary>
-        /// Throws the item in a random direction, using default velocity and verticality calculations.
-        /// </summary>
-        protected void Throw()
-        {
-            float throwForceVariance = 0.66f;
-            float throwForce = 10f * (1 + UnityEngine.Random.Range(-throwForceVariance, throwForceVariance));
-            float throwVerticality = UnityEngine.Random.Range(0.35f, 0.85f);
-
-            Throw(throwForce, throwVerticality);
-        }
-
         /// <summary>
         /// Throws this item in a random direction.
         /// </summary>
         /// <param name="velocity"> How much force the item should be thrown with. </param>
-        /// <param name="forceVerticality"> A value of 0 will throw the item horizontallty, a value of 1 will throw it directly up.</param>
-        protected void Throw(float velocity, float forceVerticality)
+        protected void Throw(float velocity, Vector3 direction)
         {
-            Vector3 horizontalDir = GetThrowDirection();
             Vector3 upDir = Vector3.up;
+            
+            float verticality = UnityEngine.Random.Range(0.35f, 0.85f);
 
-            Vector3 throwForce = velocity * Vector3.Lerp(horizontalDir, upDir, forceVerticality);
+            Vector3 throwForce = velocity * Vector3.Lerp(direction, upDir, verticality);
             
             _rb.AddForce(throwForce, ForceMode.VelocityChange);
 
@@ -118,7 +99,21 @@ namespace MarbleBash
 
         }
            
+        protected Vector3 GetRandomThrowDirection()
+        {
+            Vector2 randomOnCircle = UnityEngine.Random.onUnitCircle;
+            Vector3 direction = new (randomOnCircle.x, 0f, randomOnCircle.y);
+        
+            return direction.normalized;
+        }
 
+        protected float GetRandomThrowForce()
+        {
+            float throwForceVariance = 0.66f;
+            float throwForce = 10f * (1 + UnityEngine.Random.Range(-throwForceVariance, throwForceVariance));
+            
+            return throwForce;
+        }
          
         /// <summary>
         /// Positions the gameobject to be in a random point within the marble.
