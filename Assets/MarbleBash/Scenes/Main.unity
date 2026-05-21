@@ -10259,6 +10259,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1164334700}
   - component: {fileID: 1164334701}
+  - component: {fileID: 1164334702}
   m_Layer: 0
   m_Name: --- Enemies
   m_TagString: Untagged
@@ -10296,6 +10297,18 @@ MonoBehaviour:
   _maxRequestsAllowedPerFrame: 4
   _numRequesters: 0
   _numRequestsAllowedPerFrame: 0
+--- !u!114 &1164334702
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1164334699}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b0f0c90a9954f6249985e5f5957734bc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MarbleBash.Encounters.EncounterManager
 --- !u!1 &1206196619
 GameObject:
   m_ObjectHideFlags: 0

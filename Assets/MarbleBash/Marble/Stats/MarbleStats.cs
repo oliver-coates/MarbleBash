@@ -12,11 +12,14 @@ namespace MarbleBash
     /// </summary>
     public class MarbleStats
     {
+        public const int MAXIMUM_LEVEL = 100;
+
         #region Events:
 
         public event Action<int> OnXpChanged;
         public event Action<int> OnLevelUp;
         #endregion
+
 
         #region Level:
         [Header("Level:")]
@@ -45,6 +48,7 @@ namespace MarbleBash
                 return _xpNeededForLevelUp;
             }	
         }
+
         #endregion
 
 
@@ -208,6 +212,11 @@ namespace MarbleBash
     
         public void AddXp(int amount)
         {
+            if (_level >= MAXIMUM_LEVEL)
+            {
+                return;
+            }
+            
             _xp += amount;
 
             if (_xp > _xpNeededForLevelUp)
