@@ -14,3 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::MarbleBash.CombatConfig
   _xpPrefab: {fileID: 7846100061068676596, guid: 5b9a4e8c462864749b8e16f60a39d14a, type: 3}
   _quartzPrefab: {fileID: 7846100061068676596, guid: cc357a931a9980a41b3ef479cba84b77, type: 3}
+  _enemyPrefab: {fileID: 2296398700786242156, guid: fb6f00d5452a63a4da6ad7f9a0edd762, type: 3}

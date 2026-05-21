@@ -26,7 +26,10 @@ public class XpGlob : DroppedEntity
         SetSize(size);
         PositionWithinMarble(position, spawnRadius, size);
 
-        Throw();
+        Vector3 direction = GetRandomThrowDirection();
+        float force = GetRandomThrowForce();
+
+        Throw(force, direction);
     }
 
     protected override void OnHitGround()

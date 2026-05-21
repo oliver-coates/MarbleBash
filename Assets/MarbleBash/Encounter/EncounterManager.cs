@@ -10,6 +10,7 @@ namespace MarbleBash.Encounters
     {
         public const string ENEMY_CLASS_PATH = "Marble Bash/Enemy/Classes";
 
+        private static EncounterManager _this;
         private EnemyClass[] _classes;
         private EnemySpawner _spawner;
 
@@ -31,6 +32,7 @@ namespace MarbleBash.Encounters
 
         private void Initialise()
         {
+            _this = this;
             _spawner = new();
 
             LoadAndInitialiseEnemyClassObjects();
@@ -46,7 +48,16 @@ namespace MarbleBash.Encounters
             }
         }
     
-        public void StartEncounter(Encounter encounter)
+
+
+        public static void StartEncounter(Encounter encounter)
+        {
+            _this.StartSpawnEncounter(encounter);
+        }
+
+
+
+        private void StartSpawnEncounter(Encounter encounter)
         {
             _spawner.SpawnEncounter(encounter);
 

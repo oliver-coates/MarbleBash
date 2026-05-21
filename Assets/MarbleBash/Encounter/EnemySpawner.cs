@@ -8,7 +8,13 @@ namespace MarbleBash.Encounters
     public class EnemySpawner
     {
         private readonly float _MinimumSpawnDistance = Configuration.Read("minimum_distance_to_spawn_enemy_to_player");
-        private readonly GameObject _EnemyPrefab = Configuration.Get<CombatConfig>().enemyPrefab;
+        private GameObject _enemyPrefab;
+
+
+        public EnemySpawner()
+        {
+            _enemyPrefab = Configuration.Get<CombatConfig>().enemyPrefab;
+        }
 
         private class EnemySpawnData
         {
@@ -20,13 +26,13 @@ namespace MarbleBash.Encounters
         
         internal void SpawnEncounter(Encounter encounter)
         {
-            foreach (Encounter.ElementTEMP enemyElement in encounter.elements)
+            foreach (EncounterElement enemyElement in encounter.elements)
             {
                 SpawnEncounterElement(encounter, enemyElement);
             }
         }
 
-        private void SpawnEncounterElement(Encounter encounter, Encounter.ElementTEMP enemyElement)
+        private void SpawnEncounterElement(Encounter encounter, EncounterElement enemyElement)
         {
             EnemyClass @class = enemyElement.enemyClass;
             for (int enemyIndex = 0; enemyIndex < enemyElement.num; enemyIndex++)
@@ -37,7 +43,7 @@ namespace MarbleBash.Encounters
             }
         }
 
-        private EnemySpawnData GenerateEnemyData(Encounter encounter, Encounter.ElementTEMP enemyElement, EnemyClass @class)
+        private EnemySpawnData GenerateEnemyData(Encounter encounter, EncounterElement enemyElement, EnemyClass @class)
         {
             int level = enemyElement.level;
             float marbleRadius = 1f; // For now we will just assume a radius of 1, this should be reviewed later.
@@ -55,37 +61,36 @@ namespace MarbleBash.Encounters
 
         private void SpawnEnemy(EnemySpawnData data)
         {
-            EnemyInstance newInstance = GameObject.Instantiate(_EnemyPrefab).GetComponent<EnemyInstance>();
-        
+            EnemyInstance newInstance = GameObject.Instantiate(_enemyPrefab).GetComponent<EnemyInstance>();
             newInstance.transform.position = data.postion;
+            newInstance.Initialise();
+
             
             // ToDo: Implement level & type  here
         }
 
 
         #region Finding Spawn Location
-        private Vector3 FindSpawnLocation(Vector3 position, float spawnRadius, float marbleRadius)
+        private Vector3 FindSpawnLocation(Vector3 centerPosition, float spawnRadius, float marbleRadius)
         {
             int attempts = 0;
             while (attempts < 128)
             {
                 attempts++;
 
-                Vector3 pos = GetRandomPosition(position, spawnRadius);
-
-                if (IsPositionTooCloseToPlayer(pos))
+                Vector3 randomPosition = GetRandomPosition(centerPosition, spawnRadius);
+                if (IsPositionTooCloseToPlayer(randomPosition))
                 {
                     continue;
                 }
 
-                if (IsPositionWithinGeometry(position, marbleRadius))
+                if (IsPositionWithinGeometry(randomPosition, marbleRadius))
                 {
                     continue;
                 }
 
-                return pos;
+                return randomPosition;
             }
-
 
             Debug.LogError("Could not find suitable position!");
             return Vector3.zero;
@@ -108,7 +113,7 @@ namespace MarbleBash.Encounters
 
         private static bool IsPositionWithinGeometry(Vector3 position, float marbleRadius)
         {
-            Collider[] collidersHit = Physics.OverlapSphere(position, marbleRadius, LayerMask.NameToLayer("Default")); 
+            Collider[] collidersHit = Physics.OverlapSphere(position, marbleRadius, LayerMask.GetMask("Default")); 
             return collidersHit.Length > 0;
         }
         #endregion

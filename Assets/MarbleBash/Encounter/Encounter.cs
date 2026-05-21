@@ -7,8 +7,8 @@ namespace MarbleBash.Encounters
 
     public class Encounter
     {
-        private List<ElementTEMP> _enemyElements;
-        public ElementTEMP[] elements
+        private List<EncounterElement> _enemyElements;
+        public EncounterElement[] elements
         {
             get
             {
@@ -22,28 +22,18 @@ namespace MarbleBash.Encounters
         [SerializeField] private float _radius;
         public float radius => _radius;
 
-        internal Encounter()
+        internal Encounter(Vector3 pos, float radius)
         {
+            _position = pos;
+            _radius = radius;
+
+            
             _enemyElements = new();
         }
 
-        public class ElementTEMP
+        public void AddElement(EncounterElement toAdd)
         {
-            internal EnemyClass enemyClass;
-            
-            internal int num;
-            
-            private int minLevel;
-            private int maxLevel;
-            internal int level
-            {
-                get
-                {
-                    return UnityEngine.Random.Range(minLevel, maxLevel+1);
-                }
-
-            }
-
+            _enemyElements.Add(toAdd);
         }
     }
 
