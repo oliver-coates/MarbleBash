@@ -26,5 +26,9 @@ namespace MarbleBash
             }	
         }
 
+
+        [Header("Temp:")]
+        [SerializeField] private GameObject _enemyPrefab;
+        public GameObject enemyPrefab => _enemyPrefab;
     }
 }
