@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using KahuInteractive.HassleFreeConfig;
+using MarbleBash.Enemy;
 using UnityEngine;
 
 namespace MarbleBash
@@ -14,14 +15,22 @@ namespace MarbleBash
     {
         public const int MAXIMUM_LEVEL = 100;
 
-        #region Events:
+        #region Events
 
         public event Action<int> OnXpChanged;
         public event Action<int> OnLevelUp;
         #endregion
 
 
-        #region Level:
+        #region Type
+
+        [SerializeField] private EnemyType _type;
+        public EnemyType type => _type;
+
+        #endregion
+
+
+        #region Level
         [Header("Level:")]
         [SerializeField] private int _level;
         public int level
@@ -52,8 +61,12 @@ namespace MarbleBash
         #endregion
 
 
-        #region Core Stats:
+        #region Core Stats
         [Header("Stats:")]
+        // Points you can use to level up the core stats:
+        private int _statLevelUpPoints;
+        public int statLevelUpPoints => _statLevelUpPoints;
+
         public CoreStat mass; // Size, Damage, Health
         public CoreStat agility; // Speed
         public CoreStat recharge; // Energy recharge rate, ability recharge rate
@@ -97,6 +110,8 @@ namespace MarbleBash
 
         #endregion
 
+
+        #region Constructors
         public MarbleStats()
         {
             _level = 1;
@@ -104,8 +119,71 @@ namespace MarbleBash
             RecalculateXpNeededForLevelUp();
             
             SetupStats();
+
         }
 
+        public MarbleStats(int level, EnemyType type, EnemyLevelUpProfile levelUpProfile)
+        {
+            _type = type;
+            
+            SetupStats();
+
+            BringToLevel(level, levelUpProfile);
+        }
+
+        #endregion
+
+
+        #region Public Methods
+
+        public void AddXp(int amount)
+        {
+            if (_level >= MAXIMUM_LEVEL)
+            {
+                return;
+            }
+            
+            _xp += amount;
+
+            if (_xp > _xpNeededForLevelUp)
+            {
+                _xp -= _xpNeededForLevelUp;
+                LevelUp();
+            }
+            else
+            {
+                OnXpChanged?.Invoke(amount);
+            }
+
+        }
+
+        public void LevelUpCoreStat(CoreStatType _toLevelUp)
+        {
+            if (_statLevelUpPoints > 0)
+            {
+                _statLevelUpPoints -= 1;
+            }
+            else
+            {
+                Debug.LogError("Not enough points to level up the stat.");
+                return;
+            }
+
+            CoreStat toLevel = GetCoreStatFromType(_toLevelUp);
+            toLevel.LevelUp();
+        }
+
+        internal void RecalulcateAllStats()
+        {
+            foreach (MutableStat stat in _allMutableStats)
+            {
+                stat.RecalculateValue();
+            }
+        }
+        #endregion
+
+
+        #region Internal Methods
         private void SetupStats()
         {
             // Mass:
@@ -209,47 +287,66 @@ namespace MarbleBash
         {
             _xpNeededForLevelUp = _level * 100;
         }
-    
-        public void AddXp(int amount)
-        {
-            if (_level >= MAXIMUM_LEVEL)
-            {
-                return;
-            }
-            
-            _xp += amount;
-
-            if (_xp > _xpNeededForLevelUp)
-            {
-                _xp -= _xpNeededForLevelUp;
-                LevelUp();
-            }
-            else
-            {
-                OnXpChanged?.Invoke(amount);
-            }
-
-        }
 
         private void LevelUp()
         {
             _level += 1;
+            _statLevelUpPoints += 1;
             RecalculateXpNeededForLevelUp();
             OnLevelUp?.Invoke(_level);
-
-            // TEMP DEBUG:
-            mass.LevelUp();
         }
     
-        public void RecalulcateAllStats()
+        private void BringToLevel(int level, EnemyLevelUpProfile levelUpProfile)
         {
-            foreach (MutableStat stat in _allMutableStats)
+            for (int levelIndex = 1; levelIndex < level; levelIndex++)
             {
-                stat.RecalculateValue();
+                _level += 1;
+                _statLevelUpPoints += 1;
+
+                LevelUpCoreStat(levelUpProfile.PickStatType());
+            }            
+
+            RecalculateXpNeededForLevelUp();
+            
+            // Just make sure the xp sits somewhere in the middle,
+            // So enemies don't immediately just level up/down when we implement xp changing mechanics
+            float lowerLimitXp = _xpNeededForLevelUp * 0.2f;
+            float upperLimitXp = _xpNeededForLevelUp * 0.8f;
+            _xp =  UnityEngine.Random.Range(lowerLimitXp, upperLimitXp);
+        }
+
+        private CoreStat GetCoreStatFromType(CoreStatType type)
+        {
+            switch (type)
+            {
+                case CoreStatType.Mass:
+                    return mass;
+                
+                case CoreStatType.Agility:
+                    return agility;
+                
+                case CoreStatType.Recharge:
+                    return recharge;
+                
+                case CoreStatType.Block:
+                    return block;
+                
+                case CoreStatType.Luck:
+                    return luck;
+                
+                case CoreStatType.Energy:
+                    return energy;
+                
+                default:
+                    throw new Exception($"Unhandled Core Stat Type of '{type}'");
             }
         }
+        
+        public string GetStatsAsString()
+        {
+            return $"M: {mass.level} A: {agility.level} R: {recharge.level} B: {block.level} L: {luck.level} E: {energy.level}";
+        }
+        #endregion
     }
-
-
-}
+}       
 

@@ -13,7 +13,7 @@ namespace MarbleBash
         private void Update()
         {
             _marble.materials.baseMat.SetFloat("_FlashAmount", _intensity);
-            _intensity = Mathf.MoveTowards(_intensity, 0f, Time.deltaTime * 4f);
+            _intensity = Mathf.MoveTowards(_intensity, 0f, Time.deltaTime * 3f);
         }
 
         public void Flash()

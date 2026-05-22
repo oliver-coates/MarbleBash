@@ -20,7 +20,6 @@ public class StartEncounterButton : PhysicalButton
     
         EncounterManager.StartEncounter(newEncounter);
 
-        Debug.Break();
     }
 
 

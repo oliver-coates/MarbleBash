@@ -6,8 +6,19 @@ namespace MarbleBash.Enemy
     [CreateAssetMenu(fileName = "EnemyClass", menuName = "Marble Bash/Enemies/Enemy Class")]
     public class EnemyClass : ScriptableObject
     {
+        #region Parameters
+        [Header("Types of enemies:")]
         [SerializeField] private EnemyTypeCategory[] _enemyTypes;
 
+        [Header("Level up profile:")]
+        [SerializeField] private EnemyLevelUpProfile _levelUpProfile;
+        public EnemyLevelUpProfile levelUpProfile => _levelUpProfile;
+
+        [Header("Tactics:")]
+        [SerializeField] private int _temp;
+        #endregion
+
+    
         private Dictionary<ushort, EnemyType> _levelToTypeDictionary;
 
         public void Initialise()

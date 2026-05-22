@@ -20,9 +20,10 @@ namespace MarbleBash
 
         #endregion
 
-        protected override void Setup()
+        internal void Initialise()
         {
             _stats = new MarbleStats();
+            InitialiseInternal();
         }
     }
 }

@@ -1,5 +1,6 @@
 using System;
 using KahuInteractive.HassleFreeConfig;
+using MarbleBash.Encounters;
 using MarbleBash.Enemy;
 using UnityEngine;
 
@@ -20,18 +21,22 @@ namespace MarbleBash
             }
         }
 
-        protected override void Setup()
+        internal void Initialise(EnemySpawnData data)
         {
+            _stats = new MarbleStats(data.level, data.type, data.levelUpProfile);
+            InitialiseInternal();
+
             movement = this.GetComponentSafe<EnemyMovement>();
             _telegraphManager = GetComponentInChildren<AbilityTelegraphManager>();
 
             _combatConfig = Configuration.Get<CombatConfig>();
 
             // In future, enemies should be setup with a method:
-            _stats = new MarbleStats();
+            transform.position = data.position;
 
             _health.OnDied += Die;
         }
+
 
         private void Update()
         {

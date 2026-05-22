@@ -90,7 +90,7 @@ namespace MarbleBash
             }
         }
 
-        internal void Initialise()
+        protected void InitialiseInternal()
         {
             _health = new MarbleHealth(this);
             
@@ -109,16 +109,12 @@ namespace MarbleBash
                 subcomponent.Initialise(this);
             }
 
-            Setup();
-
             _stats.marbleSize.OnChange += UpdateSize;
             _stats.rigidbodyMass.OnChange += UpdateMass;
             _stats.rigidbodyDrag.OnChange += UpdateDrag;
 
             _stats.RecalulcateAllStats();
         }   
-
-        protected abstract void Setup();
 
         private void UpdateSize(float size)
         {

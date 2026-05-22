@@ -16,14 +16,6 @@ namespace MarbleBash.Encounters
             _enemyPrefab = Configuration.Get<CombatConfig>().enemyPrefab;
         }
 
-        private class EnemySpawnData
-        {
-            public EnemyType type;     
-            public int level;
-
-            public Vector3 postion;
-        }
-        
         internal void SpawnEncounter(Encounter encounter)
         {
             foreach (EncounterElement enemyElement in encounter.elements)
@@ -49,24 +41,23 @@ namespace MarbleBash.Encounters
             float marbleRadius = 1f; // For now we will just assume a radius of 1, this should be reviewed later.
             Vector3 randomPosition = FindSpawnLocation(encounter.position, encounter.radius, marbleRadius);
 
-            EnemySpawnData data = new()
-            {
-                type = @class.GetTypeAtLevel(level),
-                level = level,
-                postion = randomPosition
-            };
+            EnemySpawnData data = new(
+                @class,
+                level,
+                randomPosition
+            );
 
             return data;
         }
 
         private void SpawnEnemy(EnemySpawnData data)
         {
-            EnemyInstance newInstance = GameObject.Instantiate(_enemyPrefab).GetComponent<EnemyInstance>();
-            newInstance.transform.position = data.postion;
-            newInstance.Initialise();
+            EnemyInstance newEnemy = GameObject.Instantiate(_enemyPrefab).GetComponent<EnemyInstance>();
+            newEnemy.Initialise(data);
 
-            
-            // ToDo: Implement level & type  here
+
+            // ToDo: Implement level & type  here            
+        
         }
 
 
@@ -117,8 +108,6 @@ namespace MarbleBash.Encounters
             return collidersHit.Length > 0;
         }
         #endregion
-
-
 
     }
 

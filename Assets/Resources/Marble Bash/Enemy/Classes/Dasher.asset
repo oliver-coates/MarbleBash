@@ -22,3 +22,11 @@ MonoBehaviour:
   - _type: {fileID: 11400000, guid: 5e8442ca9b1dd3949980607a5078b31a, type: 2}
     _minLevel: 11
     _maxLevel: 100
+  _levelUpProfile:
+    _massWeight: 0.2
+    _agilityWeight: 0.35
+    _rechargeWeight: 0.2
+    _blockWeight: 0.05
+    _luckWeight: 0
+    _energyWeight: 0.1
+  _temp: 0

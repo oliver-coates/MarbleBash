@@ -5,7 +5,7 @@ namespace MarbleBash.Enemy
     internal class DashAttack : Tactic
     {
         private const float MAX_DURATION = 0.8f;
-        private const float FLASH_TIME = 0.15f;
+        private const float FLASH_TIME = 0.2f;
         private const float JUMP_TIME = 0.2f;
 
         // Time when we should dash
