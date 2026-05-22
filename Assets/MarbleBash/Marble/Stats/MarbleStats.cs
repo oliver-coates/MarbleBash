@@ -22,14 +22,6 @@ namespace MarbleBash
         #endregion
 
 
-        #region Type
-
-        [SerializeField] private EnemyType _type;
-        public EnemyType type => _type;
-
-        #endregion
-
-
         #region Level
         [Header("Level:")]
         [SerializeField] private int _level;
@@ -57,6 +49,8 @@ namespace MarbleBash
                 return _xpNeededForLevelUp;
             }	
         }
+
+        private EnemyLevelUpProfile _levelUpProfile;
 
         #endregion
 
@@ -122,13 +116,12 @@ namespace MarbleBash
 
         }
 
-        public MarbleStats(int level, EnemyType type, EnemyLevelUpProfile levelUpProfile)
-        {
-            _type = type;
-            
+        public MarbleStats(int level, EnemyLevelUpProfile levelUpProfile)
+        {            
             SetupStats();
 
-            BringToLevel(level, levelUpProfile);
+            _levelUpProfile = levelUpProfile;
+            BringToLevel(level);
         }
 
         #endregion
@@ -179,6 +172,11 @@ namespace MarbleBash
             {
                 stat.RecalculateValue();
             }
+        }
+        
+        public string GetStatsAsString()
+        {
+            return $"M: {mass.level} A: {agility.level} R: {recharge.level} B: {block.level} L: {luck.level} E: {energy.level}";
         }
         #endregion
 
@@ -294,16 +292,26 @@ namespace MarbleBash
             _statLevelUpPoints += 1;
             RecalculateXpNeededForLevelUp();
             OnLevelUp?.Invoke(_level);
+
+            if (_levelUpProfile != null)
+            {
+                IncreaseStatByLevelUpProfile();
+            }
         }
-    
-        private void BringToLevel(int level, EnemyLevelUpProfile levelUpProfile)
+
+        private void IncreaseStatByLevelUpProfile()
+        {
+            LevelUpCoreStat(_levelUpProfile.PickStatType());
+        }
+
+        private void BringToLevel(int level)
         {
             for (int levelIndex = 1; levelIndex < level; levelIndex++)
             {
                 _level += 1;
                 _statLevelUpPoints += 1;
 
-                LevelUpCoreStat(levelUpProfile.PickStatType());
+                IncreaseStatByLevelUpProfile();
             }            
 
             RecalculateXpNeededForLevelUp();
@@ -341,11 +349,7 @@ namespace MarbleBash
                     throw new Exception($"Unhandled Core Stat Type of '{type}'");
             }
         }
-        
-        public string GetStatsAsString()
-        {
-            return $"M: {mass.level} A: {agility.level} R: {recharge.level} B: {block.level} L: {luck.level} E: {energy.level}";
-        }
+    
         #endregion
     }
 }       

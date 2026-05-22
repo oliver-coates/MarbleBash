@@ -9,6 +9,10 @@ namespace MarbleBash
     [RequireComponent(typeof(Rigidbody))]
     public class EnemyInstance : Marble
     {
+        [SerializeField] private EnemyType _type;
+        public EnemyType type => _type;
+
+        #region References / Subcomponents:
         private CombatConfig _combatConfig;
         public new EnemyMovement movement;
 
@@ -20,10 +24,11 @@ namespace MarbleBash
                 return _telegraphManager;            
             }
         }
+        #endregion
 
         internal void Initialise(EnemySpawnData data)
         {
-            _stats = new MarbleStats(data.level, data.type, data.levelUpProfile);
+            _stats = new MarbleStats(data.level, data.levelUpProfile);
             InitialiseInternal();
 
             movement = this.GetComponentSafe<EnemyMovement>();
@@ -31,7 +36,7 @@ namespace MarbleBash
 
             _combatConfig = Configuration.Get<CombatConfig>();
 
-            // In future, enemies should be setup with a method:
+            SetType(data.type);
             transform.position = data.position;
 
             _health.OnDied += Die;
@@ -93,6 +98,19 @@ namespace MarbleBash
         {
             QuartzCrystal quartz = Instantiate(_combatConfig.quartzPrefab).GetComponent<QuartzCrystal>();
             quartz.Initialise(this, 1);
+        }
+    
+        private void SetType(EnemyType type)
+        {
+            if (_type != null)
+            {
+                Debug.LogError("This marble already has a type set.");
+                return;
+            }
+            
+            _type = type;
+                
+            _materials.baseMat.SetColor("_BaseColor", _type.color);
         }
     }
 
