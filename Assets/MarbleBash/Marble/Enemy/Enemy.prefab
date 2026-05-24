@@ -62,7 +62,6 @@ GameObject:
   - component: {fileID: 8815133265322639581}
   - component: {fileID: 4555060791517180805}
   - component: {fileID: 2294801459881049985}
-  - component: {fileID: -2740015639981706090}
   m_Layer: 9
   m_Name: Enemy
   m_TagString: Enemy
@@ -215,6 +214,7 @@ MonoBehaviour:
     _shield: 0
     _maxShield: 0
   _movement: {fileID: 0}
+  _type: {fileID: 0}
   movement: {fileID: 0}
 --- !u!114 &5163346413169798622
 MonoBehaviour:
@@ -270,18 +270,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 69110e680fddad4448f160ee3433f022, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MarbleBash.MarbleCollisionHandler
---- !u!114 &-2740015639981706090
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2296398700786242156}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fd41a9a7ec989bd4dabfde98b9955438, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::EnemyAbilityJumpstart
 --- !u!1 &3569598351033456739
 GameObject:
   m_ObjectHideFlags: 0

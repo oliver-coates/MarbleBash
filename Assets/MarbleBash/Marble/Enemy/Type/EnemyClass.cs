@@ -15,7 +15,10 @@ namespace MarbleBash.Enemy
         internal EnemyLevelUpProfile levelUpProfile => _levelUpProfile;
 
         [Header("Tactics:")]
-        [SerializeField] private List<EnemyTacticTypeCategory> _tactics;
+        [SerializeField] private EnemyTacticTypeCategory[] _tactics;
+        
+        [Header("Abilities:")]
+        [SerializeField] private EnemyAbilityTypeCategory[] _abilities;
         #endregion
 
     
@@ -44,7 +47,12 @@ namespace MarbleBash.Enemy
     
         public EnemyTacticTypeCategory[] GetTactics()
         {
-            return _tactics.ToArray();
+            return _tactics;
+        }
+
+        public EnemyAbilityTypeCategory[] GetAbilities()
+        {
+            return _abilities;
         }
     }
 
@@ -69,6 +77,13 @@ namespace MarbleBash.Enemy
         [SerializeField] private string _tactic;
         public string tacticName => _tactic;
         // [SerializeField] internal Tactic.Type tactic;
+    }
+
+    [System.Serializable]
+    public class EnemyAbilityTypeCategory
+    {
+        [SerializeField] private string _abilityName;
+        public string abilityName => _abilityName;
     }
 }
 

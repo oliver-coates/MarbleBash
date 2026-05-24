@@ -114,8 +114,16 @@ namespace MarbleBash
             
             _type = type;
 
+            // Abilities:
+            _abilities.SetupAbilitiesFromEnemyClass(this, @class);
+
+            // Ability upgrades:
+            // ...
+
+            // AI:
             EnemyBrainInitialiser.SetupBrain(_brain, @class);
 
+            // Visuals:
             _materials.baseMat.SetColor("_BaseColor", _type.color);
         }
     }

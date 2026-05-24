@@ -91,6 +91,25 @@ namespace MarbleBash.Abilities
         {
             _cooldownTimer -= Time.deltaTime;        
         }        
+
+        public static Ability CreateFromString(string name, Marble subject)
+        {
+            switch (name)
+            {
+                case "Dash":
+                    return new Dash(subject);
+
+                case "Charge":
+                    return new Charge(subject);
+                
+                case "Ground Pound":
+                    return new GroundPound(subject);
+
+                default:
+                    Debug.LogError($"Unhandled ability name '{name}'");
+                    return null;
+            }
+        }
     }
 
 

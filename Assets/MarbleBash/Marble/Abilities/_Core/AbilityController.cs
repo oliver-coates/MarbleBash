@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using MarbleBash.Enemy;
 using Unity.Mathematics;
 using UnityEngine;
 
@@ -44,6 +45,19 @@ namespace MarbleBash.Abilities
 
             // Attempt activation
             return ability.AttemptActivate();
+        }
+
+        public void SetupAbilitiesFromEnemyClass(EnemyInstance enemyMarble, EnemyClass enemyClass)
+        {
+            int slotIndex = 0;
+            foreach (EnemyAbilityTypeCategory abilityType in enemyClass.GetAbilities())
+            {
+                Ability newAbility =  Ability.CreateFromString(abilityType.abilityName, enemyMarble);
+
+                EquipAbility(newAbility, slotIndex);
+
+                slotIndex++;
+            }
         }
 
         public void EquipAbility(Ability ability, int slot)
