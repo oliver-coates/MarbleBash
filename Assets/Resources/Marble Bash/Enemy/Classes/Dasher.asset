@@ -29,4 +29,6 @@ MonoBehaviour:
     _blockWeight: 0.05
     _luckWeight: 0
     _energyWeight: 0.1
-  _temp: 0
+  _tactics:
+  - _tactic: Attack
+  - _tactic: Dash Attack

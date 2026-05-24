@@ -4,26 +4,19 @@ using UnityEngine;
 
 namespace MarbleBash.Enemy
 {
-    internal abstract class Tactic
+    internal abstract partial class Tactic
     {
         internal enum FinishReason
         {
             DurationExpired = 0,
-            TransitionOccured=1,
+            TransitionOccured = 1,
         }
+
         protected float _duration;
-        private float _timeSinceStart;
-        internal float timeSinceStart
-        {
-            get
-            {
-                return _timeSinceStart;
-            }
-        }
+        protected float _timeSinceStart;
 
         protected EnemyBrain _brain;
         protected EnemyInstance _marble;
-
         protected List<TacticTransition> _transtions;
 
         internal void Initialise(EnemyBrain brain)
@@ -94,5 +87,7 @@ namespace MarbleBash.Enemy
         /// </summary>
         /// <returns></returns>
         protected abstract Tactic GetNextTactic();
+    
+
     }
 }

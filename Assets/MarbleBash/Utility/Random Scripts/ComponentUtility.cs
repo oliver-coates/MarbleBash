@@ -10,4 +10,11 @@ public static class ComponentUtility
         Assert.IsFalse(got == null, $"'{c.GetType().Name}' on game object '{c.name}' could not get component of type '{typeof(T).Name}'");
         return got;
     }
+
+    public static T GetComponentInChildrenSafe<T>(this Component c) where T : Component
+    {
+        T got = c.GetComponentInChildren<T>();
+        Assert.IsFalse(got == null, $"'{c.GetType().Name}' on game object '{c.name}' could not get component of type '{typeof(T).Name}' in children.");
+        return got;
+    }
 }

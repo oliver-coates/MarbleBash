@@ -37,19 +37,19 @@ namespace MarbleBash.Enemy
         {
             _brain.SetPathTarget(Player.movement.groundedPosition);
 
-            if (timeSinceStart > _dashTime)
+            if (_timeSinceStart > _dashTime)
             {
                 _marble.rigidbody.linearDamping *= 0.75f;
                 _marble.abilities.AttemptActivateAbility("Dash");
                 EndTactic();
             }
-            if (_doFlash && timeSinceStart > _flashTime)
+            if (_doFlash && _timeSinceStart > _flashTime)
             {
                 // Flash
                 _marble.abilityTelegraph.Flash();
                 _doFlash = false;
             }
-            if (_doJump && timeSinceStart > _jumpTime)
+            if (_doJump && _timeSinceStart > _jumpTime)
             {
                 _brain.movement.AttemptJump();
                 _doJump = false;

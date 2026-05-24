@@ -27,9 +27,6 @@ namespace MarbleBash.Abilities
         [SerializeField] private bool _hasCooldown;
         [SerializeField] private float _cooldownTimer;
 
-        [Header("Enemy AI use requriements:")]
-        [SerializeField] private EnemyAbilityUseRequirement[] _useRequirements;
-
         public Ability(Marble subject)
         {
             _subject = subject;
@@ -89,23 +86,6 @@ namespace MarbleBash.Abilities
         /// <returns> True if able to activate.</returns>
         protected abstract bool IsAbleToActivate();
 
-
-        /// <summary>
-        /// Loops through all Enemy Ability Use Requirements and ensures they are all true.
-        /// Returns true if all use requirements are met.
-        /// </summary>
-        public bool EvaluateEnemyUseRequirements()
-        {
-            foreach (EnemyAbilityUseRequirement requirement in _useRequirements)
-            {
-                if (requirement.Evaluate() == false)
-                {
-                    return false;
-                }
-            }
-
-            return true;
-        }
 
         internal void Tick()
         {

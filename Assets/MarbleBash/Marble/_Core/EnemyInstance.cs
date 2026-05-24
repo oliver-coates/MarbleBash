@@ -24,6 +24,10 @@ namespace MarbleBash
                 return _telegraphManager;            
             }
         }
+        
+        
+        private EnemyBrain _brain;
+        public EnemyBrain brain => brain;
         #endregion
 
         internal void Initialise(EnemySpawnData data)
@@ -32,16 +36,16 @@ namespace MarbleBash
             InitialiseInternal();
 
             movement = this.GetComponentSafe<EnemyMovement>();
-            _telegraphManager = GetComponentInChildren<AbilityTelegraphManager>();
+            _telegraphManager = this.GetComponentInChildrenSafe<AbilityTelegraphManager>();
+            _brain = this.GetComponentInChildrenSafe<EnemyBrain>();
 
             _combatConfig = Configuration.Get<CombatConfig>();
 
-            SetType(data.type);
+            SetType(data.@class, data.type);
             transform.position = data.position;
 
             _health.OnDied += Die;
         }
-
 
         private void Update()
         {
@@ -100,7 +104,7 @@ namespace MarbleBash
             quartz.Initialise(this, 1);
         }
     
-        private void SetType(EnemyType type)
+        private void SetType(EnemyClass @class, EnemyType type)
         {
             if (_type != null)
             {
@@ -109,7 +113,9 @@ namespace MarbleBash
             }
             
             _type = type;
-                
+
+            EnemyBrainInitialiser.SetupBrain(_brain, @class);
+
             _materials.baseMat.SetColor("_BaseColor", _type.color);
         }
     }

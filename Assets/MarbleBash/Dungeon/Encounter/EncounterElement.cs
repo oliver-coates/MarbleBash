@@ -7,7 +7,7 @@ namespace MarbleBash.Encounters
     public class EncounterElement
     {
         [SerializeField] private EnemyClass _enemyClass;
-        public EnemyClass enemyClass => _enemyClass;
+        internal EnemyClass enemyClass => _enemyClass;
 
         [SerializeField] private int _num = 1;
         public int num => _num;

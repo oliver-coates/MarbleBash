@@ -32,7 +32,7 @@ namespace MarbleBash.Enemy
 
         protected override void Update()
         {
-            if (timeSinceStart > 0.25 && !_hasLeaped)
+            if (_timeSinceStart > 0.25 && !_hasLeaped)
             {
                 if (_marble.abilities.IsAbilityAbleToActivate("Dash"))
                 {

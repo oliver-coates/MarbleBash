@@ -7,21 +7,21 @@ namespace MarbleBash.Enemy
     public class EnemyClass : ScriptableObject
     {
         #region Parameters
-        [Header("Types of enemies:")]
+        [Header("Enemy Types:")]
         [SerializeField] private EnemyTypeCategory[] _enemyTypes;
 
-        [Header("Level up profile:")]
+        [Header("Level Up:")]
         [SerializeField] private EnemyLevelUpProfile _levelUpProfile;
-        public EnemyLevelUpProfile levelUpProfile => _levelUpProfile;
+        internal EnemyLevelUpProfile levelUpProfile => _levelUpProfile;
 
         [Header("Tactics:")]
-        [SerializeField] private int _temp;
+        [SerializeField] private List<EnemyTacticTypeCategory> _tactics;
         #endregion
 
     
         private Dictionary<ushort, EnemyType> _levelToTypeDictionary;
 
-        public void Initialise()
+        internal void Initialise()
         {
             // Set up the level to type dictionary:
             _levelToTypeDictionary = new();
@@ -41,6 +41,11 @@ namespace MarbleBash.Enemy
         {
             return _levelToTypeDictionary[(ushort) level];
         }
+    
+        public EnemyTacticTypeCategory[] GetTactics()
+        {
+            return _tactics.ToArray();
+        }
     }
 
     [System.Serializable]
@@ -56,6 +61,14 @@ namespace MarbleBash.Enemy
         public int maxLevel => _maxLevel;
 
 
+    }
+
+    [System.Serializable]
+    public class EnemyTacticTypeCategory
+    {
+        [SerializeField] private string _tactic;
+        public string tacticName => _tactic;
+        // [SerializeField] internal Tactic.Type tactic;
     }
 }
 
