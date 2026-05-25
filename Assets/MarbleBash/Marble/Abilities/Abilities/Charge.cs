@@ -16,7 +16,10 @@ namespace MarbleBash.Abilities
 
         protected override void Activate()
         {
-            Vector3 startForce = _subject.movement.lookDirection * _BaseChargeStartForce;
+            Vector3 lookDirection2D = _subject.movement.lookDirection;
+            lookDirection2D.y = 0;
+
+            Vector3 startForce = lookDirection2D * _BaseChargeStartForce;
             startForce.y = 0;
 
             _subject.rigidbody.AddForce(startForce);

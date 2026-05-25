@@ -1,0 +1,30 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 61b7dab597932224099583223c05dc0b, type: 3}
+  m_Name: Charger
+  m_EditorClassIdentifier: Assembly-CSharp::MarbleBash.Enemy.EnemyClass
+  _enemyTypes:
+  - _type: {fileID: 11400000, guid: d3a79f40526e198499010b74a90c4ad2, type: 2}
+    _minLevel: 1
+    _maxLevel: 100
+  _levelUpProfile:
+    _massWeight: 0.3
+    _agilityWeight: 0.35
+    _rechargeWeight: 0.2
+    _blockWeight: 0
+    _luckWeight: 0
+    _energyWeight: 0.15
+  _tactics:
+  - _tactic: Attack
+  - _tactic: Charge Attack
+  _abilities:
+  - _abilityName: Charge

@@ -14,7 +14,7 @@ namespace MarbleBash.Enemy
 
         internal override bool Evaluate()
         {
-            return !_subject.abilities.IsAbilityOnCooldown(_abilityName);
+            return _subject.abilities.IsAbilityAbleToActivate(_abilityName);
         }
     }
 }

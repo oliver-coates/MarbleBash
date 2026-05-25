@@ -114,5 +114,30 @@ namespace MarbleBash.Enemy
         {
             _transtions.Add(transition);
         }
+    
+        internal static Tactic CreateFromName(string name)
+        {
+            switch (name)
+            {
+                case "Attack":
+                    return new Attack();
+                
+                case "Dash Attack":
+                    return new DashAttack();
+                
+                case "Leap Out Of Chasm":
+                    return new LeapOutOfChasm();
+                
+                case "Pound Attack":
+                    return new PoundAttack();
+                
+                case "Charge Attack":
+                    return new ChargeAttack();
+
+                default:
+                    Debug.LogError($"Unhandled tactic name '{name}'");
+                    return null;
+            }
+        }
     }
 }

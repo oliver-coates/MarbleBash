@@ -25,6 +25,10 @@ namespace MarbleBash.Abilities
             {
                 subject.collisionHandler.AssignDamageListener(HitMarble);
             }
+            else
+            {
+                subject.collisionHandler.OnCollisionMarble += HitMarble;
+            }
 
             // Increase move speed
             float speedMultiplier = _baseSpeedMultiplier;
@@ -47,18 +51,23 @@ namespace MarbleBash.Abilities
 
         protected override void Finished()
         {
-            subject.collisionHandler.UnassignDamageListener();
             if (subject.isPlayer)
             {
-                subject.collisionHandler.OnCollisionGround -= CollisionGround;   
+                subject.collisionHandler.UnassignDamageListener();
             }
+            else
+            {
+                subject.collisionHandler.OnCollisionMarble -= HitMarble;
+            }
+            
+            subject.collisionHandler.OnCollisionGround -= CollisionGround;   
 
             subject.stats.movementSpeed.RemoveModifier(moveSpeedModifier);            
         }
 
         private void CollisionGround(Collision collision)
         {
-            if (collision.impulse.magnitude > 0.5f)
+            if (collision.impulse.ShearTo2D().magnitude > 0.5f)
             {
                 StopEffect();
                 StunSubjectMarble(collision);
@@ -88,7 +97,7 @@ namespace MarbleBash.Abilities
             Vector3 knockbackDir = cachedVelocity.normalized + (Vector3.up * _knockbackVelocityUpAmount);
             
             // Offset the hit marble by the hit direction (to prevent follow up hits)
-            hitMarble.transform.position += knockbackDir;
+            hitMarble.transform.position += (knockbackDir * 0.25f);
 
             // Apply damage:
             float damage = hitMarble.movement.cachedSpeed;
@@ -97,6 +106,8 @@ namespace MarbleBash.Abilities
             // Apply stun:
             float stunDuration = damage * _hitStunTimeMultiplier;
             hitMarble.statusEffects.AddEffect<Stunned>(stunDuration);
+
+            
         }
 
 
