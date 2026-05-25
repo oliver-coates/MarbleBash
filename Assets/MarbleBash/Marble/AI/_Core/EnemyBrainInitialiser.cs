@@ -41,6 +41,8 @@ namespace MarbleBash.Enemy
                 case "Leap Out Of Chasm":
                     return new LeapOutOfChasm();
                 
+                case "Pound Attack":
+                    return new PoundAttack();
 
                 default:
                     Debug.LogError($"Unhandled tactic name '{name}'");

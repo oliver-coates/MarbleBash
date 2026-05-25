@@ -25,5 +25,6 @@ MonoBehaviour:
     _energyWeight: 0.1
   _tactics:
   - _tactic: Attack
+  - _tactic: Pound Attack
   _abilities:
   - _abilityName: Ground Pound

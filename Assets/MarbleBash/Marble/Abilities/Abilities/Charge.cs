@@ -17,7 +17,7 @@ namespace MarbleBash.Abilities
 
             _subject.rigidbody.AddForce(startForce);
 
-            _subject.abilityEffects.AddEffect<Charging>();
+            _subject.statusEffects.AddEffect<Charging>();
         }
 
         protected override bool IsAbleToActivate()

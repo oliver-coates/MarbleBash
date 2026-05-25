@@ -54,7 +54,7 @@ namespace MarbleBash.Enemy
 
             if (_timeSinceStart > _dashTime)
             {
-                _marble.rigidbody.linearDamping *= 0.75f;
+                _marble.rigidbody.linearVelocity *= 0.75f;
                 _marble.abilities.AttemptActivateAbility("Dash");
                 EndTactic();
             }

@@ -27,7 +27,6 @@ namespace MarbleBash.Upgrades
 
                 stat.AddModifier(modifier);
             }
-            Debug.Log($"Added upgrade: {upgrade.name}"    );
         }
 
         private MutableStat GetStatFromName(string name)

@@ -21,7 +21,7 @@ namespace MarbleBash.Abilities
             Vector3 force = Vector3.down * _downForce;
             _subject.rigidbody.AddForce(force);
 
-            _subject.abilityEffects.AddEffect<Pounding>();
+            _subject.statusEffects.AddEffect<Pounding>();
         }
         
         protected override bool IsAbleToActivate()

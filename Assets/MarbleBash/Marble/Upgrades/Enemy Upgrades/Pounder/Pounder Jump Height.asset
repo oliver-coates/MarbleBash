@@ -16,4 +16,4 @@ MonoBehaviour:
   _description: 
   _elements:
   - _name: jump_height
-    _value: 3
+    _value: 1.75

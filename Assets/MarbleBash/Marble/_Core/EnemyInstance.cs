@@ -27,7 +27,7 @@ namespace MarbleBash
         
         
         private EnemyBrain _brain;
-        public EnemyBrain brain => brain;
+        public EnemyBrain brain => _brain;
         #endregion
 
         internal void Initialise(EnemySpawnData data)

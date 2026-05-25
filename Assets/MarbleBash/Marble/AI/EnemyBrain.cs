@@ -34,6 +34,8 @@ namespace MarbleBash.Enemy
         private List<TacticTransition> _generalTransitions;
         #endregion
 
+        // Stunned marbles don't use their brain!
+        public bool isStunned;
 
         // Note this Initialise method, as part of the MarbleSubComoponent, is called but not used.
         // Instead the other Initialise method is called by the EnemyBrainInitialiser to prime this class with its tactics
@@ -71,6 +73,11 @@ namespace MarbleBash.Enemy
 
         private void Update()
         {
+            if (isStunned)
+            {
+                return;
+            }
+            
             _currentTactic.Tick();
 
             foreach (TacticTransition tacticTransition in _generalTransitions)

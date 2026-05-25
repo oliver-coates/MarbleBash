@@ -38,7 +38,7 @@ namespace MarbleBash
         }
     
         protected StatusEffectManager _statusEffects;
-        public StatusEffectManager abilityEffects
+        public StatusEffectManager statusEffects
         {
             get
             {

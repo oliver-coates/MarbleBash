@@ -144,7 +144,7 @@ namespace MarbleBash
             #endregion
         
             // Additional:
-            rigidbodyDrag = new MutableStat(0.25f);
+            rigidbodyDrag = new MutableStat(Configuration.Read("marble_drag_base"));
             
             #region Collate Mutable Stats
             _allMutableStats = new MutableStat[]

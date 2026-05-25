@@ -50,7 +50,7 @@ namespace MarbleBash.Abilities
 
         private void StunSubjectMarble(Collision collision)
         {
-            subject.abilityEffects.AddEffect<Stunned>(1.5f);
+            subject.statusEffects.AddEffect<Stunned>(1.5f);
 
             Vector3 knockbackDir = (collision.contacts[0].normal + Vector3.up).normalized;
             
@@ -73,7 +73,7 @@ namespace MarbleBash.Abilities
             DamageManager.ApplyDamage(subject, m, damage, knockbackDir);
 
             float stunDuration = damage * 0.25f;
-            m.abilityEffects.AddEffect<Stunned>(stunDuration);
+            m.statusEffects.AddEffect<Stunned>(stunDuration);
         }
 
 
