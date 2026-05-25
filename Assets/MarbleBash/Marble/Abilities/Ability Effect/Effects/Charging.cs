@@ -20,7 +20,7 @@ namespace MarbleBash.Abilities
             }
 
             // Increase move speed by 50%!
-            moveSpeedModifier = new MutableStatModifier(0.5f);
+            moveSpeedModifier = new MutableStatModifier(MutableStatModifier.Source.Effect, 0.5f);
             subject.stats.movementSpeed.AddModifier(moveSpeedModifier);            
         }
 

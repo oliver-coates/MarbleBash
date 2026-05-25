@@ -21,6 +21,7 @@ namespace MarbleBash.Enemy
         [SerializeField] private EnemyAbilityTypeCategory[] _abilities;
         #endregion
 
+
     
         private Dictionary<ushort, EnemyType> _levelToTypeDictionary;
 

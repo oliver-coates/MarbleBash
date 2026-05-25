@@ -16,6 +16,7 @@ namespace MarbleBash.Upgrades
         [Header("Stats:")]
         [SerializeField] private MarbleUpgradeElement[] _elements;
         public MarbleUpgradeElement[] elements => _elements;
+    
     }
 
 

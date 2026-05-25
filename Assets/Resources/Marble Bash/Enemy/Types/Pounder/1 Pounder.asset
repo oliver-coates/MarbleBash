@@ -14,3 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::MarbleBash.Enemy.EnemyType
   _descriptiveName: Pounder
   _color: {r: 0.9716981, g: 0.6004361, b: 0.6004361, a: 1}
+  _upgrades:
+  - {fileID: 11400000, guid: 4c671a94e600e31419b1678387f4cbef, type: 2}

@@ -1,4 +1,6 @@
+using System.Collections.Generic;
 using KahuInteractive.HassleFreeConfig;
+using MarbleBash.Upgrades;
 using UnityEngine;
 
 namespace MarbleBash.Enemy
@@ -20,7 +22,9 @@ namespace MarbleBash.Enemy
         [SerializeField] private Color _color;
         public Color color => _color;
     
-        
+        [Header("Upgrades:")]
+        [SerializeField] private MarbleUpgrade[] _upgrades;
+        public MarbleUpgrade[] upgrades => _upgrades;
     }
 
 

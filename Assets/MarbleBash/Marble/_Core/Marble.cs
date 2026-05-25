@@ -18,8 +18,8 @@ namespace MarbleBash
         private MarbleMovement _movement;
         public MarbleMovement movement => _movement;
         
-        private MarbleStatManager _stats;
-        public MarbleStatManager stats => _stats;
+        private MarbleStats _stats;
+        public MarbleStats stats => _stats;
 
         private MarbleUpgrades _upgrades;
         public MarbleUpgrades upgrades => _upgrades;
@@ -118,7 +118,7 @@ namespace MarbleBash
             
             _materials = this.GetComponentInChildrenSafe<MarbleMaterialAcessor>();
             _upgrades = this.GetComponentInChildrenSafe<MarbleUpgrades>();
-            _stats = this.GetComponentInChildrenSafe<MarbleStatManager>();
+            _stats = this.GetComponentInChildrenSafe<MarbleStats>();
         }
 
 

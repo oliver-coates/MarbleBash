@@ -5,6 +5,12 @@ namespace MarbleBash
 
     public class MutableStatModifier
     {   
+        public enum Source
+        {
+            Effect,
+            Upgrade,
+        }
+
         private float _addition;
         public float addition
         {
@@ -22,9 +28,13 @@ namespace MarbleBash
                 return _multiplier;
             }
         }
-    
-        public MutableStatModifier(float addition = 0f, float multiplier = 1f)
+        
+        private Source _source;
+        public Source source => _source;
+
+        public MutableStatModifier(Source source, float addition = 0f, float multiplier = 1f)
         {
+            _source = source;
             _addition = addition;
             _multiplier = multiplier;
         }

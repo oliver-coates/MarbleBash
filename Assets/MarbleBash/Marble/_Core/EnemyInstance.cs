@@ -118,7 +118,7 @@ namespace MarbleBash
             _abilities.SetupAbilitiesFromEnemyClass(this, @class);
 
             // Ability upgrades:
-            // ...
+            upgrades.SetupUpgradesFromEnemyType(type);
 
             // AI:
             EnemyBrainInitialiser.SetupBrain(_brain, @class);

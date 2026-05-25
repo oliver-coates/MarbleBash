@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace MarbleBash
 {
-    
+    [System.Serializable]
     public class MutableStat 
     {
         [SerializeField] private float _value;

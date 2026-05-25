@@ -11,7 +11,7 @@ namespace MarbleBash.Abilities
         protected override void Start()
         {
             // Disable movement speed:
-            _movementSpeedModifier = new MutableStatModifier(0f, 0f);
+            _movementSpeedModifier = new MutableStatModifier(MutableStatModifier.Source.Effect, 0f, 0f);
             subject.stats.movementSpeed.AddModifier(_movementSpeedModifier);
 
             // Particles:
