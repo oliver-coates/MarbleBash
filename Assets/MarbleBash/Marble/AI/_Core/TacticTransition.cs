@@ -6,51 +6,35 @@ namespace MarbleBash.Enemy
     
     internal class TacticTransition
     {
-        protected EnemyBrain _brain;
         protected List<TransitionCriteria> _transitionCriteria;
-        
-        
         protected Tactic _tacticToTransition;
+        internal Tactic toTransitionTo => _tacticToTransition;
 
-        internal TacticTransition(EnemyBrain brain, Type tacticType)
-        {
-            _brain = brain;
-            _transitionCriteria = new List<TransitionCriteria>();
-        
-            // Ensure provided type is a tactic
-            object o = Activator.CreateInstance(tacticType);
-            if (o is Tactic tactic)
-            {
-                _tacticToTransition = tactic;
-            }
-        }
+        internal bool enabled;
 
-        internal TacticTransition(EnemyBrain brain, Type tacticType, TransitionCriteria[] criteria)
+        internal TacticTransition(Tactic toTransitionTo, TransitionCriteria[] criteria)
         {
-            _brain = brain;
+            enabled = true;
             _transitionCriteria = new List<TransitionCriteria>(criteria);
-        
-            // Ensure provided type is a tactic
-            object o = Activator.CreateInstance(tacticType);
-            if (o is Tactic tactic)
-            {
-                _tacticToTransition = tactic;
-            }
+            _tacticToTransition = toTransitionTo;
         }
 
-        internal void Check()
+        internal bool Check()
         {
+            if (!enabled)
+            {
+                return false;
+            }
+
             foreach (TransitionCriteria criteria in _transitionCriteria)
             {
                 if (criteria.Evaluate() == false)
                 {
-                    return;
+                    return false;
                 }
             }
 
-            // If none of the criteria evaluate to false, we are good to transition:
-            _brain.TransitionToTactic(_tacticToTransition);
-
+            return true;
         }
 
         internal void AddNewCriteria(TransitionCriteria criteria)

@@ -4,8 +4,9 @@ namespace MarbleBash.Enemy
     internal class IsAbilityReady : TransitionCriteria
     {
         private string _abilityName;
-        internal IsAbilityReady(EnemyBrain brain, string abilityName) : base(brain)
+        internal IsAbilityReady(Marble subject, string abilityName)
         {
+            Initialise(subject);
             _abilityName = abilityName;
         }
 

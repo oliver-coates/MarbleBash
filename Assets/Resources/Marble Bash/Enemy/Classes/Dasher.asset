@@ -32,5 +32,6 @@ MonoBehaviour:
   _tactics:
   - _tactic: Attack
   - _tactic: Dash Attack
+  - _tactic: Leap Out Of Chasm
   _abilities:
   - _abilityName: Dash

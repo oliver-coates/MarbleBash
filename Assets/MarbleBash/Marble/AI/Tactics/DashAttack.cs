@@ -33,6 +33,21 @@ namespace MarbleBash.Enemy
             }
         }
 
+        internal override void SetupTransitions()
+        {
+            // Attempt to jump at player when the dash ability is ready
+            TacticTransition dashAtPlayer = new TacticTransition(
+                this,
+                new TransitionCriteria[]
+                {
+                    new IsAbilityReady(_marble, "Dash"),
+                    new IsWithinDistanceToPlayer(_marble, 0.75f, 3f),
+                    _brain.AddCriteria<IsNotMovingAwayFromPlayer>()
+                }
+            );
+            _brain.defaultTactic.AddTransition(dashAtPlayer);
+        }
+
         protected override void Update()
         {
             _brain.SetPathTarget(Player.movement.groundedPosition);
@@ -67,9 +82,13 @@ namespace MarbleBash.Enemy
 
         protected override Tactic GetNextTactic()
         {
-            return new Attack();
+            return _brain.defaultTactic;
         }
 
+        internal override string GetName()
+        {
+            return "Dash Attack";
+        }
     }
 }
 

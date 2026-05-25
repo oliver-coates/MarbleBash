@@ -7,8 +7,9 @@ namespace MarbleBash.Enemy
     {
         private float _minDistance;
         private float _maxDistance;
-        internal IsWithinDistanceToPlayer(EnemyBrain brain, float min, float max) : base(brain)
+        internal IsWithinDistanceToPlayer(Marble marble, float min, float max)
         {
+            Initialise(marble);
             _minDistance = min;
             _maxDistance = max;
         }

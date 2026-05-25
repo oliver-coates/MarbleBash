@@ -19,17 +19,30 @@ namespace MarbleBash.Enemy
         protected EnemyInstance _marble;
         protected List<TacticTransition> _transtions;
 
+        /// <summary>
+        /// Sets up the tactic.
+        /// Called when the tactic is first created.
+        /// </summary>
         internal void Initialise(EnemyBrain brain)
         {
             _brain = brain;
             _marble = (EnemyInstance) brain.marble;
 
-            _duration = 1f;
-            _timeSinceStart = 0f;
-
             _transtions = new();
+        }
+
+        /// <summary>
+        /// Starts this tactic
+        /// Resets this tactic's internal clock and calls the start method.
+        /// Called whenever we enter into this tactic state.
+        /// </summary>
+        internal void Begin()
+        {
+            _duration = 1f; // This duration is typically overwritten in the start method, which is a bit sloppy, we could consider refactoring this.
+            _timeSinceStart = 0f;            
+        
             Start();
-        }        
+        }
 
         internal void Tick()
         {
@@ -44,7 +57,12 @@ namespace MarbleBash.Enemy
 
             foreach (TacticTransition tacticTransition in _transtions)
             {
-                tacticTransition.Check();
+                if (tacticTransition.Check())
+                {
+                    _brain.TransitionToTactic(tacticTransition.toTransitionTo);
+                    return;    
+                }
+                
             }
         }
 
@@ -67,6 +85,8 @@ namespace MarbleBash.Enemy
             }
         }
 
+        internal abstract void SetupTransitions();
+
         protected abstract void Start();
 
         protected abstract void Update();
@@ -88,6 +108,11 @@ namespace MarbleBash.Enemy
         /// <returns></returns>
         protected abstract Tactic GetNextTactic();
     
+        internal abstract string GetName();
 
+        internal void AddTransition(TacticTransition transition)
+        {
+            _transtions.Add(transition);
+        }
     }
 }

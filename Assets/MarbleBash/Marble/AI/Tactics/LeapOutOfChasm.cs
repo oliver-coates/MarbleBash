@@ -12,22 +12,38 @@ namespace MarbleBash.Enemy
         /// </summary>
         private Vector3 _leapTarget;
         private bool _hasLeaped;
+        private TacticTransition _overChasmTransition;
 
         protected override void Start()
         {
-            _hasLeaped = false;
             _duration = 5f;
 
-            TacticTransition backOnGround = new(
-                _brain, 
-                typeof(Attack),
-                new TransitionCriteria[] { new IsGrounded(_brain) }
-            );
-            _transtions.Add(backOnGround);
+            _hasLeaped = false;
+            _overChasmTransition.enabled = false;
 
             _leapTarget = GetLeapTarget();
 
             _brain.movement.MoveTowardsPoint(_leapTarget);
+        }
+
+        internal override void SetupTransitions()
+        {
+            // Transition to this state when we are over a chasm
+            _overChasmTransition = new TacticTransition (
+                this,
+                new TransitionCriteria[]
+                {
+                    _brain.AddCriteria<IsOverChasm>()
+                }
+            );
+            _brain.AddGeneralTransition(_overChasmTransition);
+
+            // Transition back to the default state when we are back on the ground
+            TacticTransition backOnGround = new(
+                _brain.defaultTactic,
+                new TransitionCriteria[] { _brain.AddCriteria<IsGrounded>() }
+            );
+            _transtions.Add(backOnGround);
         }
 
         protected override void Update()
@@ -45,6 +61,7 @@ namespace MarbleBash.Enemy
         protected override void OnTransition()
         {
             _brain.movement.MoveAlongPath();
+            _overChasmTransition.enabled = true;
         }
 
         protected override void OnDurationFinished()
@@ -53,7 +70,7 @@ namespace MarbleBash.Enemy
 
         protected override Tactic GetNextTactic()
         {
-            return new LeapOutOfChasm();
+            return this;
         }
         
         private Vector3 GetLeapTarget()
@@ -64,6 +81,11 @@ namespace MarbleBash.Enemy
             
             
             return groundedPosition + (Vector3.up * 2f) + (dirToGroundedPosition * 2f);
+        }
+
+        internal override string GetName()
+        {
+            return "Leap Out Of Chasm";
         }
     }
 }
