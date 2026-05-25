@@ -1,3 +1,4 @@
+using KahuInteractive.HassleFreeConfig;
 using UnityEngine;
 
 namespace MarbleBash.Abilities
@@ -5,14 +6,17 @@ namespace MarbleBash.Abilities
 
     public class Charge : Ability
     {
+        private float _BaseChargeStartForce;
+
         public Charge(Marble subject) : base(subject)
         {
             _name = "Charge";
+            _BaseChargeStartForce = Configuration.Read("charge_base_start_force");
         }
 
         protected override void Activate()
         {
-            Vector3 startForce = _subject.movement.lookDirection * 250f;
+            Vector3 startForce = _subject.movement.lookDirection * _BaseChargeStartForce;
             startForce.y = 0;
 
             _subject.rigidbody.AddForce(startForce);

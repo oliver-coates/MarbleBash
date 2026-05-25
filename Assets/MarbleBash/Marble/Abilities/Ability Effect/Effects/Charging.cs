@@ -1,4 +1,5 @@
 using System;
+using KahuInteractive.HassleFreeConfig;
 using UnityEngine;
 
 namespace MarbleBash.Abilities
@@ -8,10 +9,16 @@ namespace MarbleBash.Abilities
     {
         private MutableStatModifier moveSpeedModifier;
 
+        private float _baseChargeDuration;
+        private float _baseSpeedMultiplier;
+        private float _selfStunTimeMultiplier;
+        private float _hitStunTimeMultiplier;
+        private float _knockbackVelocityUpAmount;
 
         protected override void Start()
         {
-            _duration = 1f;
+            PullConfigValues();
+            _duration = _baseChargeDuration;
 
             subject.collisionHandler.OnCollisionGround += CollisionGround;    
             if (subject.isPlayer)
@@ -19,9 +26,19 @@ namespace MarbleBash.Abilities
                 subject.collisionHandler.AssignDamageListener(HitMarble);
             }
 
-            // Increase move speed by 50%!
-            moveSpeedModifier = new MutableStatModifier(MutableStatModifier.Source.Effect, 0.5f);
+            // Increase move speed
+            float speedMultiplier = _baseSpeedMultiplier;
+            moveSpeedModifier = new MutableStatModifier(MutableStatModifier.Source.Effect, speedMultiplier);
             subject.stats.movementSpeed.AddModifier(moveSpeedModifier);            
+        }
+
+        private void PullConfigValues()
+        {
+            _baseChargeDuration = Configuration.Read("charge_base_duration");
+            _baseSpeedMultiplier = Configuration.Read("charge_base_speed_multiplier");
+            _selfStunTimeMultiplier = Configuration.Read("charge_impact_self_stun_time_multiplier");
+            _hitStunTimeMultiplier = Configuration.Read("charge_impact_other_stun_time_multiplier");
+            _knockbackVelocityUpAmount = Configuration.Read("charge_knockback_velocity_up_amount");
         }
 
         protected override void Update()
@@ -50,7 +67,8 @@ namespace MarbleBash.Abilities
 
         private void StunSubjectMarble(Collision collision)
         {
-            subject.statusEffects.AddEffect<Stunned>(1.5f);
+            float stunDuration = collision.impulse.magnitude * _selfStunTimeMultiplier;
+            subject.statusEffects.AddEffect<Stunned>(stunDuration);
 
             Vector3 knockbackDir = (collision.contacts[0].normal + Vector3.up).normalized;
             
@@ -61,19 +79,24 @@ namespace MarbleBash.Abilities
             subject.rigidbody.angularVelocity = subject.rigidbody.angularVelocity * 0.25f;
         }
 
-        private void HitMarble(Collision c, Marble m)
+        private void HitMarble(Collision collision, Marble hitMarble)
         {
             Vector3 cachedVelocity = subject.movement.cachedVelocity;
+            subject.rigidbody.linearVelocity = cachedVelocity * 0.9f;
+
+            // Get the knockback direction
+            Vector3 knockbackDir = cachedVelocity.normalized + (Vector3.up * _knockbackVelocityUpAmount);
             
-            subject.rigidbody.linearVelocity = cachedVelocity;
+            // Offset the hit marble by the hit direction (to prevent follow up hits)
+            hitMarble.transform.position += knockbackDir;
 
-            Vector3 knockbackDir = cachedVelocity.normalized + Vector3.up;
-
-            float damage = m.movement.cachedSpeed;
-            DamageManager.ApplyDamage(subject, m, damage, knockbackDir);
-
-            float stunDuration = damage * 0.25f;
-            m.statusEffects.AddEffect<Stunned>(stunDuration);
+            // Apply damage:
+            float damage = hitMarble.movement.cachedSpeed;
+            DamageManager.ApplyDamage(subject, hitMarble, damage, knockbackDir);
+            
+            // Apply stun:
+            float stunDuration = damage * _hitStunTimeMultiplier;
+            hitMarble.statusEffects.AddEffect<Stunned>(stunDuration);
         }
 
 

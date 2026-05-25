@@ -123,5 +123,23 @@ MonoBehaviour:
     value: 10
     path: Encounter
   - name: marble_drag_base
-    value: 0.75
+    value: 0.6
     path: Marble
+  - name: charge_base_start_force
+    value: 300
+    path: Abilities/Charge
+  - name: charge_base_duration
+    value: 1
+    path: Abilities/Charge
+  - name: charge_base_speed_multiplier
+    value: 0.75
+    path: Abilities/Charge
+  - name: charge_impact_self_stun_time_multiplier
+    value: 0.175
+    path: Abilities/Charge
+  - name: charge_impact_other_stun_time_multiplier
+    value: 0.125
+    path: Abilities/Charge
+  - name: charge_knockback_velocity_up_amount
+    value: 0.5
+    path: Abilities/Charge
