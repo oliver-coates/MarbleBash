@@ -58,17 +58,17 @@ namespace MarbleBash
             #region Mass
             // Mass:
             marbleSize = new MutableStat(
-                Configuration.Read("mass_marble_size_base"), 
+                1f, 
                 l.mass,
                 Configuration.Read("mass_marble_size_per_level")
             );
             rigidbodyMass = new MutableStat(
-                Configuration.Read("mass_mass_base"),
+                1f,
                 l.mass,
                 Configuration.Read("mass_mass_per_level")
             );
             maxHealth = new MutableStat(
-                Configuration.Read("mass_maxhealth_base"),
+                1f,
                 l.mass,
                 Configuration.Read("mass_maxhealth_per_level")
             );
@@ -77,12 +77,12 @@ namespace MarbleBash
             #region Agility
             // Agility:
             movementSpeed = new MutableStat(
-                Configuration.Read("agility_movespeed_base"), 
+                1f, 
                 l.agility,
                 Configuration.Read("agility_movespeed_per_level")
             );
             jumpHeight = new MutableStat(
-                Configuration.Read("agility_jump_height_base"),
+                1f,
                 l.agility,
                 Configuration.Read("agility_movespeed_per_level"));
             #endregion
@@ -90,12 +90,12 @@ namespace MarbleBash
             #region Recharge
             // Recharge:
             energyRechargeRate = new MutableStat(
-                Configuration.Read("recharge_recharge_rate_base"),
+                1f,
                 l.recharge,
                 Configuration.Read("recharge_recharge_rate_per_level")
             );
             abilityCooldownMultiplier = new MutableStat(
-                Configuration.Read("recharge_cooldown_modifier_base"),
+                1f,
                 l.recharge,
                 Configuration.Read("recharge_cooldown_modifier_per_level")
             );
@@ -104,12 +104,12 @@ namespace MarbleBash
             #region Block
             // Block:
             maxShield = new MutableStat(
-                Configuration.Read("block_max_shield_base"),
+                1f,
                 l.block,
                 Configuration.Read("block_max_shield_per_level")
             );
             blockChance = new MutableStat(
-                Configuration.Read("block_block_chance_base"),
+                1f,
                 l.block,
                 Configuration.Read("block_block_chance_per_level")
             );
@@ -118,12 +118,12 @@ namespace MarbleBash
             #region Luck
             // Luck:
             criticalChance = new MutableStat(
-                Configuration.Read("luck_critical_chance_base"),
+                1f,
                 l.luck,
                 Configuration.Read("luck_critical_chance_per_level")
             );
             lootRarity = new MutableStat(
-                Configuration.Read("luck_loot_rarity_base"),
+                1f,
                 l.luck,
                 Configuration.Read("luck_loot_rarity_per_level")
             );
@@ -132,12 +132,12 @@ namespace MarbleBash
             #region Energy
             // Energy:
             maxEnergy = new MutableStat(
-                Configuration.Read("energy_max_energy_base"),
+                1f,
                 l.energy,
                 Configuration.Read("energy_max_energy_per_level")
             );
             shieldRechargeRate = new MutableStat(
-                Configuration.Read("energy_shield_recharge_base"),
+                1f,
                 l.energy,
                 Configuration.Read("energy_shield_recharge_per_level")
             );

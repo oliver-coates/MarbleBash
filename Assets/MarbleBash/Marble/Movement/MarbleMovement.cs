@@ -89,9 +89,14 @@ namespace MarbleBash
             }
         }
 
+        #region Configuration Values
         // These two tuners are set by the subclasses, as they need to be different depending on if we are a player or enemy.
         protected float _moveSpeedMultiplier;
         protected float _jumpHeightMultiplier;
+        protected float _moveSpeedBase;
+        protected float _jumpHeightBase;
+
+        #endregion
 
         protected abstract bool CheckIsGrounded(out float distanceToGround);
         protected abstract Vector3 GetLookDirection();
@@ -102,6 +107,9 @@ namespace MarbleBash
         {            
             _config = Configuration.Get<MovementConfig>();
             _distanceToGround = 1f;
+
+            _moveSpeedBase = Configuration.Read("marble_move_speed_base");
+            _jumpHeightBase = Configuration.Read("marble_jump_height_base");
         }
 
         protected virtual void LateUpdate()
@@ -132,16 +140,18 @@ namespace MarbleBash
 
         protected void Jump()
         {
-            Vector3 jumpForce = Vector3.up * _jumpHeightMultiplier * _marble.stats.jumpHeight.value;
+            float jumpForce = _jumpHeightBase * _jumpHeightMultiplier * _marble.stats.jumpHeight.value;
+            
+            Vector3 jumpVelocity = Vector3.up * jumpForce;
         
-            _marble.rigidbody.AddForce(jumpForce);
+            _marble.rigidbody.AddForce(jumpVelocity);
         }
         
         protected void Move()
         {
             Vector3 movementInput = GetMovementDirection();
 
-            float speedMultiplier = _marble.stats.movementSpeed.value * _moveSpeedMultiplier * Time.deltaTime;
+            float speedMultiplier = _moveSpeedBase *  _moveSpeedMultiplier * _marble.stats.movementSpeed.value * Time.deltaTime;
 
             _marble.rigidbody.AddForce(speedMultiplier * movementInput);
         }

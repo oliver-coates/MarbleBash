@@ -22293,11 +22293,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7577397783247586936, guid: 96c96d38e429c3c4cb3f5a386ab19327, type: 3}
       propertyPath: _elements.Array.data[0]._num
-      value: 3
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 7577397783247586936, guid: 96c96d38e429c3c4cb3f5a386ab19327, type: 3}
       propertyPath: _elements.Array.data[1]._num
-      value: 1
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 7577397783247586936, guid: 96c96d38e429c3c4cb3f5a386ab19327, type: 3}
       propertyPath: _elements.Array.data[0]._maxLevel

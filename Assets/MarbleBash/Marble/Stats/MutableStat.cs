@@ -66,7 +66,7 @@ namespace MarbleBash
 
             if (_linkedCoreStat != null)
             {
-                _value += _linkedCoreStat.level * _valueModifierPerCoreStatLevel;
+                _value += (_linkedCoreStat.level-1) * _valueModifierPerCoreStatLevel;
             }
 
             float multiplier = 1;

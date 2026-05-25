@@ -59,7 +59,16 @@ namespace KahuInteractive.HassleFreeConfig
 
         public static float Read(string valueName)
         {
-            return _currentDataFile.Read(valueName);
+            try
+            {
+                return _currentDataFile.Read(valueName);            
+            
+            }
+            catch (KeyNotFoundException e)
+            {
+                Debug.LogError($"Configuration does not have a value for {valueName} | {e}");
+                return 1f;
+            }
         }
 
         private static ConfigDataFile GetCurrentDataFile()

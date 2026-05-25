@@ -26,84 +26,84 @@ MonoBehaviour:
   - name: ground_pound_initial_force
     value: 200
     path: Abilities/Ground Pound
-  - name: mass_marble_size_base
-    value: 0.7
-    path: Stats/Mass/Marble Size
+  - name: marble_size_base
+    value: 0.75
+    path: Marble
   - name: mass_marble_size_per_level
     value: 0.05
-    path: Stats/Mass/Marble Size
-  - name: mass_mass_base
-    value: 1
-    path: Stats/Mass/Mass
+    path: Stats/Mass
+  - name: marble_mass_base
+    value: 0.5
+    path: Marble
   - name: mass_mass_per_level
     value: 0.01
-    path: Stats/Mass/Mass
-  - name: mass_maxhealth_base
-    value: 20
-    path: Stats/Mass/Max Health
+    path: Stats/Mass
+  - name: marble_max_health_base
+    value: 25
+    path: Marble
   - name: mass_maxhealth_per_level
-    value: 5
-    path: Stats/Mass/Max Health
-  - name: agility_movespeed_base
-    value: 200
-    path: Stats/Agility/Move Speed
+    value: 0.1
+    path: Stats/Mass
+  - name: marble_move_speed_base
+    value: 150
+    path: Marble
   - name: agility_movespeed_per_level
-    value: 50
-    path: Stats/Agility/Move Speed
-  - name: agility_jump_height_base
-    value: 200
-    path: Stats/Agility/Jump Height
-  - name: agility_jump_height_per_level
     value: 0.05
-    path: Stats/Agility/Jump Height
-  - name: recharge_recharge_rate_base
+    path: Stats/Agility
+  - name: marble_jump_height_base
+    value: 100
+    path: Marble
+  - name: agility_jump_height_per_level
+    value: 0.075
+    path: Stats/Agility
+  - name: marble_energy_recharge_rate_base
     value: 10
-    path: Stats/Recharge/Energy Recharge
+    path: Marble
   - name: recharge_recharge_rate_per_level
-    value: 5
-    path: Stats/Recharge/Energy Recharge
-  - name: recharge_cooldown_modifier_base
-    value: 1.05
-    path: Stats/Recharge/Ability Cooldown
+    value: 0.1
+    path: Stats/Recharge
+  - name: marble_ability_cooldown_modifier_base
+    value: 1
+    path: Marble
   - name: recharge_cooldown_modifier_per_level
     value: -0.05
-    path: Stats/Recharge/Ability Cooldown
-  - name: block_max_shield_base
-    value: 40
-    path: Stats/Block/Maximum Shield
+    path: Stats/Recharge
+  - name: marble_max_shield_base
+    value: 50
+    path: Marble
   - name: block_max_shield_per_level
-    value: 10
-    path: Stats/Block/Maximum Shield
-  - name: luck_critical_chance_base
-    value: 0.05
-    path: Stats/Luck/Critical Chance
+    value: 0.2
+    path: Stats/Block
+  - name: marble_critical_chance_base
+    value: 0.1
+    path: Marble
   - name: luck_critical_chance_per_level
     value: 0.05
-    path: Stats/Luck/Critical Chance
-  - name: luck_loot_rarity_base
-    value: 0.99
-    path: Stats/Luck/Loot Rarity
+    path: Stats/Luck
+  - name: marble_loot_rarity_base
+    value: 1
+    path: Marble
   - name: luck_loot_rarity_per_level
     value: 0.01
-    path: Stats/Luck/Loot Rarity
-  - name: block_block_chance_base
-    value: 0
-    path: Stats/Block/Block Chance
+    path: Stats/Luck
+  - name: marble_block_chance_base
+    value: 1
+    path: Marble
   - name: block_block_chance_per_level
-    value: 0.025
-    path: Stats/Block/Block Chance
-  - name: energy_max_energy_base
-    value: 40
-    path: Stats/Energy/Maximum Energy
+    value: 0.25
+    path: Stats/Block
+  - name: marble_max_energy_base
+    value: 25
+    path: Marble
   - name: energy_max_energy_per_level
     value: 10
-    path: Stats/Energy/Maximum Energy
-  - name: energy_shield_recharge_base
-    value: 4
-    path: Stats/Energy/Shield Recharge Rate
+    path: Stats/Energy
+  - name: marble_shield_recharge_base
+    value: 5
+    path: Marble
   - name: energy_shield_recharge_per_level
     value: 1
-    path: Stats/Energy/Shield Recharge Rate
+    path: Stats/Energy
   - name: knockback_multiplier
     value: 1.8
     path: Combat/Global

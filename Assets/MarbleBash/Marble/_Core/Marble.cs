@@ -102,9 +102,7 @@ namespace MarbleBash
                 subcomponent.Initialise(this);
             }
 
-            _stats.marbleSize.OnChange += UpdateSize;
-            _stats.rigidbodyMass.OnChange += UpdateMass;
-            _stats.rigidbodyDrag.OnChange += UpdateDrag;
+
             _stats.RecalulcateAllStats();
         }   
 
@@ -122,22 +120,6 @@ namespace MarbleBash
         }
 
 
-        #region Rigidbody setting update methods
-        private void UpdateSize(float size)
-        {
-            transform.localScale = new Vector3(size, size, size);
-        }
-
-        private void UpdateMass(float mass)
-        {
-            _rigidbody.mass = mass;
-        }
-
-        private void UpdateDrag(float drag)
-        {
-            _rigidbody.linearDamping = drag;
-            _rigidbody.angularDamping = drag / 2f;
-        }
-        #endregion
+        
     }
 }

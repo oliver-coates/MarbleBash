@@ -17,5 +17,3 @@ MonoBehaviour:
   _elements:
   - _name: jump_height
     _value: 3
-  - _name: move_speed
-    _value: 10
