@@ -89,7 +89,7 @@ namespace MarbleBash
             }
         }
 
-        // Settings:
+        // These two tuners are set by the subclasses, as they need to be different depending on if we are a player or enemy.
         protected float _moveSpeedMultiplier;
         protected float _jumpHeightMultiplier;
 

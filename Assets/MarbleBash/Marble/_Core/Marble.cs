@@ -1,50 +1,33 @@
 using UnityEngine;
 using MarbleBash.Abilities;
+using MarbleBash.Upgrades;
 
 namespace MarbleBash
 {
     [System.Serializable]
     public abstract class Marble : MonoBehaviour
     {
-        [Header("Stats:")]
-        [SerializeField] protected MarbleStats _stats;
-        public MarbleStats stats
-        {
-            get
-            {
-                return _stats;
-            }
-        }
 
-        [Header("Health:")]
-        [SerializeField] protected MarbleHealth _health;
-        public MarbleHealth health
-        {
-            get
-            {
-                return _health;
-            }
-        }
+        #region Core Subcomponents:
+        protected MarbleLevel _level;
+        public MarbleLevel level => _level;
 
-        [Header("Movement:")]
-        [SerializeField] private MarbleMovement _movement;
-        public MarbleMovement movement
-        {
-            get
-            {
-                return _movement;
-            }	
-        }
+        private MarbleHealth _health;
+        public MarbleHealth health => _health;
 
-        protected Rigidbody _rigidbody;
-        public new Rigidbody rigidbody
-        {
-            get
-            {
-                return _rigidbody;
-            }
-        }
+        private MarbleMovement _movement;
+        public MarbleMovement movement => _movement;
+        
+        private MarbleStatManager _stats;
+        public MarbleStatManager stats => _stats;
 
+        private MarbleUpgrades _upgrades;
+        public MarbleUpgrades upgrades => _upgrades;
+
+        #endregion
+
+
+        #region Additional Subcomponents
         protected AbilityController _abilities;
         public AbilityController abilities
         {
@@ -54,8 +37,8 @@ namespace MarbleBash
             }
         }
     
-        protected AbilityEffectManager _statusEffects;
-        public AbilityEffectManager abilityEffects
+        protected StatusEffectManager _statusEffects;
+        public StatusEffectManager abilityEffects
         {
             get
             {
@@ -80,6 +63,21 @@ namespace MarbleBash
                 return _materials;
             }
         }
+        #endregion
+
+
+        #region Unity component references
+        private Rigidbody _rigidbody;
+        public new Rigidbody rigidbody
+        {
+            get
+            {
+                return _rigidbody;
+            }
+        }
+
+        #endregion
+
 
         protected bool _isPlayer;
         public bool isPlayer
@@ -92,16 +90,11 @@ namespace MarbleBash
 
         protected void InitialiseInternal()
         {
+            _isPlayer = this == Player.instance;
+
             _health = new MarbleHealth(this);
             
-            _rigidbody = this.GetComponentSafe<Rigidbody>();
-            _abilities = this.GetComponentSafe<AbilityController>();
-            _statusEffects = this.GetComponentSafe<AbilityEffectManager>();
-            _movement = this.GetComponentSafe<MarbleMovement>();
-            _collisionHandler = this.GetComponentSafe<MarbleCollisionHandler>();
-            _materials = this.GetComponentInChildren<MarbleMaterialAcessor>();
-
-            _isPlayer = this == Player.instance;
+            GetAllSubcomponents();
 
             // Setup subcomponents:
             foreach (MarbleSubComponent subcomponent in transform.GetComponentsInChildren<MarbleSubComponent>())
@@ -112,10 +105,24 @@ namespace MarbleBash
             _stats.marbleSize.OnChange += UpdateSize;
             _stats.rigidbodyMass.OnChange += UpdateMass;
             _stats.rigidbodyDrag.OnChange += UpdateDrag;
-
             _stats.RecalulcateAllStats();
         }   
 
+        private void GetAllSubcomponents()
+        {
+            _rigidbody = this.GetComponentSafe<Rigidbody>();
+            _abilities = this.GetComponentSafe<AbilityController>();
+            _statusEffects = this.GetComponentSafe<StatusEffectManager>();
+            _movement = this.GetComponentSafe<MarbleMovement>();
+            _collisionHandler = this.GetComponentSafe<MarbleCollisionHandler>();
+            
+            _materials = this.GetComponentInChildrenSafe<MarbleMaterialAcessor>();
+            _upgrades = this.GetComponentInChildrenSafe<MarbleUpgrades>();
+            _stats = this.GetComponentInChildrenSafe<MarbleStatManager>();
+        }
+
+
+        #region Rigidbody setting update methods
         private void UpdateSize(float size)
         {
             transform.localScale = new Vector3(size, size, size);
@@ -131,6 +138,6 @@ namespace MarbleBash
             _rigidbody.linearDamping = drag;
             _rigidbody.angularDamping = drag / 2f;
         }
-
+        #endregion
     }
 }

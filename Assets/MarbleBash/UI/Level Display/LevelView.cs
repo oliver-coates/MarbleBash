@@ -29,8 +29,8 @@ namespace MarbleBash.UI
 
             if (_initialised)
             {
-                Player.instance.stats.OnXpChanged -= PlayerXpChanged;
-                Player.instance.stats.OnLevelUp -= PlayerLevelUp;
+                Player.instance.level.OnXpChanged -= PlayerXpChanged;
+                Player.instance.level.OnLevelUp -= PlayerLevelUp;
             }
         }
         #endregion
@@ -39,8 +39,8 @@ namespace MarbleBash.UI
         {
             _initialised = true;
 
-            Player.instance.stats.OnXpChanged += PlayerXpChanged;
-            Player.instance.stats.OnLevelUp += PlayerLevelUp;
+            Player.instance.level.OnXpChanged += PlayerXpChanged;
+            Player.instance.level.OnLevelUp += PlayerLevelUp;
 
             _ringFillTarget = 0f;
             _xpFillRing.fillAmount = 0;
@@ -60,14 +60,14 @@ namespace MarbleBash.UI
 
         private void RecalculateRingFillTarget()
         {
-            float xpPercentage = (float)Player.instance.stats.xp / (float)Player.instance.stats.xpNeededForLevelUp;
+            float xpPercentage = (float)Player.instance.level.xp / (float)Player.instance.level.xpNeededForLevelUp;
             
             _ringFillTarget = xpPercentage;
         }
 
         private void RedrawLevelText()
         {
-            _levelText.text = Player.instance.stats.level.ToString();
+            _levelText.text = Player.instance.level.level.ToString();
         }
     
         private void Update()

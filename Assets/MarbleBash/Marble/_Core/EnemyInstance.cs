@@ -32,7 +32,7 @@ namespace MarbleBash
 
         internal void Initialise(EnemySpawnData data)
         {
-            _stats = new MarbleStats(data.level, data.levelUpProfile);
+            _level = new MarbleLevel(data.level, data.levelUpProfile);
             InitialiseInternal();
 
             movement = this.GetComponentSafe<EnemyMovement>();
@@ -44,14 +44,14 @@ namespace MarbleBash
             SetType(data.@class, data.type);
             transform.position = data.position;
 
-            _health.OnDied += Die;
+            health.OnDied += Die;
         }
 
         private void Update()
         {
-            if (!_health.isDead && transform.position.y < -25f)
+            if (!health.isDead && transform.position.y < -25f)
             {
-                _health.FellOffMap();
+                health.FellOffMap();
             }
         }
 

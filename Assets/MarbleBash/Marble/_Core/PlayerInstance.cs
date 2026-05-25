@@ -22,7 +22,7 @@ namespace MarbleBash
 
         internal void Initialise()
         {
-            _stats = new MarbleStats();
+            _level = new MarbleLevel();
             InitialiseInternal();
         }
     }

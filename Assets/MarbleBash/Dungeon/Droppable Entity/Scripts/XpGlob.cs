@@ -55,7 +55,7 @@ public class XpGlob : DroppedEntity
 
     private void ReachedPlayer()
     {
-        Player.instance.stats.AddXp(_xp);
+        Player.instance.level.AddXp(_xp);
         Destroy(gameObject);
     }
 }

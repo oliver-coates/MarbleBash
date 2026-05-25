@@ -8,10 +8,9 @@ namespace MarbleBash
 {
     
     /// <summary>
-    /// Class representing the status of a marble:
-    /// - Health, level, xp, name, etc
+    /// Class representing the level of a marble.
     /// </summary>
-    public class MarbleStats
+    public class MarbleLevel
     {
         public const int MAXIMUM_LEVEL = 100;
 
@@ -71,57 +70,31 @@ namespace MarbleBash
         #endregion
 
 
-        #region Mutable Stats
-        private MutableStat[] _allMutableStats;
-        
-        // MASS:
-        public MutableStat marbleSize;
-        public MutableStat rigidbodyMass;
-        public MutableStat maxHealth;
-
-        // AGILITY:
-        public MutableStat movementSpeed;
-        public MutableStat jumpHeight;
-
-        // RECHARGE:
-        public MutableStat energyRechargeRate;
-        public MutableStat abilityCooldownMultiplier;
-
-        // BLOCK:
-        public MutableStat maxShield;
-        public MutableStat blockChance;
-
-        // LUCK:
-        public MutableStat criticalChance;
-        public MutableStat lootRarity;
-
-        // ENERGY:
-        public MutableStat maxEnergy;
-        public MutableStat shieldRechargeRate;
-        
-        // ADDITIONAL:
-        public MutableStat rigidbodyDrag;
-
-        #endregion
-
-
         #region Constructors
-        public MarbleStats()
+        public MarbleLevel()
         {
             _level = 1;
             _xp = 0;
-            RecalculateXpNeededForLevelUp();
-            
-            SetupStats();
 
+            SetupCoreStats();
+            RecalculateXpNeededForLevelUp();
         }
 
-        public MarbleStats(int level, EnemyLevelUpProfile levelUpProfile)
+        public MarbleLevel(int level, EnemyLevelUpProfile levelUpProfile)
         {            
-            SetupStats();
-
+            SetupCoreStats();
             _levelUpProfile = levelUpProfile;
             BringToLevel(level);
+        }
+
+        private void SetupCoreStats()
+        {
+            mass = new CoreStat();
+            agility = new CoreStat();
+            recharge = new CoreStat();
+            block = new CoreStat();
+            luck = new CoreStat();
+            energy = new CoreStat();
         }
 
         #endregion
@@ -166,14 +139,6 @@ namespace MarbleBash
             toLevel.LevelUp();
         }
 
-        internal void RecalulcateAllStats()
-        {
-            foreach (MutableStat stat in _allMutableStats)
-            {
-                stat.RecalculateValue();
-            }
-        }
-        
         public string GetStatsAsString()
         {
             return $"M: {mass.level} A: {agility.level} R: {recharge.level} B: {block.level} L: {luck.level} E: {energy.level}";
@@ -182,105 +147,6 @@ namespace MarbleBash
 
 
         #region Internal Methods
-        private void SetupStats()
-        {
-            // Mass:
-            mass = new CoreStat();
-            marbleSize = new MutableStat(
-                Configuration.Read("mass_marble_size_base"), 
-                mass,
-                Configuration.Read("mass_marble_size_per_level")
-            );
-            rigidbodyMass = new MutableStat(
-                Configuration.Read("mass_mass_base"),
-                mass,
-                Configuration.Read("mass_mass_per_level")
-            );
-            maxHealth = new MutableStat(
-                Configuration.Read("mass_maxhealth_base"),
-                mass,
-                Configuration.Read("mass_maxhealth_per_level")
-            );
-
-            // Agility:
-            agility = new CoreStat();
-            movementSpeed = new MutableStat(
-                Configuration.Read("agility_movespeed_base"), 
-                agility,
-                Configuration.Read("agility_movespeed_per_level")
-            );
-            jumpHeight = new MutableStat(
-                Configuration.Read("agility_jump_height_base"),
-                agility,
-                Configuration.Read("agility_movespeed_per_level"));
-
-            // Recharge:
-            recharge = new CoreStat();
-            energyRechargeRate = new MutableStat(
-                Configuration.Read("recharge_recharge_rate_base"),
-                recharge,
-                Configuration.Read("recharge_recharge_rate_per_level")
-            );
-            abilityCooldownMultiplier = new MutableStat(
-                Configuration.Read("recharge_cooldown_modifier_base"),
-                recharge,
-                Configuration.Read("recharge_cooldown_modifier_per_level")
-            );
-
-            // Block:
-            block = new CoreStat();
-            maxShield = new MutableStat(
-                Configuration.Read("block_max_shield_base"),
-                block,
-                Configuration.Read("block_max_shield_per_level")
-            );
-            blockChance = new MutableStat(
-                Configuration.Read("block_block_chance_base"),
-                block,
-                Configuration.Read("block_block_chance_per_level")
-            );
-
-            // Luck:
-            luck = new CoreStat();
-            criticalChance = new MutableStat(
-                Configuration.Read("luck_critical_chance_base"),
-                luck,
-                Configuration.Read("luck_critical_chance_per_level")
-            );
-            lootRarity = new MutableStat(
-                Configuration.Read("luck_loot_rarity_base"),
-                luck,
-                Configuration.Read("luck_loot_rarity_per_level")
-            );
-
-            // Energy:
-            energy = new CoreStat();
-            maxEnergy = new MutableStat(
-                Configuration.Read("energy_max_energy_base"),
-                energy,
-                Configuration.Read("energy_max_energy_per_level")
-            );
-            shieldRechargeRate = new MutableStat(
-                Configuration.Read("energy_shield_recharge_base"),
-                energy,
-                Configuration.Read("energy_shield_recharge_per_level")
-            );
-        
-            // Additional:
-            rigidbodyDrag = new MutableStat(0.25f);
-            
-
-            _allMutableStats = new MutableStat[]
-            {
-               marbleSize, rigidbodyMass, maxHealth,
-               movementSpeed, rigidbodyDrag,
-               energyRechargeRate, abilityCooldownMultiplier,
-               maxShield, blockChance,
-               criticalChance, lootRarity,
-               maxEnergy, shieldRechargeRate  
-            };
-        }
-
         private void RecalculateXpNeededForLevelUp()
         {
             _xpNeededForLevelUp = _level * 100;

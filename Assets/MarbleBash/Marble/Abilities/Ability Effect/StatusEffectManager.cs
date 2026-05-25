@@ -5,7 +5,7 @@ using UnityEngine;
 namespace MarbleBash.Abilities
 {
 
-    public class AbilityEffectManager : MarbleSubComponent
+    public class StatusEffectManager : MarbleSubComponent
     {
         [SerializeField] private List<AbilityEffect> _currentEffects;
 
