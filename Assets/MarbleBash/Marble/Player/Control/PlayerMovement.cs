@@ -130,11 +130,11 @@ public class PlayerMovement : MarbleMovement
         
         Vector3 goundBoxSize = new Vector3(halfScale * 0.5f, 0.15f, halfScale * 0.5f);
 
-        bool isGrounded = Physics.CheckBox(floorPosition, goundBoxSize, Quaternion.identity, _config.groundedLayerMask);
+        bool isGrounded = Physics.CheckBox(floorPosition, goundBoxSize, Quaternion.identity, _masks.groundedLayerMask);
         
         // Update our grounded position:
         Ray downRay = new Ray(floorPosition, Vector3.down);
-        if (Physics.Raycast(downRay, out RaycastHit hit, GROUNDED_RAYCAST_DOWN_MAXIMUM_DISTANCE, _config.groundedLayerMask))
+        if (Physics.Raycast(downRay, out RaycastHit hit, GROUNDED_RAYCAST_DOWN_MAXIMUM_DISTANCE, _masks.groundedLayerMask))
         {
             _groundedPosition = hit.point;
             distanceToGround = hit.distance;

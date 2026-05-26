@@ -25,7 +25,7 @@ public class PlayerAbilityJumpstart : MonoBehaviour
         AbilityController abilities = this.GetComponentSafe<AbilityController>();
 
         abilities.EquipAbility(new Dash(subject), 0);
-        abilities.EquipAbility(new GroundPound(subject), 1);
+        abilities.EquipAbility(new Rocket(subject), 1);
         abilities.EquipAbility(new Charge(subject), 2);
         abilities.EquipAbility(new Parry(subject), 3);
     }

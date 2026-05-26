@@ -7,6 +7,7 @@ namespace MarbleBash
     public abstract class MarbleMovement : MarbleSubComponent
     {
         protected MovementConfig _config;
+        protected MasksConfig _masks;
         public const float GROUNDED_RAYCAST_DOWN_MAXIMUM_DISTANCE = 999f;
 
 
@@ -106,6 +107,7 @@ namespace MarbleBash
         protected override void Initialise()
         {            
             _config = Configuration.Get<MovementConfig>();
+            _masks = Configuration.Get<MasksConfig>();
             _distanceToGround = 1f;
 
             _moveSpeedBase = Configuration.Read("marble_move_speed_base");
@@ -135,7 +137,7 @@ namespace MarbleBash
 
         protected bool IsObjectOnGroundedLayer(GameObject obj)
         {
-            return ((_config.groundedLayerMask.value & (1 << obj.layer)) > 0); 
+            return ((_masks.groundedLayerMask.value & (1 << obj.layer)) > 0); 
         }
 
         protected void Jump()
