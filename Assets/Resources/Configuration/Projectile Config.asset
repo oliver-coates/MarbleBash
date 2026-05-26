@@ -12,4 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1b7868d31172d484ab6b33af56afdb00, type: 3}
   m_Name: Projectile Config
   m_EditorClassIdentifier: Assembly-CSharp::MarbleBash.ProjectileConfig
-  _rocket: {fileID: 5393767980083663152, guid: b90a400368b26624dbe3aaefeaa8efe4, type: 3}
+  _bomb: {fileID: 5393767980083663152, guid: b90a400368b26624dbe3aaefeaa8efe4, type: 3}

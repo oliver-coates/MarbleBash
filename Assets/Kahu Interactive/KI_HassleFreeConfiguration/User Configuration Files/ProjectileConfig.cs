@@ -8,8 +8,8 @@ namespace MarbleBash
     [CreateAssetMenu(fileName = "Projectile Config", menuName = "Configuration/Projectiles")]
     public class ProjectileConfig : ConfigBase
     {
-        [SerializeField] private GameObject _rocket;
-        public GameObject rocket => _rocket;
+        [SerializeField] private GameObject _bomb;
+        public GameObject bomb => _bomb;
 
     }
 

@@ -4,7 +4,6 @@ using MarbleBash.Upgrades;
 
 namespace MarbleBash
 {
-    [System.Serializable]
     public abstract class Marble : MonoBehaviour
     {
 

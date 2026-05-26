@@ -4,11 +4,11 @@ using UnityEngine;
 namespace MarbleBash.Abilities
 {
 
-    public class Rocket : Ability
+    public class Bomb : Ability
     {
         private MasksConfig _masks;
         private ProjectileConfig _projectiles;
-        public Rocket(Marble subject) : base(subject)
+        public Bomb(Marble subject) : base(subject)
         {
             _masks = Configuration.Get<MasksConfig>();
             _projectiles = Configuration.Get<ProjectileConfig>();
@@ -19,10 +19,13 @@ namespace MarbleBash.Abilities
         {
             Vector3 targetPosition = GetTargetPosition();
 
-            var r = GameObject.Instantiate(_projectiles.rocket).GetComponent<RocketProjectile>();
+            BombProjectile bomb = Object.Instantiate(_projectiles.bomb).GetComponent<BombProjectile>();
             
-            Vector3 start = _subject.transform.position + Vector3.up + Vector3.right;
-            r.Initialise(start, targetPosition);
+            // Vector3 start = _subject.transform.position + Vector3.up + Vector3.right;
+            if (_subject.isPlayer)
+            {
+                bomb.Initialise((PlayerInstance) _subject);            
+            }
         }
 
         private Vector3 GetTargetPosition()

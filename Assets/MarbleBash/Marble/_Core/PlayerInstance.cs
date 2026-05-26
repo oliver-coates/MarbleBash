@@ -2,10 +2,11 @@ using UnityEngine;
 
 namespace MarbleBash
 {
-    [System.Serializable]
     public class PlayerInstance : Marble
     {
-        
+        private PlayerMovement _playerMovement;
+        public new PlayerMovement movement => _playerMovement;
+
         #region Initialisation & Destruction
 
         private void Awake()
@@ -23,6 +24,9 @@ namespace MarbleBash
         internal void Initialise()
         {
             _level = new MarbleLevel();
+
+            _playerMovement = this.GetComponentSafe<PlayerMovement>();
+
             InitialiseInternal();
         }
     }

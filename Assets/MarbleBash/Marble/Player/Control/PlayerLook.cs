@@ -45,6 +45,14 @@ public class PlayerLook : MonoBehaviour
         }
     }
 
+    public Vector3 pitchUp
+    {
+        get
+        {
+            return _pitchDirection.up;
+        }
+    }
+
 
     #region Input
     [Header("Input:")]

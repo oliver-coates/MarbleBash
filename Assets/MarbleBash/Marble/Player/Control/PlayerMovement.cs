@@ -1,161 +1,165 @@
-using System;
 using KahuInteractive.HassleFreeConfig;
 using KahuInteractive.VisualFX;
-using MarbleBash;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class PlayerMovement : MarbleMovement
+namespace MarbleBash
 {
-
-    [Header("References:")]
-    [SerializeField] private PlayerLook _playerLook;
-
-    #region Input
-    [Header("Input:")]
-    [SerializeField] private InputActionAsset _inputActions;
-    private InputAction _moveAction;
-    private void SetupInput()
+    public class PlayerMovement : MarbleMovement
     {
-        InputActionMap map = _inputActions.FindActionMap("Player");
 
-        _moveAction = map.FindAction("Move");
-        map.FindAction("Jump").performed += AttemptJump;
-    }
+        [Header("References:")]
+        [SerializeField] private PlayerLook _playerLook;
+        public PlayerLook look => _playerLook;
 
-    #endregion
-
-    [Header("State:")]
-    [SerializeField] private bool _isAgainstWall;
-    public bool isAgainstWall
-    {
-        get
+        #region Input
+        [Header("Input:")]
+        [SerializeField] private InputActionAsset _inputActions;
+        private InputAction _moveAction;
+        private void SetupInput()
         {
-            return _isAgainstWall;
-        }	
-    }
-  
-    [SerializeField] private Vector3 _wallNormal;
-    public Vector3 wallNormal
-    {
-        get
-        {
-            return _wallNormal;
-        }	
-    }
+            InputActionMap map = _inputActions.FindActionMap("Player");
 
-    protected override void Initialise()
-    {
-        base.Initialise();
-
-        SetupInput();
-
-        _moveSpeedMultiplier = Configuration.Read("player_movement_speed");
-        _jumpHeightMultiplier = Configuration.Read("player_jump_height");
-    }
-
-
-    protected override void Update()
-    {
-        base.Update();
-
-        VFX.UpdateRTPC("Player Speed", cachedSpeed);
-    }
-
-    private void AttemptJump(InputAction.CallbackContext context)
-    {
-        if (isGrounded)
-        {
-            Jump();
+            _moveAction = map.FindAction("Move");
+            map.FindAction("Jump").performed += AttemptJump;
         }
-        else if (_isAgainstWall)
+
+        #endregion
+
+        [Header("State:")]
+        [SerializeField] private bool _isAgainstWall;
+        public bool isAgainstWall
         {
-            WallJump();    
-        }
-    }
-
-    private void WallJump()
-    {
-        Vector3 direction = (_wallNormal + Vector3.up).normalized;
-
-        Vector3 velocity = _marble.rigidbody.linearVelocity;
-        if (velocity.y < 0)
-        {
-            velocity.y = velocity.y / 2f;
-            _marble.rigidbody.linearVelocity = velocity;
-        } 
-        _marble.rigidbody.AddForce(direction  * _config.wallJumpForceMultiplier, ForceMode.VelocityChange);
-
-        _isAgainstWall = false;
-    }
-
-    #region Wall Collision Checking
-    private void OnCollisionEnter(Collision collision)
-    {
-        if (isGrounded == false && IsObjectOnGroundedLayer(collision.gameObject))
-        {
-            if (IsCollisionAgainstWall(collision))
+            get
             {
-                _isAgainstWall = true;        
-                _wallNormal = collision.contacts[0].normal;    
+                return _isAgainstWall;
+            }	
+        }
+    
+        [SerializeField] private Vector3 _wallNormal;
+        public Vector3 wallNormal
+        {
+            get
+            {
+                return _wallNormal;
+            }	
+        }
+
+        protected override void Initialise()
+        {
+            base.Initialise();
+
+            SetupInput();
+
+            _moveSpeedMultiplier = Configuration.Read("player_movement_speed");
+            _jumpHeightMultiplier = Configuration.Read("player_jump_height");
+        }
+
+
+        protected override void Update()
+        {
+            base.Update();
+
+            VFX.UpdateRTPC("Player Speed", cachedSpeed);
+        }
+
+        private void AttemptJump(InputAction.CallbackContext context)
+        {
+            if (isGrounded)
+            {
+                Jump();
+            }
+            else if (_isAgainstWall)
+            {
+                WallJump();    
             }
         }
-    }
 
-    private void OnCollisionExit(Collision collision)
-    {
-        if (IsObjectOnGroundedLayer(collision.gameObject))
+        private void WallJump()
         {
+            Vector3 direction = (_wallNormal + Vector3.up).normalized;
+
+            Vector3 velocity = _marble.rigidbody.linearVelocity;
+            if (velocity.y < 0)
+            {
+                velocity.y = velocity.y / 2f;
+                _marble.rigidbody.linearVelocity = velocity;
+            } 
+            _marble.rigidbody.AddForce(direction  * _config.wallJumpForceMultiplier, ForceMode.VelocityChange);
+
             _isAgainstWall = false;
         }
-    }
 
-    private bool IsCollisionAgainstWall(Collision collision)
-    {
-        // Find difference in height between the player and the point hit
-        float yDiff = Mathf.Abs(transform.position.y - collision.contacts[0].point.y);
-
-        // We consider against a wall if the difference in y is less than 0.2 units.
-        return yDiff < 0.2f; 
-    }
-    #endregion
-
-    protected override bool CheckIsGrounded(out float distanceToGround)
-    {
-        // Check to see if we are grounded:
-        float halfScale = transform.localScale.x / 2f;
-        
-        // Find the position at the very bottom of our marble
-        Vector3 floorPosition = transform.position + (Vector3.down * halfScale) + (Vector3.up * 0.05f);
-        
-        Vector3 goundBoxSize = new Vector3(halfScale * 0.5f, 0.15f, halfScale * 0.5f);
-
-        bool isGrounded = Physics.CheckBox(floorPosition, goundBoxSize, Quaternion.identity, _masks.groundedLayerMask);
-        
-        // Update our grounded position:
-        Ray downRay = new Ray(floorPosition, Vector3.down);
-        if (Physics.Raycast(downRay, out RaycastHit hit, GROUNDED_RAYCAST_DOWN_MAXIMUM_DISTANCE, _masks.groundedLayerMask))
+        #region Wall Collision Checking
+        private void OnCollisionEnter(Collision collision)
         {
-            _groundedPosition = hit.point;
-            distanceToGround = hit.distance;
-        }
-        else
-        {
-            distanceToGround = GROUNDED_RAYCAST_DOWN_MAXIMUM_DISTANCE;
+            if (isGrounded == false && IsObjectOnGroundedLayer(collision.gameObject))
+            {
+                if (IsCollisionAgainstWall(collision))
+                {
+                    _isAgainstWall = true;        
+                    _wallNormal = collision.contacts[0].normal;    
+                }
+            }
         }
 
-        return isGrounded;
+        private void OnCollisionExit(Collision collision)
+        {
+            if (IsObjectOnGroundedLayer(collision.gameObject))
+            {
+                _isAgainstWall = false;
+            }
+        }
+
+        private bool IsCollisionAgainstWall(Collision collision)
+        {
+            // Find difference in height between the player and the point hit
+            float yDiff = Mathf.Abs(transform.position.y - collision.contacts[0].point.y);
+
+            // We consider against a wall if the difference in y is less than 0.2 units.
+            return yDiff < 0.2f; 
+        }
+        #endregion
+
+        protected override bool CheckIsGrounded(out float distanceToGround)
+        {
+            // Check to see if we are grounded:
+            float halfScale = transform.localScale.x / 2f;
+            
+            // Find the position at the very bottom of our marble
+            Vector3 floorPosition = transform.position + (Vector3.down * halfScale) + (Vector3.up * 0.05f);
+            
+            Vector3 goundBoxSize = new Vector3(halfScale * 0.5f, 0.15f, halfScale * 0.5f);
+
+            bool isGrounded = Physics.CheckBox(floorPosition, goundBoxSize, Quaternion.identity, _masks.groundedLayerMask);
+            
+            // Update our grounded position:
+            Ray downRay = new Ray(floorPosition, Vector3.down);
+            if (Physics.Raycast(downRay, out RaycastHit hit, GROUNDED_RAYCAST_DOWN_MAXIMUM_DISTANCE, _masks.groundedLayerMask))
+            {
+                _groundedPosition = hit.point;
+                distanceToGround = hit.distance;
+            }
+            else
+            {
+                distanceToGround = GROUNDED_RAYCAST_DOWN_MAXIMUM_DISTANCE;
+            }
+
+            return isGrounded;
+        }
+
+        protected override Vector3 GetLookDirection()
+        {
+            return Player.look.pitchForward;
+        }
+
+        protected override Vector3 GetMovementDirection()
+        {
+            Vector2 movementInput =  _moveAction.ReadValue<Vector2>();
+
+            return (_playerLook.yawForward * movementInput.y) + (_playerLook.yawRight * movementInput.x);
+        }
     }
 
-    protected override Vector3 GetLookDirection()
-    {
-        return Player.look.pitchForward;
-    }
-
-    protected override Vector3 GetMovementDirection()
-    {
-        Vector2 movementInput =  _moveAction.ReadValue<Vector2>();
-
-        return (_playerLook.yawForward * movementInput.y) + (_playerLook.yawRight * movementInput.x);
-    }
 }
+
