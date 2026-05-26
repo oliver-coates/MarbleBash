@@ -34,7 +34,7 @@ namespace MarbleBash.Enemy
                 this,
                 new TransitionCriteria[]
                 {
-                    new IsAbilityReady(_marble, "Ground Pound"),
+                    new IsAbilityNotOnCooldown(_marble, "Ground Pound"),
                     new IsWithinDistanceToPlayer(_marble, 1f, 4f),
                     _brain.AddCriteria<IsVelocityAlignedAgainstPlayer>()
                 }

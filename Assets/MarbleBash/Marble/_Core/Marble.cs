@@ -63,6 +63,16 @@ namespace MarbleBash
                 return _materials;
             }
         }
+        
+        private AbilityTelegraphManager _telegraphManager;
+        public AbilityTelegraphManager abilityTelegraph
+        {
+            get
+            {
+                return _telegraphManager;            
+            }
+        }
+        
         #endregion
 
 
@@ -87,6 +97,8 @@ namespace MarbleBash
                 return _isPlayer;
             }
         }
+
+        public bool isStunned;
 
         protected void InitialiseInternal()
         {
@@ -113,6 +125,7 @@ namespace MarbleBash
             _statusEffects = this.GetComponentSafe<StatusEffectManager>();
             _movement = this.GetComponentSafe<MarbleMovement>();
             _collisionHandler = this.GetComponentSafe<MarbleCollisionHandler>();
+            _telegraphManager = this.GetComponentInChildrenSafe<AbilityTelegraphManager>();
             
             _materials = this.GetComponentInChildrenSafe<MarbleMaterialAcessor>();
             _upgrades = this.GetComponentInChildrenSafe<MarbleUpgrades>();

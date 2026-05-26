@@ -143,3 +143,15 @@ MonoBehaviour:
   - name: charge_knockback_velocity_up_amount
     value: 0.5
     path: Abilities/Charge
+  - name: parry_base_duration
+    value: 0.1
+    path: Abilities/Parry
+  - name: parry_knockback_velocity_multiplier
+    value: 0.7
+    path: Abilities/Parry
+  - name: parry_knockback_up_velocity_bonus
+    value: 0.5
+    path: Abilities/Parry
+  - name: parry_stun_time_multiplier
+    value: 0.1
+    path: Abilities/Parry

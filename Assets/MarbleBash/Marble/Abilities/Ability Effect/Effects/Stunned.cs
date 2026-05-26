@@ -17,7 +17,7 @@ namespace MarbleBash.Abilities
             // Disable AI
             if (!subject.isPlayer)
             {
-                (subject as EnemyInstance).brain.isStunned = true;            
+                (subject as EnemyInstance).isStunned = true;            
             }
 
             // Particles:
@@ -35,7 +35,7 @@ namespace MarbleBash.Abilities
             // Re-enable AI
             if (!subject.isPlayer)
             {
-                (subject as EnemyInstance).brain.isStunned = false;            
+                (subject as EnemyInstance).isStunned = false;            
             }
         }
 

@@ -43,7 +43,7 @@ namespace MarbleBash
         
         // ADDITIONAL:
         public MutableStat rigidbodyDrag;
-
+        public bool isImmuneFromDamage;
         #endregion
 
         protected override void Initialise()

@@ -20,10 +20,15 @@ namespace MarbleBash.Abilities
 
         private void PoundMarble(Marble toPound, float force)
         {
+            if (toPound.stats.isImmuneFromDamage)
+            {
+                return;                
+            }   
+
             // Randomise knockback direction - It doesn't really matter here as the 
             // physics engine is going to freak out from the player pounding onto the enemy.
             Vector3 knockbackDir = new Vector3(Random.Range(0,1f), 0, Random.Range(0, 1f)).normalized;
-            
+
             DamageManager.ApplyDamage(subject, toPound, force * 1.5f, knockbackDir);
 
             Vector3 velocity = subject.rigidbody.linearVelocity;

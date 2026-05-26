@@ -15,16 +15,6 @@ namespace MarbleBash
         #region References / Subcomponents:
         private CombatConfig _combatConfig;
         public new EnemyMovement movement;
-
-        private AbilityTelegraphManager _telegraphManager;
-        public AbilityTelegraphManager abilityTelegraph
-        {
-            get
-            {
-                return _telegraphManager;            
-            }
-        }
-        
         
         private EnemyBrain _brain;
         public EnemyBrain brain => _brain;
@@ -36,7 +26,6 @@ namespace MarbleBash
             InitialiseInternal();
 
             movement = this.GetComponentSafe<EnemyMovement>();
-            _telegraphManager = this.GetComponentInChildrenSafe<AbilityTelegraphManager>();
             _brain = this.GetComponentInChildrenSafe<EnemyBrain>();
 
             _combatConfig = Configuration.Get<CombatConfig>();
@@ -113,6 +102,7 @@ namespace MarbleBash
             }
             
             _type = type;
+            name = type.descriptiveName;
 
             // Abilities:
             _abilities.SetupAbilitiesFromEnemyClass(this, @class);

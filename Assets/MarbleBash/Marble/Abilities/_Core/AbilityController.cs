@@ -5,14 +5,15 @@ using UnityEngine;
 
 namespace MarbleBash.Abilities
 {
-    public class AbilityController : MonoBehaviour
+    public class AbilityController : MarbleSubComponent
     {
         [Header("Equipped Abilities:")]
         [SerializeField] private Ability[] _abilities;
         private Dictionary<string, Ability> _nameToAbilityDict;
 
+        internal bool isStunned;
 
-        private void Awake()
+        protected override void Initialise()
         {
             _nameToAbilityDict = new();
             _abilities = new Ability[4];
@@ -39,6 +40,12 @@ namespace MarbleBash.Abilities
 
             // Ensure there is an ability in this slot.
             if (ability == null)
+            {
+                return false;
+            }
+
+            // We can't activate abilities when we are stunned
+            if (_marble.isStunned)
             {
                 return false;
             }
@@ -82,5 +89,7 @@ namespace MarbleBash.Abilities
                 }
             }
         }
+
+
     }
 }

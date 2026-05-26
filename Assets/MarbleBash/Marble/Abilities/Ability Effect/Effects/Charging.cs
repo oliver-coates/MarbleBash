@@ -90,6 +90,11 @@ namespace MarbleBash.Abilities
 
         private void HitMarble(Collision collision, Marble hitMarble)
         {
+            if (hitMarble.stats.isImmuneFromDamage)
+            {
+                return;
+            }
+            
             Vector3 cachedVelocity = subject.movement.cachedVelocity;
             subject.rigidbody.linearVelocity = cachedVelocity * 0.9f;
 

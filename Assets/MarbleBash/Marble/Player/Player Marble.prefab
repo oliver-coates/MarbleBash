@@ -4980,6 +4980,50 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MarbleBash.VisualEffects.VFX_LineRendererSize
   _rtpc: {fileID: 11400000, guid: 83c73b4e60acb3b4e84c6308b57fa978, type: 2}
+--- !u!1 &1543430910117692986
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 198503220765167040}
+  - component: {fileID: 7435368549678119684}
+  m_Layer: 9
+  m_Name: Ability Telegraph
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &198503220765167040
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1543430910117692986}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 14.413622, y: 0.5000001, z: 8.636136}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 1
+  m_Children: []
+  m_Father: {fileID: 494723684023555688}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &7435368549678119684
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1543430910117692986}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7a08dba4be35318458fbc8082a435a52, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MarbleBash.AbilityTelegraphManager
 --- !u!1 &2001852699742128830
 GameObject:
   m_ObjectHideFlags: 0
@@ -5305,6 +5349,7 @@ Transform:
   - {fileID: 8462606030234502790}
   - {fileID: 5224596361435416579}
   - {fileID: 7477916443614340961}
+  - {fileID: 198503220765167040}
   m_Father: {fileID: 5316720526632171059}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &8021503836750542332
@@ -5614,6 +5659,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d0735726b8f4a374f9754f3f3fd156ac, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MarbleBash.PlayerInstance
+  isStunned: 0
 --- !u!114 &6948702813846551566
 MonoBehaviour:
   m_ObjectHideFlags: 0

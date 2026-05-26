@@ -99,6 +99,11 @@ namespace MarbleBash
 
         public void TakeDamage(DamageEvent damageEvent)
         {
+            if (_marble.stats.isImmuneFromDamage)
+            {
+                return;
+            }
+
             HealthChangedEvent newEvent = new (damageEvent);
 
             // Apply shield:
