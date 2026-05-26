@@ -7,9 +7,11 @@ namespace MarbleBash.Abilities
     public class Rocket : Ability
     {
         private MasksConfig _masks;
+        private ProjectileConfig _projectiles;
         public Rocket(Marble subject) : base(subject)
         {
             _masks = Configuration.Get<MasksConfig>();
+            _projectiles = Configuration.Get<ProjectileConfig>();
             _name = "Rocket";
         }
 
@@ -17,8 +19,10 @@ namespace MarbleBash.Abilities
         {
             Vector3 targetPosition = GetTargetPosition();
 
-            Debug.DrawLine(_subject.transform.position, targetPosition, Color.red);
-            Debug.Break();
+            var r = GameObject.Instantiate(_projectiles.rocket).GetComponent<RocketProjectile>();
+            
+            Vector3 start = _subject.transform.position + Vector3.up + Vector3.right;
+            r.Initialise(start, targetPosition);
         }
 
         private Vector3 GetTargetPosition()
