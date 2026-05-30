@@ -30,5 +30,8 @@ namespace MarbleBash
         [Header("Temp:")]
         [SerializeField] private GameObject _enemyPrefab;
         public GameObject enemyPrefab => _enemyPrefab;
+
+        [SerializeField] private GameObject _rollerBombPrefab;
+        public GameObject rollerBombPrefab => _rollerBombPrefab;
     }
 }

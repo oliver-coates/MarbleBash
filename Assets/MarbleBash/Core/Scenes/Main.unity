@@ -22293,7 +22293,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7577397783247586936, guid: 96c96d38e429c3c4cb3f5a386ab19327, type: 3}
       propertyPath: _elements.Array.size
-      value: 3
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 7577397783247586936, guid: 96c96d38e429c3c4cb3f5a386ab19327, type: 3}
       propertyPath: _elements.Array.data[0]._num
@@ -22305,6 +22305,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7577397783247586936, guid: 96c96d38e429c3c4cb3f5a386ab19327, type: 3}
       propertyPath: _elements.Array.data[2]._num
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7577397783247586936, guid: 96c96d38e429c3c4cb3f5a386ab19327, type: 3}
+      propertyPath: _elements.Array.data[3]._num
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7577397783247586936, guid: 96c96d38e429c3c4cb3f5a386ab19327, type: 3}
@@ -22332,6 +22336,14 @@ PrefabInstance:
       value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 7577397783247586936, guid: 96c96d38e429c3c4cb3f5a386ab19327, type: 3}
+      propertyPath: _elements.Array.data[3]._maxLevel
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 7577397783247586936, guid: 96c96d38e429c3c4cb3f5a386ab19327, type: 3}
+      propertyPath: _elements.Array.data[3]._minLevel
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7577397783247586936, guid: 96c96d38e429c3c4cb3f5a386ab19327, type: 3}
       propertyPath: _elements.Array.data[0]._enemyClass
       value: 
       objectReference: {fileID: 11400000, guid: a5ff9b2539236da429271334cbc0b2c4, type: 2}
@@ -22343,6 +22355,10 @@ PrefabInstance:
       propertyPath: _elements.Array.data[2]._enemyClass
       value: 
       objectReference: {fileID: 11400000, guid: 65585457263f3214c99307243a1b5dcf, type: 2}
+    - target: {fileID: 7577397783247586936, guid: 96c96d38e429c3c4cb3f5a386ab19327, type: 3}
+      propertyPath: _elements.Array.data[3]._enemyClass
+      value: 
+      objectReference: {fileID: 11400000, guid: 6fb4c59db28c0a44e96e37e0ce83b93a, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

@@ -1,7 +1,9 @@
+using TMPro;
+
 namespace MarbleBash.Enemy
 {
 
-    internal class Attack : Tactic
+    internal class AvoidPlayer : Tactic
     {
         protected override void Start()
         {
@@ -16,7 +18,8 @@ namespace MarbleBash.Enemy
 
         protected override void Update()
         {
-            _brain.SetPathTarget(Player.movement.groundedPosition);
+            _marble.movement.MoveTowardsPoint(_marble.transform.position);
+            // _brain.SetPathTarget(Player.movement.groundedPosition);
         }
 
         protected override void OnTransition()
@@ -36,7 +39,7 @@ namespace MarbleBash.Enemy
 
         internal override string GetName()
         {
-            return "Attack";
+            return "Avoid Player";
         }
     }
 

@@ -137,7 +137,7 @@ namespace MarbleBash
 
         protected bool IsObjectOnGroundedLayer(GameObject obj)
         {
-            return ((_masks.groundedLayerMask.value & (1 << obj.layer)) > 0); 
+            return ((_masks.grounded.value & (1 << obj.layer)) > 0); 
         }
 
         protected void Jump()

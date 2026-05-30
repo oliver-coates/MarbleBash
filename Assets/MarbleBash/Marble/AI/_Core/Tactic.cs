@@ -133,6 +133,12 @@ namespace MarbleBash.Enemy
                 
                 case "Charge Attack":
                     return new ChargeAttack();
+                
+                case "Avoid Player":
+                    return new AvoidPlayer();
+                
+                case "Throw Roller Bomb":
+                    return new ThrowRollerBomb();
 
                 default:
                     Debug.LogError($"Unhandled tactic name '{name}'");

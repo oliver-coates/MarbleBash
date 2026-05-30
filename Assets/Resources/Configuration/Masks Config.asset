@@ -12,9 +12,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: def6cf858ef8a1f42ba078b5a40d0621, type: 3}
   m_Name: Masks Config
   m_EditorClassIdentifier: Assembly-CSharp::MarbleBash.MasksConfig
-  _groundedLayerMask:
+  _defaultLayer:
     serializedVersion: 2
     m_Bits: 1
+  _grounded:
+    serializedVersion: 2
+    m_Bits: 1
+  _debris:
+    serializedVersion: 2
+    m_Bits: 128
   _notPlayerMask:
     serializedVersion: 2
     m_Bits: 951

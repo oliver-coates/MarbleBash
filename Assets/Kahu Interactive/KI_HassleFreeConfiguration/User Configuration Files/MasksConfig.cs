@@ -8,13 +8,25 @@ namespace MarbleBash
     [CreateAssetMenu(fileName = "Masks Config", menuName = "Configuration/Masks")]
     public class MasksConfig : ConfigBase
     {
-        [SerializeField] private LayerMask _groundedLayerMask;
-        public LayerMask groundedLayerMask
+        [SerializeField] private LayerMask _defaultLayer;
+        public LayerMask defaultLayer => _defaultLayer;
+
+        [SerializeField] private LayerMask _grounded;
+        public LayerMask grounded
         {
             get
             {
-                return _groundedLayerMask;
+                return _grounded;
             }
+        }
+
+        [SerializeField] private LayerMask _debris;
+        public LayerMask debris
+        {
+            get
+            {
+                return _debris;
+            }	
         }
 
         [SerializeField] private LayerMask _notPlayerMask;

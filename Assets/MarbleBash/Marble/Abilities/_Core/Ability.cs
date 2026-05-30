@@ -105,6 +105,9 @@ namespace MarbleBash.Abilities
                 case "Ground Pound":
                     return new GroundPound(subject);
 
+                case "Throw Roller Bomb":
+                    return new ThrowRollerBomb(subject);
+
                 default:
                     Debug.LogError($"Unhandled ability name '{name}'");
                     return null;
