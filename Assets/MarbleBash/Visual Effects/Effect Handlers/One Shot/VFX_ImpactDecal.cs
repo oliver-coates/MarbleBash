@@ -13,6 +13,7 @@ namespace MarbleBash.VisualEffects
         [SerializeField] private ParticleSystem _dustParticles;
         private float _opacity;
 
+
         public override void Play(OneShotEffectData data)
         {
             _projector = this.GetComponentSafe<DecalProjector>();
@@ -56,6 +57,12 @@ namespace MarbleBash.VisualEffects
                 Destroy(gameObject);
             }
         }
+
+        public override void Finish()
+        {
+            
+        }
+
 
 
     }

@@ -38,18 +38,22 @@ namespace KahuInteractive.VisualFX
             _reusableInstance = instance;
         }
 
-        public void Play(OneShotEffectData data)
+        public VFX_OneShotHandler Play(OneShotEffectData data)
         {
             switch (_useCase)
             {
                 case UseCase.Reuse:
                     _reusableInstance.Play(data);
-                    break;
+                    return null;
 
                 case UseCase.CreateNewEachTime:
                     VFX_OneShotHandler effectInstance = Instantiate(_prefab, VFX.instanceContainer).GetComponent<VFX_OneShotHandler>();
                     effectInstance.Play(data);
-                    break;
+                    return effectInstance;
+                
+                default:
+                    Debug.LogError("Unhandled effect UseCase");
+                    return null;
             }
             
         }

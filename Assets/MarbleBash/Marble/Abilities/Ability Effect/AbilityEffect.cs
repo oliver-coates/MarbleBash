@@ -51,16 +51,12 @@ namespace MarbleBash.Abilities
             }	
         }
 
-        public AbilityEffect()
-        {
-            _isFinished = false;
-            _timeElapsed = 0f;
-        }
-
         public void Initialise(Marble subject, float duration)
         {
             _subject = subject;
             _duration = duration;
+            _isFinished = false;
+            _timeElapsed = 0f;
             
             Start();
         }

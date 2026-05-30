@@ -1,3 +1,4 @@
+using KahuInteractive.HassleFreeConfig;
 using KahuInteractive.VisualFX;
 using TMPro;
 using UnityEngine;
@@ -7,8 +8,22 @@ namespace MarbleBash.Abilities
     [System.Serializable]
     public class Pounding : AbilityEffect
     {
+        private const float MINIMUM_FORCE = 5f;
+        private MasksConfig _masks;
+        private LayerMask _toDamageMask;
+
         protected override void Start()
         {
+            _masks = Configuration.Get<MasksConfig>();
+            if (subject.isPlayer)
+            {
+                _toDamageMask = _masks.enemyMarbles;
+            }
+            else
+            {
+                _toDamageMask = _masks.playerMarble;
+            }
+            
             _duration = 10f;
 
             subject.collisionHandler.OnCollisionGround += HitGround;
@@ -45,21 +60,18 @@ namespace MarbleBash.Abilities
         {
             float size = force * 0.33f;
 
-            Collider[] hits = Physics.OverlapSphere(pos, size, LayerMask.GetMask("Default"));
+            Collider[] hits = Physics.OverlapSphere(pos, size, _toDamageMask);
             foreach (Collider hit in hits)
             {
-                if (hit.tag is "Enemy" or "Player")
-                {
-                    Marble hitMarble = hit.gameObject.GetComponent<Marble>();
-                    float distanceL = 1f - (Vector3.Distance(pos, hitMarble.transform.position) / size);
+                Marble hitMarble = hit.gameObject.GetComponent<Marble>();
+                float distanceL = 1f - (Vector3.Distance(pos, hitMarble.transform.position) / size);
 
-                    float damage = force * distanceL;
+                float damage = force * distanceL;
 
-                    Vector3 knockbackDir = hitMarble.transform.position - subject.transform.position;
-                    knockbackDir.y = 3f;
+                Vector3 knockbackDir = hitMarble.transform.position - subject.transform.position;
+                knockbackDir.y = 3f;
 
-                    DamageManager.ApplyDamage(subject, hitMarble, damage, knockbackDir, 1.25f);
-                }
+                DamageManager.ApplyDamage(subject, hitMarble, damage, knockbackDir, 1.25f);
             }
             
             VFX.Play(new OneShotEffectData("Ground Pound", pos, Quaternion.identity, size));
@@ -83,7 +95,7 @@ namespace MarbleBash.Abilities
         private void HitGround(Collision c)
         {
             float force = c.impulse.magnitude;
-            if (force > 5f)
+            if (force > MINIMUM_FORCE)
             {
                 PoundGround(c.contacts[0].point, force);
             }
@@ -93,11 +105,15 @@ namespace MarbleBash.Abilities
 
         private void HitMarble(Collision c, Marble m)
         {
-            float force = c.impulse.magnitude;
-            if (force > 5f)
+            if (c.gameObject.layer == _toDamageMask)
             {
-                PoundMarble(m, force);
+                float force = c.impulse.magnitude;
+                if (force > MINIMUM_FORCE)
+                {
+                    PoundMarble(m, force);
+                }
             }
+
 
             StopEffect();
         }

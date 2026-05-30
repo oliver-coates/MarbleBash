@@ -1,4 +1,5 @@
 using KahuInteractive.VisualFX;
+using MarbleBash.Abilities;
 using UnityEngine;
 
 namespace MarbleBash
@@ -17,6 +18,7 @@ namespace MarbleBash
         private bool _isThrown;
         private float _lifeTime;
 
+        [SerializeField] private GameObject _explosionPrefab;
 
         public void Initialise(PlayerInstance player)
         {
@@ -34,64 +36,65 @@ namespace MarbleBash
             transform.position = player.transform.position;
         }
 
-        // public void Initialise(Vector3 startPos, Vector3 targetPosition)
-        // {
-        //     Vector3 direction = (targetPosition - startPos).normalized;
-        
-        //     transform.position = startPos;
-        //     transform.rotation = Quaternion.LookRotation(direction);
-        // }
-
-        // private void Update()
-        // {
-        //     float speed = Time.deltaTime * 25f;
-        //     transform.position = transform.position + transform.forward * speed;
-        // }
-
         private void Update()
         {
             _lifeTime += Time.deltaTime;
 
             if (_lifeTime < THROW_TIME)
             {
-                Vector3 _rearPosition = -(_playerMarble.movement.look.pitchForward * 2f);
-                Vector3 _throwPosition = _playerMarble.movement.look.pitchRight + _playerMarble.movement.look.pitchUp;
-
-                Vector3 targetPosition = Vector3.Lerp(_rearPosition, _throwPosition, _lifeTime / THROW_TIME);
-                _offset = Vector3.Lerp(_offset, targetPosition, Time.deltaTime * 4f);
-                
-                transform.position = _playerMarble.transform.position  + _offset; 
+                LobUpdate();
             }
-            else
+            else if (_isThrown == false)
             {
-                if (_isThrown == false)
-                {
-                    _isThrown = true;
-
-                    _rb.isKinematic = false;
-                    _rb.useGravity = true;
-
-                    _collider.enabled = true;
-
-                    _rb.linearVelocity = _playerMarble.movement.velocity;
-
-                    float velocityAlignment = Mathf.Clamp(Vector3.Dot(_playerMarble.movement.velocity.normalized, _playerMarble.movement.look.pitchForward), 0, 1);
-                    
-                    Vector3 inhertiedVelocity = _playerMarble.movement.velocity * velocityAlignment;
-                    Vector3 forceDir = (_playerMarble.movement.look.pitchForward + ( Vector3.up* 0.25f) ).normalized;
-                    
-                    Vector3 force = (forceDir * 750) + inhertiedVelocity;
-                    _rb.AddForce(force);
-                }
+                Throw();
             }
+        }
+
+        private void Throw()
+        {
+            _isThrown = true;
+
+            _rb.isKinematic = false;
+            _rb.useGravity = true;
+
+            _collider.enabled = true;
+
+            _rb.linearVelocity = _playerMarble.movement.velocity;
+
+            float velocityAlignment = Mathf.Clamp(Vector3.Dot(_playerMarble.movement.velocity.normalized, _playerMarble.movement.look.pitchForward), 0, 1);
+
+            Vector3 inhertiedVelocity = _playerMarble.movement.velocity * velocityAlignment;
+            Vector3 forceDir = (_playerMarble.movement.look.pitchForward + (Vector3.up * 0.25f)).normalized;
+
+            Vector3 force = (forceDir * 750) + inhertiedVelocity;
+            _rb.AddForce(force);
+        }
+
+        private void LobUpdate()
+        {
+            Vector3 _rearPosition = -(_playerMarble.movement.look.pitchForward * 2f);
+            Vector3 _throwPosition = _playerMarble.movement.look.pitchRight + _playerMarble.movement.look.pitchUp;
+
+            Vector3 targetPosition = Vector3.Lerp(_rearPosition, _throwPosition, _lifeTime / THROW_TIME);
+            _offset = Vector3.Lerp(_offset, targetPosition, Time.deltaTime * 2f);
+
+            transform.position = _playerMarble.transform.position + _offset;
         }
 
         private void OnCollisionEnter(Collision c)
         {
-            OneShotEffectData data = new OneShotEffectData("Ground Pound", c.contacts[0].point, Quaternion.identity, 3f);
+            CreateExplosion(c.contacts[0].point);
+            Destroy(gameObject);
+        }
+
+        private void CreateExplosion(Vector3 position)
+        {
+            BombExplosion explosion = Instantiate(_explosionPrefab, position, Quaternion.identity).GetComponent<BombExplosion>();
+            explosion.Initialise(1.5f, 10f, Player.instance);
+
+            OneShotEffectData data = new OneShotEffectData("Ground Pound", position, Quaternion.identity, 3f);
             VFX.Play(data);
 
-            Destroy(gameObject);
         }
     }
 

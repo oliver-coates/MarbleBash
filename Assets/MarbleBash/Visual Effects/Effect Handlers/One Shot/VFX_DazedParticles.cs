@@ -49,10 +49,10 @@ namespace MarbleBash.VisualEffects
             }
         }
 
-        private void Finish()
+        public override void Finish()
         {
             _marble.health.OnDied -= KillMyself;
-            Destroy(gameObject);            
+            Destroy(gameObject);
         }
     }
 

@@ -20,6 +20,11 @@ namespace MarbleBash.VisualEffects
 
             _particles.Play();
         }
+
+        public override void Finish()
+        {
+            
+        }
     }
 
 

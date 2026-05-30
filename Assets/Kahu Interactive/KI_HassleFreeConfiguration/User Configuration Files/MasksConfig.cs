@@ -26,6 +26,32 @@ namespace MarbleBash
             }	
         }
 
+        [SerializeField] private LayerMask _allMarbles;
+        public LayerMask allMarbles
+        {
+            get
+            {
+                return _allMarbles;
+            }	
+        }
+    
+        [SerializeField] private LayerMask _enemyMarbles;
+        public LayerMask enemyMarbles
+        {
+            get
+            {
+                return _enemyMarbles;
+            }	
+        }
+
+        [SerializeField] private LayerMask _playerMarble;
+        public LayerMask playerMarble
+        {
+            get
+            {
+                return _playerMarble;
+            }	
+        }
     }
 
 }

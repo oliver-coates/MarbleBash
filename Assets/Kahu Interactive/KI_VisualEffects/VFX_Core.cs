@@ -101,11 +101,12 @@ namespace KahuInteractive.VisualFX
         #endregion
 
 
-        public static void Play(OneShotEffectData data)
+        public static VFX_OneShotHandler Play(OneShotEffectData data)
         {
             OneShotEffectType effect = GetEffectFromString(data.name);
-            
-            effect.Play(data);
+            VFX_OneShotHandler handler = effect.Play(data);
+
+            return handler;
         }
 
         public static void UpdateRTPC(string name, float value)

@@ -18,3 +18,12 @@ MonoBehaviour:
   _notPlayerMask:
     serializedVersion: 2
     m_Bits: 951
+  _allMarbles:
+    serializedVersion: 2
+    m_Bits: 576
+  _enemyMarbles:
+    serializedVersion: 2
+    m_Bits: 512
+  _playerMarble:
+    serializedVersion: 2
+    m_Bits: 64

@@ -26,5 +26,10 @@ namespace MarbleBash.VisualEffects
 
             _particles.Emit(emitCount);            
         }
+
+        public override void Finish()
+        {
+            
+        }
     }
 }
