@@ -1,23 +1,42 @@
 using System;
 using KahuInteractive.HassleFreeConfig;
+using KahuInteractive.VisualFX;
 using UnityEngine;
 
 namespace MarbleBash.Abilities
 {
     public class RollerBomb : MonoBehaviour
     {
+        #region Configuration        
+        private const float TIME_TO_ACTIVATE = 1f;
+        
+        private float _rollSpeed;
+        private float _duration;
+        private float _explodeNearTargetRadius;
+        private float _deactivateNearTargetRadius;
+        private float _explosionRadius;
+        private float _explosionDamage;
+        #endregion
 
-        private const float TIME_TO_ACTIVATE = 0.5f;
-
-
+        // References:
+        [SerializeField] private GameObject _explosionPrefab;
         private Rigidbody _rb;
 
+        // State:
+        private Marble _caster;
+        private Marble _target;
         private float _timeAlive;
         private bool _hasActivated;
+        private bool _hasDeactivated;
 
-        public void Initialise()
+        public void Initialise(Marble caster, Marble targetMarble)
         {
             _rb = this.GetComponentSafe<Rigidbody>();
+            
+            _target = targetMarble;
+            _caster = caster;
+
+            GetConfigValues();
 
             _timeAlive = 0f;
             _hasActivated = false;
@@ -26,6 +45,18 @@ namespace MarbleBash.Abilities
 
             Throw();
         }
+
+        private void GetConfigValues()
+        {
+            _rollSpeed = 250f;
+            _duration = 5f;
+            _explodeNearTargetRadius = 0.75f;
+            _deactivateNearTargetRadius = 2f;
+        
+            _explosionRadius = 1f;
+            _explosionDamage = 5f;
+        }
+
 
         private void Throw()
         {
@@ -44,7 +75,19 @@ namespace MarbleBash.Abilities
 
             if (_hasActivated)
             {
-                ChasePalyer();
+                if (!_hasDeactivated)
+                {
+                    ChaseTarget();     
+                    if (CheckDistanceToTargetLessThan(_deactivateNearTargetRadius))
+                    {
+                        _hasDeactivated = true;
+                    }           
+                }
+
+                if (_timeAlive > _duration || CheckDistanceToTargetLessThan(_explodeNearTargetRadius))
+                {
+                    Explode();
+                }
             }
             else
             {
@@ -56,17 +99,33 @@ namespace MarbleBash.Abilities
             
         }
 
-        private void ChasePalyer()
+        private void ChaseTarget()
         {
-            Vector3 dirToPlayer = (Player.transform.position - transform.position).normalized;
+            Vector3 dirToTarget = (_target.transform.position - transform.position).normalized;
 
-            _rb.AddForce(dirToPlayer * 100f * Time.deltaTime);
+            _rb.AddForce(dirToTarget * _rollSpeed * Time.deltaTime);
         }
 
         private void Activate()
         {
             _hasActivated = true;
             gameObject.layer = LayerMask.NameToLayer("Default");           
+        }
+    
+        private bool CheckDistanceToTargetLessThan(float than)
+        {
+            return Vector3.Distance(transform.position, _target.transform.position) < than;
+        }
+
+        private void Explode()
+        {
+            BombExplosion explosion = Instantiate(_explosionPrefab, transform.position, Quaternion.identity).GetComponent<BombExplosion>();
+            explosion.Initialise(_explosionRadius, _explosionDamage, false, _caster);
+
+            OneShotEffectData data = new OneShotEffectData("Ground Pound", transform.position, Quaternion.identity, _explosionRadius);
+            VFX.Play(data);
+
+            Destroy(gameObject);
         }
     }
 }

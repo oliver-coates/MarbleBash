@@ -13,7 +13,7 @@ namespace MarbleBash.Abilities
         private float _knockbackUpAmount = 2f;
         private float _velocityNeutralisation = 0.25f;
 
-        public void Initialise(float radius, float damage, Marble caster)
+        public void Initialise(float radius, float damage, bool applyStun, Marble caster)
         {
             MasksConfig masks = Configuration.Get<MasksConfig>();
 
@@ -22,12 +22,12 @@ namespace MarbleBash.Abilities
 
             MarbleHit[] marblesToDamage = GetMarblesInRadius(radius, masks.allMarbles);
             
-            DamageHitMarbles(radius, damage, caster, marblesToDamage);
+            DamageHitMarbles(radius, damage, applyStun, caster, marblesToDamage);
 
             Destroy(gameObject, 2f);
         }
 
-        private void DamageHitMarbles(float radius, float damage, Marble caster, MarbleHit[] marblesToDamage)
+        private void DamageHitMarbles(float radius, float damage, bool applyStun, Marble caster, MarbleHit[] marblesToDamage)
         {
             foreach (MarbleHit hit in marblesToDamage)
             {
@@ -38,8 +38,11 @@ namespace MarbleBash.Abilities
                 hit.marble.rigidbody.linearVelocity *= (1f - _velocityNeutralisation);
 
                 // Apply stun:
-                hit.marble.transform.position += Vector3.up * 0.1f; // Lift slighty off the ground so the stun doesn't shut off instantly
-                hit.marble.statusEffects.AddEffect<AirStunned>(25f);
+                if (applyStun)
+                {   
+                    hit.marble.transform.position += Vector3.up * 0.1f; // Lift slighty off the ground so the stun doesn't shut off instantly
+                    hit.marble.statusEffects.AddEffect<AirStunned>(25f);   
+                }
 
                 // Damage Marble:
                 DamageEvent damageEvent = new DamageEvent(caster, hit.marble)

@@ -69,7 +69,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
+  - {fileID: 2100000, guid: 48eda0dbaada4cf408b5edcde73a0083, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -122,8 +122,8 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8315364795367003442}
   serializedVersion: 5
-  m_Mass: 0.2
-  m_LinearDamping: 0
+  m_Mass: 0.25
+  m_LinearDamping: 0.75
   m_AngularDamping: 0.05
   m_CenterOfMass: {x: 0, y: 0, z: 0}
   m_InertiaTensor: {x: 1, y: 1, z: 1}
@@ -153,3 +153,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6bdf67ddd1b16444985e3c34a2522c25, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MarbleBash.Abilities.RollerBomb
+  _explosionPrefab: {fileID: 6837537597241440470, guid: e9beb27fdb2eec24c9462006e21dfd39, type: 3}

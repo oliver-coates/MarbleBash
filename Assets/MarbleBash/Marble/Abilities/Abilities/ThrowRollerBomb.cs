@@ -16,12 +16,10 @@ namespace MarbleBash.Abilities
         {
             CombatConfig config = Configuration.Get<CombatConfig>();
 
-            float radius = _subject.transform.localScale.x / 2f;
-
             Vector3 startPos = _subject.transform.position;
 
             RollerBomb newRollerBomb = Object.Instantiate(config.rollerBombPrefab, startPos, Quaternion.identity).GetComponent<RollerBomb>();
-            newRollerBomb.Initialise();
+            newRollerBomb.Initialise(_subject, Player.instance);
         }
 
         protected override bool IsAbleToActivate()
