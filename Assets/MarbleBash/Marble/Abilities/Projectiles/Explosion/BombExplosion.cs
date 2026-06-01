@@ -17,7 +17,7 @@ namespace MarbleBash.Abilities
         private float _knockbackUpAmount = 2f;
         private float _velocityNeutralisation = 0.25f;
 
-        public void Initialise(Vector3 point, Vector3 normal, float radius, float damage, Marble caster)
+        public void Initialise(Vector3 point, Vector3 normal, float radius, float damage, bool applyStun, Marble caster)
         {
             MasksConfig masks = Configuration.Get<MasksConfig>();
 
@@ -25,7 +25,7 @@ namespace MarbleBash.Abilities
 
             MarbleHit[] marblesToDamage = GetMarblesInRadius(radius, masks.allMarbles);
 
-            DamageHitMarbles(radius, damage, caster, marblesToDamage);
+            DamageHitMarbles(radius, damage, applyStun, caster, marblesToDamage);
 
             PlayParticles(radius);
 
@@ -46,14 +46,14 @@ namespace MarbleBash.Abilities
             int numShards = 3 + Mathf.CeilToInt(radius / 10f);
             _shardsParticles.Emit(numShards);
 
-            var smokeShape = _smokeParticles.shape;
-            smokeShape.radius = radius;
+            // var smokeShape = _smokeParticles.shape;
+            // smokeShape.radius = radius;
 
             int numSmoke = Mathf.CeilToInt(radius * 50f);
             _smokeParticles.Emit(numSmoke);
         }
 
-        private void DamageHitMarbles(float radius, float damage, Marble caster, MarbleHit[] marblesToDamage)
+        private void DamageHitMarbles(float radius, float damage, bool applyStun, Marble caster, MarbleHit[] marblesToDamage)
         {
             foreach (MarbleHit hit in marblesToDamage)
             {

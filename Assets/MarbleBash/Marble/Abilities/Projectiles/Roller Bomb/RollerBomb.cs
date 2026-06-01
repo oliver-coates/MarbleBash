@@ -86,7 +86,7 @@ namespace MarbleBash.Abilities
 
                 if (_timeAlive > _duration || CheckDistanceToTargetLessThan(_explodeNearTargetRadius))
                 {
-                    Explode();
+                    Explode(Vector3.up);
                 }
             }
             else
@@ -117,10 +117,15 @@ namespace MarbleBash.Abilities
             return Vector3.Distance(transform.position, _target.transform.position) < than;
         }
 
-        private void Explode()
+        private void OnCollisionEnter(Collision c)
+        {
+            
+        }
+
+        private void Explode(Vector3 normal)
         {
             BombExplosion explosion = Instantiate(_explosionPrefab, transform.position, Quaternion.identity).GetComponent<BombExplosion>();
-            explosion.Initialise(_explosionRadius, _explosionDamage, false, _caster);
+            explosion.Initialise(transform.position, normal, _explosionRadius, _explosionDamage, false, _caster);
 
             OneShotEffectData data = new OneShotEffectData("Ground Pound", transform.position, Quaternion.identity, _explosionRadius);
             VFX.Play(data);

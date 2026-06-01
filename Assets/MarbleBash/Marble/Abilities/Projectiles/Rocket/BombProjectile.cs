@@ -93,7 +93,7 @@ namespace MarbleBash
         private void CreateExplosion(Vector3 position, Vector3 normal)
         {
             BombExplosion explosion = Instantiate(_explosionPrefab).GetComponent<BombExplosion>();
-            explosion.Initialise(position, normal, 1.5f, 10f, Player.instance);
+            explosion.Initialise(position, normal, 1.5f, 10f, true, Player.instance);
 
             OneShotEffectData data = new OneShotEffectData("Ground Pound", position, Quaternion.identity, 3f);
             VFX.Play(data);
