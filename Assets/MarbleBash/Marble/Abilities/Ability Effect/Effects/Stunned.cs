@@ -1,3 +1,4 @@
+using System;
 using KahuInteractive.VisualFX;
 using UnityEngine;
 
@@ -33,6 +34,10 @@ namespace MarbleBash.Abilities
             subject.isStunned = false;
         }
 
+        internal void ChangeDuration(float amount)
+        {
+            _duration += amount;
+        }
     }
 
 }

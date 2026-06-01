@@ -25,6 +25,19 @@ namespace MarbleBash.Abilities
             return effect;
         }
 
+        public TEffectType GetEffect<TEffectType>() where TEffectType : AbilityEffect
+        {
+            foreach (AbilityEffect effect in _currentEffects)
+            {
+                if (effect is TEffectType)
+                {
+                    return effect as TEffectType;
+                }
+            }
+            
+            return null;
+        }
+
 
 
 

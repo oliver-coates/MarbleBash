@@ -64,8 +64,20 @@ namespace MarbleBash.Abilities
                 // Apply stun:
                 if (applyStun)
                 {   
-                    hit.marble.transform.position += Vector3.up * 0.1f; // Lift slighty off the ground so the stun doesn't shut off instantly
-                    hit.marble.statusEffects.AddEffect<AirStunned>(25f);   
+                    if (hit.marble.isStunned)
+                    {
+                        // Extend the stun by 1 second
+                        Stunned stunned = hit.marble.statusEffects.GetEffect<Stunned>();
+                        stunned.ChangeDuration(1f);
+                    }
+                    else
+                    {
+                        // Apply an airstun
+
+                        // Lift slighty off the ground so the stun doesn't shut off instantly
+                        hit.marble.transform.position += Vector3.up * 0.1f; 
+                        hit.marble.statusEffects.AddEffect<AirStunned>(25f);                       
+                    }
                 }
 
                 // Damage Marble:
