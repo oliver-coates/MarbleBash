@@ -35,6 +35,9 @@ namespace MarbleBash.Abilities
         [SerializeField] private GameObject _explosionPrefab;
         private Rigidbody _rb;
 
+        private MeshRenderer _outlineRenderer;
+        private Material _outlineMat;
+
         // State:
         private State _state;
         private float _stateTimer;
@@ -51,6 +54,10 @@ namespace MarbleBash.Abilities
             
             _target = targetMarble;
             _caster = caster;
+
+            _outlineRenderer = this.GetComponentSafe<MeshRenderer>();
+            _outlineMat = new Material(_outlineRenderer.material);
+            _outlineRenderer.material = _outlineMat;
 
             GetConfigValues();
 
@@ -146,16 +153,20 @@ namespace MarbleBash.Abilities
             {
                 case State.Asleep:
                     gameObject.layer = LayerMask.NameToLayer("Debris");
+                    _outlineMat.SetColor("_GlowColour", Color.grey);
                     return;
 
                 case State.Chasing:
                     gameObject.layer = LayerMask.NameToLayer("Default");
+                    _outlineMat.SetColor("_GlowColour", Color.yellow);
                     return;
 
                 case State.Activated:
+                    _outlineMat.SetColor("_GlowColour", Color.orange);
                     return;
 
                 case State.Exploding:
+                    _outlineMat.SetColor("_GlowColour", Color.red);
                     return;   
             }
         }

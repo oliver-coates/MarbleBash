@@ -30,7 +30,7 @@ namespace MarbleBash.VisualEffects
 
         public override void Finish()
         {
-            
+            Destroy(gameObject, 1f);
         }
     }
 
