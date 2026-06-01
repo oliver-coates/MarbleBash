@@ -8,8 +8,15 @@ namespace MarbleBash.Abilities
     {
         private MutableStatModifier _movementSpeedModifier;
         private VFX_OneShotHandler _stunParticles;
+
+        private const float TIME_GROUNDED_TO_REMOVE = 0.15f;
+
+        private float _groundedTimer;
+
         protected override void Start()
         {
+            _groundedTimer = 0f;
+
             // Disable movement speed:
             _movementSpeedModifier = new MutableStatModifier(MutableStatModifier.Source.Effect, 0f, 0f);
             subject.stats.movementSpeed.AddModifier(_movementSpeedModifier);
@@ -27,7 +34,12 @@ namespace MarbleBash.Abilities
             {
                 if (subject.movement.isGrounded)
                 {
-                    StopEffect();
+                    _groundedTimer += Time.deltaTime;
+
+                    if (_groundedTimer > TIME_GROUNDED_TO_REMOVE)
+                    {
+                        StopEffect();                    
+                    }
                 }            
             }
         }

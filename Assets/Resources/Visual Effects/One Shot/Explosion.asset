@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4be2563bac6e48d46a231e5053ca4134, type: 3}
-  m_Name: Marble Hit Shards
+  m_Name: Explosion
   m_EditorClassIdentifier: Assembly-CSharp::KahuInteractive.VisualFX.OneShotEffectType
-  _prefab: {fileID: 3542773550640104737, guid: 679a8dd115b95334d85e2ac6e3967d2a, type: 3}
+  _prefab: {fileID: 8283768059491968629, guid: e8a9d83d8d565804eb9669a2fd5c91c6, type: 3}
   _useCase: 1

@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: Ground Pound
   m_EditorClassIdentifier: Assembly-CSharp::KahuInteractive.VisualFX.OneShotEffectType
   _prefab: {fileID: 4964509572555229782, guid: 44c11df4950ab6c43a286d2e17633606, type: 3}
-  _useCase: 0
+  _useCase: 1
