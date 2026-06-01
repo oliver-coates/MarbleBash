@@ -31,6 +31,17 @@ namespace MarbleBash.Abilities
             {
                 subject.collisionHandler.AssignDamageListener(HitMarble);    
             }
+            else
+            {
+                subject.collisionHandler.OnCollisionMarble += HitMarble;
+            }
+
+            subject.collisionHandler.OnCollisionAll += Test;
+        }
+
+        private void Test(Collision collision)
+        {
+            Debug.Log($"COllided with: {collision.gameObject.name}");
         }
 
         private void PoundMarble(Marble toPound, float force)
@@ -56,9 +67,10 @@ namespace MarbleBash.Abilities
             subject.rigidbody.linearVelocity = velocity;
         }
 
-        private void PoundGround(Vector3 pos, float force)
+        private void PoundGround(Vector3 pos)
         {
-            float size = force * 0.33f;
+            float impactVelocity = subject.movement.cachedSpeed;
+            float size = GetDamageRadius();
 
             Collider[] hits = Physics.OverlapSphere(pos, size, _toDamageMask);
             foreach (Collider hit in hits)
@@ -66,7 +78,7 @@ namespace MarbleBash.Abilities
                 Marble hitMarble = hit.gameObject.GetComponent<Marble>();
                 float distanceL = 1f - (Vector3.Distance(pos, hitMarble.transform.position) / size);
 
-                float damage = force * distanceL;
+                float damage = impactVelocity * distanceL;
 
                 Vector3 knockbackDir = hitMarble.transform.position - subject.transform.position;
                 knockbackDir.y = 3f;
@@ -81,23 +93,43 @@ namespace MarbleBash.Abilities
         {
             Vector3 force = Vector3.down * 1000 * Time.deltaTime;
             subject.rigidbody.AddForce(force);
+
+            // if (subject.rigidbody.linearVelocity.y > -0.25f)
+            // {
+            //     HitGround();
+            // }
         }
 
         protected override void Finished()
         {
+            Debug.Log($"Finished pounding effect");
             subject.collisionHandler.OnCollisionGround -= HitGround;
             if (subject.isPlayer)
             {
                 subject.collisionHandler.UnassignDamageListener();            
             }
+            else
+            {
+                subject.collisionHandler.OnCollisionMarble -= HitMarble;
+            }
+
+            subject.collisionHandler.OnCollisionAll -= Test;
+
         }
 
         private void HitGround(Collision c)
         {
-            float force = c.impulse.magnitude;
+            HitGround();
+        }
+
+        private void HitGround()
+        {
+            Debug.Log($"Hit Ground!");
+            float force = subject.movement.cachedSpeed * subject.rigidbody.mass;
             if (force > MINIMUM_FORCE)
             {
-                PoundGround(c.contacts[0].point, force);
+                Vector3 point = subject.transform.position - (Vector3.up * subject.transform.localScale.x * 0.5f);
+                PoundGround(point);
             }
 
             StopEffect();
@@ -114,10 +146,13 @@ namespace MarbleBash.Abilities
                 }
             }
 
-
             StopEffect();
         }
 
+        public float GetDamageRadius()
+        {
+            return subject.movement.cachedSpeed * 0.15f;
+        }
     }
 
 

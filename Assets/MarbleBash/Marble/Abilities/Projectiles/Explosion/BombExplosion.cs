@@ -56,7 +56,7 @@ namespace MarbleBash.Abilities
             foreach (MarbleHit hit in marblesToDamage)
             {
                 float distanceLerp = 1f - (hit.distance / radius);
-                float distanceFactor = Mathf.Clamp(distanceLerp, 0.15f, 1f);
+                float distanceFactor = Mathf.Lerp(distanceLerp, 0.3f, 1f);
 
                 // Neutralise their velocity:
                 hit.marble.rigidbody.linearVelocity *= (1f - _velocityNeutralisation);

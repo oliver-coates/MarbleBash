@@ -1,4 +1,5 @@
 using System;
+using KahuInteractive.VisualFX;
 using MarbleBash.Abilities;
 using UnityEngine;
 
@@ -50,9 +51,18 @@ namespace MarbleBash.Enemy
 
             if (_marble.rigidbody.linearVelocity.y < -1f && !_hasPounded)
             {
-                _hasPounded = true;
-                _marble.collisionHandler.OnCollisionGround += HitGround;
-                _marble.abilities.AttemptActivateAbility("Ground Pound");
+                bool successfull = _marble.abilities.AttemptActivateAbility("Ground Pound");
+                if (successfull)
+                {
+                    _hasPounded = true;
+                    _marble.collisionHandler.OnCollisionGround += HitGround;
+                    
+                    VFX.Play(new OneShotEffectData(
+                        "Ground Pound Indicator",
+                        Vector3.zero, Quaternion.identity,
+                        1f, _marble.transform));                
+                }
+
             }
 
         }

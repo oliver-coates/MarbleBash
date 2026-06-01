@@ -6,6 +6,8 @@ namespace MarbleBash.Abilities
     [System.Serializable]
     public abstract class AbilityEffect
     {
+        public event Action OnFinished;
+
         private Marble _subject;
         public Marble subject
         {
@@ -95,6 +97,7 @@ namespace MarbleBash.Abilities
         protected void StopEffect()
         {
             _isFinished = true;
+            OnFinished?.Invoke();
             Finished();
         }
 
@@ -102,6 +105,11 @@ namespace MarbleBash.Abilities
         /// Called once this effect finished.
         /// </summary>
         protected abstract void Finished();        
+
+        internal void ExtendDuration(float amount)
+        {
+            _duration += amount;
+        }
     }
     
 }
