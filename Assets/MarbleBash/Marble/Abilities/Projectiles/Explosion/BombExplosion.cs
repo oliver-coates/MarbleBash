@@ -8,26 +8,52 @@ namespace MarbleBash.Abilities
 
     public class BombExplosion : MonoBehaviour
     {
+        // References:
+        [SerializeField] private ParticleSystem _smokeParticles;
+        [SerializeField] private ParticleSystem _shardsParticles;
+
         // Configuration:
         private float _knockbackMultiplier = 1f;
         private float _knockbackUpAmount = 2f;
         private float _velocityNeutralisation = 0.25f;
 
-        public void Initialise(float radius, float damage, bool applyStun, Marble caster)
+        public void Initialise(Vector3 point, Vector3 normal, float radius, float damage, Marble caster)
         {
             MasksConfig masks = Configuration.Get<MasksConfig>();
 
-            float diameter = radius * 2f;
-            transform.localScale = new Vector3(diameter, diameter, diameter);
+            SetPositionAndSize(point, normal, radius);
 
             MarbleHit[] marblesToDamage = GetMarblesInRadius(radius, masks.allMarbles);
-            
-            DamageHitMarbles(radius, damage, applyStun, caster, marblesToDamage);
+
+            DamageHitMarbles(radius, damage, caster, marblesToDamage);
+
+            PlayParticles(radius);
 
             Destroy(gameObject, 2f);
         }
 
-        private void DamageHitMarbles(float radius, float damage, bool applyStun, Marble caster, MarbleHit[] marblesToDamage)
+        private void SetPositionAndSize(Vector3 point, Vector3 normal, float radius)
+        {
+            transform.position = point;
+            transform.rotation = Quaternion.LookRotation(normal);
+
+            float diameter = radius * 2f;
+            transform.localScale = new Vector3(diameter, diameter, diameter);
+        }
+
+        private void PlayParticles(float radius)
+        {
+            int numShards = 3 + Mathf.CeilToInt(radius / 10f);
+            _shardsParticles.Emit(numShards);
+
+            var smokeShape = _smokeParticles.shape;
+            smokeShape.radius = radius;
+
+            int numSmoke = Mathf.CeilToInt(radius * 50f);
+            _smokeParticles.Emit(numSmoke);
+        }
+
+        private void DamageHitMarbles(float radius, float damage, Marble caster, MarbleHit[] marblesToDamage)
         {
             foreach (MarbleHit hit in marblesToDamage)
             {

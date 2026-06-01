@@ -83,14 +83,17 @@ namespace MarbleBash
 
         private void OnCollisionEnter(Collision c)
         {
-            CreateExplosion(c.contacts[0].point);
+            ContactPoint contact = c.contacts[0];
+
+            CreateExplosion(contact.point, contact.normal);
+            
             Destroy(gameObject);
         }
 
-        private void CreateExplosion(Vector3 position)
+        private void CreateExplosion(Vector3 position, Vector3 normal)
         {
-            BombExplosion explosion = Instantiate(_explosionPrefab, position, Quaternion.identity).GetComponent<BombExplosion>();
-            explosion.Initialise(1.5f, 10f, true, Player.instance);
+            BombExplosion explosion = Instantiate(_explosionPrefab).GetComponent<BombExplosion>();
+            explosion.Initialise(position, normal, 1.5f, 10f, Player.instance);
 
             OneShotEffectData data = new OneShotEffectData("Ground Pound", position, Quaternion.identity, 3f);
             VFX.Play(data);
