@@ -10,8 +10,9 @@ namespace MarbleBash.Enemy
     {
         public enum MovementMode
         {
-            AlongPath = 0,
-            TowardPoint = 1
+            AlongPath = 0, // Moves along the provided path
+            TowardPoint = 1, // Moves towards the _movementTargetPoint
+            ManualControl = 2 // Moves along the _manualMovementDirection vector.
         } 
 
         private NavMeshPath _path;
@@ -35,6 +36,8 @@ namespace MarbleBash.Enemy
             }
         }
 
+        private Vector3 _manualMovementDirection;
+
 
         #region Initialisation & Destruction
         protected override void Initialise()
@@ -52,6 +55,7 @@ namespace MarbleBash.Enemy
             PathingLoadDistributor.UnsubscribeFrom(this);
         }
         #endregion
+
 
         protected override void Update()
         {
@@ -94,6 +98,9 @@ namespace MarbleBash.Enemy
                 case MovementMode.TowardPoint:
                     return GetMovementDirectionTowardsPoint();
                 
+                case MovementMode.ManualControl:
+                    return _manualMovementDirection;
+
                 default:
                     Debug.LogError("Unhandled movement mode!");
                     return Vector3.zero;
@@ -183,7 +190,13 @@ namespace MarbleBash.Enemy
         {
             _movementMode = MovementMode.AlongPath;
         }
-        
+
+        public void MoveInDirection(Vector3 direction)
+        {
+            _manualMovementDirection = direction;
+            _movementMode = MovementMode.ManualControl;
+        }
+
         public void AttemptJump()
         {
             if (isGrounded)
@@ -192,6 +205,7 @@ namespace MarbleBash.Enemy
             }
         }
         #endregion
+
 
         #region Debug Methods
 

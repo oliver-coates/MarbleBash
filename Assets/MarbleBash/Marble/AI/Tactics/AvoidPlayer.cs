@@ -1,4 +1,5 @@
 using TMPro;
+using UnityEngine;
 
 namespace MarbleBash.Enemy
 {
@@ -18,8 +19,7 @@ namespace MarbleBash.Enemy
 
         protected override void Update()
         {
-            _marble.movement.MoveTowardsPoint(_marble.transform.position);
-            // _brain.SetPathTarget(Player.movement.groundedPosition);
+            _marble.movement.MoveInDirection(Vector3.zero);
         }
 
         protected override void OnTransition()
